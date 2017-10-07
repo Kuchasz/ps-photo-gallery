@@ -1,3 +1,5 @@
+<h1>Description will be updated... soon.</h1>
+
 <p align="center">
   <img height="300px" width="300px" src="https://rawgit.com/MurhafSousli/ng-gallery/master/assets/logo.svg" style="max-width:100%;">
 </p>
