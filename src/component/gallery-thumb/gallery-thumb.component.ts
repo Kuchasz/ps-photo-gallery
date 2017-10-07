@@ -4,8 +4,7 @@ import {
 import { GalleryService } from '../../service/gallery.service';
 import { GalleryState } from '../../service/gallery.state';
 import { GalleryThumbConfig } from '../../config';
-
-declare const Hammer: any;
+import * as Hammer from "hammerjs";
 
 @Component({
   selector: 'gallery-thumb',
@@ -18,7 +17,7 @@ export class GalleryThumbComponent implements OnInit {
   @Input() state: GalleryState;
   @Input() config: GalleryThumbConfig;
 
-  contStyle;
+  contStyle: any;
 
   constructor(public gallery: GalleryService, private el: ElementRef, private renderer: Renderer2) {
 
@@ -30,10 +29,6 @@ export class GalleryThumbComponent implements OnInit {
 
     /** Enable gestures */
     if (this.gallery.config.gestures) {
-      if (typeof Hammer === 'undefined') {
-
-        throw Error('[NgGallery]: HammerJS is undefined, make sure it is loaded');
-      } else {
         const el = this.el.nativeElement;
         const mc = new Hammer(el);
 
@@ -56,7 +51,6 @@ export class GalleryThumbComponent implements OnInit {
           this.gallery.prev();
         });
       }
-    }
   }
 
   translateThumbs() {
@@ -75,7 +69,7 @@ export class GalleryThumbComponent implements OnInit {
     };
   }
 
-  getThumbImage(i) {
+  getThumbImage(i: number) {
     /** Use thumbnail if presented */
     return `url(${this.state.images[i].thumbnail || this.state.images[i].src})`;
   }

@@ -105,7 +105,7 @@ export class GalleryService {
   }
 
   /** Play slide show */
-  play(interval?) {
+  play(interval?: number) {
     const speed = interval || this.config.player.speed || 2000;
 
     const state = this.state.getValue();
@@ -119,7 +119,7 @@ export class GalleryService {
     this.player.next(0);
   }
 
-  playerEngine(interval?) {
+  playerEngine(interval?: number) {
 
     return Observable.interval(interval)
       .takeWhile(() => this.state.getValue().play)

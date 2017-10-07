@@ -14,9 +14,9 @@ import 'rxjs/add/operator/finally';
 export class GalleryDirective implements OnInit {
 
   // A flag to check if content has changed
-  content;
+  content: boolean;
 
-  @Input() gallerize;
+  @Input() gallerize: string;
 
   constructor(public el: ElementRef, public renderer: Renderer2, public gallery: GalleryService) {
   }

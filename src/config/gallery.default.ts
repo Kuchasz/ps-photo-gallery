@@ -32,7 +32,6 @@ export const defaultConfig: GalleryConfig = {
       color: 'red'
     }
   },
-  bullets: false,
   player: {
     autoplay: false,
     speed: 3000

@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {GalleryService} from '../../service/gallery.service';
+import {GalleryState} from "../../service/gallery.state";
 
 @Component({
   selector: 'gallery-nav',
@@ -9,7 +10,7 @@ import {GalleryService} from '../../service/gallery.service';
 })
 export class GalleryNavComponent {
 
-  @Input() state;
+  @Input() state: GalleryState;
 
   constructor(public gallery: GalleryService) {
   }

@@ -14,8 +14,8 @@ export class GalleryMainComponent implements OnInit {
 
   @Input() state: GalleryState;
   @Input() config: GalleryConfig;
-  loading;
-  thumbDirection;
+  loading: any;
+  thumbDirection: string;
 
   constructor(public gallery: GalleryService) {
   }

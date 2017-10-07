@@ -10,8 +10,7 @@ import { GalleryState } from '../../service/gallery.state';
 import { GalleryConfig } from '../../config';
 import { GalleryService } from '../../service/gallery.service';
 import { animation } from './gallery-image.animation';
-
-declare const Hammer: any;
+import * as Hammer from 'hammerjs';
 
 @Component({
   selector: 'gallery-image',
@@ -33,11 +32,6 @@ export class GalleryImageComponent implements OnInit {
   ngOnInit() {
     /** Enable gestures */
     if (this.config.gestures) {
-      if (typeof Hammer === 'undefined') {
-
-        throw Error('[NgGallery]: HammerJS is undefined, make sure it is loaded');
-      } else {
-
         const el = this.el.nativeElement;
         const mc = new Hammer(el);
 
@@ -47,7 +41,7 @@ export class GalleryImageComponent implements OnInit {
         mc.on('panend', () => {
           this.renderer.addClass(el, 'g-pan-reset');
         });
-        mc.on('pan', (e) => {
+        mc.on('pan', (e: any) => {
           this.renderer.setStyle(el, 'transform', `translate3d(${e.deltaX}px, 0px, 0px)`);
         });
         /** Swipe next and prev */
@@ -57,7 +51,6 @@ export class GalleryImageComponent implements OnInit {
         mc.on('swiperight', () => {
           this.gallery.prev();
         });
-      }
     }
   }
 

@@ -11,8 +11,8 @@ import { GalleryLoaderConfig } from '../../config';
 export class GalleryLoaderComponent implements OnInit {
 
   @Input() config: GalleryLoaderConfig;
-  icon;
-  styles;
+  icon: string;
+  styles: any;
 
   constructor(public gallery: GalleryService) {
   }
