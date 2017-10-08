@@ -38,9 +38,7 @@ export class GalleryService {
         this.player.switchMap((interval) => (interval) ? this.playerEngine(interval) : Observable.of(null)).subscribe();
     }
 
-    /** Load images and reset the state */
     load(directories: GalleryDirectory[]) {
-
         this.state.next({
             directories,
             currDirectory: undefined,
@@ -48,17 +46,21 @@ export class GalleryService {
             hasNext: undefined,
             hasPrev: undefined
         });
+    }
 
-        // this.state.next({
-        //   images: state.directories[state.currDirectory].images,
-        //   currIndex: 0,
-        //   hasNext: images.length > 1,
-        //   hasPrev: false,
-        // });
+    selectDirectory(directoryIndex: number){
+        const state = this.state.getValue();
+
+        this.state.next({
+            ...state,
+            currDirectory: directoryIndex
+        });
+
+        this.selectImage(0);
     }
 
     /** Set current image and update the state */
-    set(index: number) {
+    selectImage(index: number) {
         const state = this.state.getValue();
 
         this.state.next({
@@ -71,37 +73,33 @@ export class GalleryService {
         });
     }
 
-    /** Go to next image and update the state */
     next() {
         const state = this.state.getValue();
 
         if (state.hasNext) {
             const index = state.currIndex + 1;
-            this.set(index);
+            this.selectImage(index);
         } else {
-            this.set(0);
+            this.selectImage(0);
         }
     }
 
-    /** Go to previous image and update the state */
     prev() {
         const state = this.state.getValue();
 
         if (state.hasPrev) {
             const index = state.currIndex - 1;
-            this.set(index);
+            this.selectImage(index);
         } else {
-            this.set(state.directories[state.currDirectory].images.length - 1);
+            this.selectImage(state.directories[state.currDirectory].images.length - 1);
         }
     }
 
-    /** Reset gallery with initial state */
     reset() {
         this.state.next(defaultState);
         this.stop();
     }
 
-    /** Play slide show */
     play(interval?: number) {
         const speed = interval || this.config.player.speed || 2000;
 
@@ -111,7 +109,6 @@ export class GalleryService {
         this.player.next(speed);
     }
 
-    /** End slide show */
     stop() {
         this.player.next(0);
     }

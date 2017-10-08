@@ -10,12 +10,10 @@ import { GalleryThumbComponent } from './component/gallery-thumb/gallery-thumb.c
 import { GalleryTextComponent } from './component/gallery-text/gallery-text.component';
 import { GalleryImageComponent } from './component/gallery-image/gallery-image.component';
 import { GalleryLoaderComponent } from './component/gallery-loader/gallery-loader.component';
-import { GalleryModalComponent } from './component/gallery-modal/gallery-modal.component';
 import { GalleryBulletsComponent } from './component/gallery-bullets/gallery-bullets.component';
 import { GalleryPlayerComponent } from './component/gallery-player/gallery-player.component';
 import { GalleryMainComponent } from './component/gallery-main/gallery-main.component';
 
-import { GalleryDirective } from './directive/gallery.directive';
 import { LazyDirective } from './directive/lazy.directive';
 import { TapDirective } from './directive/tap.directive';
 
@@ -34,11 +32,9 @@ export const CONFIG = new InjectionToken<GalleryConfig>('config');
     GalleryComponent,
     GalleryNavComponent,
     GalleryThumbComponent,
-    GalleryDirective,
     GalleryTextComponent,
     GalleryImageComponent,
     GalleryLoaderComponent,
-    GalleryModalComponent,
     GalleryBulletsComponent,
     GalleryPlayerComponent,
     GalleryMainComponent,
@@ -46,9 +42,7 @@ export const CONFIG = new InjectionToken<GalleryConfig>('config');
     LazyDirective
   ],
   exports: [
-    GalleryComponent,
-    GalleryDirective,
-    GalleryModalComponent
+    GalleryComponent
   ]
 })
 export class GalleryModule {

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {GalleryService} from '../../index';
 import {parseString} from "xml2js";
 
@@ -7,7 +7,8 @@ const wallpapers = ["http://pyszstudio.pl/media/images/blog/2017-08-27/targanice
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+    styleUrls: ['./app.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
 
@@ -15,7 +16,13 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.gallery.load(wallpapers.map(src => ({src})));
+        this.gallery.load([
+            {
+                name: 'Blog images',
+                rootDir: '/blog',
+                images: wallpapers.map(src => ({src}))
+            }
+        ]);
 
         fetch('/folders.xml')
             .then(response => response.text())

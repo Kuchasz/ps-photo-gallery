@@ -3,7 +3,7 @@ import { GalleryService } from '../../service/gallery.service';
 
 @Component({
   selector: 'gallery',
-  template: '<gallery-main *ngIf="gallery.state | async as state" [state]="state" [config]="gallery.config"></gallery-main>',
+  templateUrl: './gallery.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./gallery.component.scss']
 })

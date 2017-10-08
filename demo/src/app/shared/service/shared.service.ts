@@ -82,7 +82,7 @@ export class SharedService {
   `,
     gridTemplate: `
   <div class="grid">
-    <div *ngFor="let image of images; let i = index" (click)="gallery.set(i)">
+    <div *ngFor="let image of images; let i = index" (click)="gallery.selectImage(i)">
       <img [src]="image.src"/>
     </div>
   </div>

@@ -34,4 +34,8 @@ export class GalleryTextComponent implements OnInit {
       this.renderer.setStyle(el, 'bottom', 0);
     }
   }
+
+  get currentImage(){
+    return this.state.directories[this.state.currDirectory].images[this.state.currIndex];
+  }
 }

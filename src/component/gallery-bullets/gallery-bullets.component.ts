@@ -57,4 +57,8 @@ export class GalleryBulletsComponent implements OnInit {
     }
   }
 
+  getImages(){
+    return this.state.directories[this.state.currDirectory].images;
+  }
+
 }

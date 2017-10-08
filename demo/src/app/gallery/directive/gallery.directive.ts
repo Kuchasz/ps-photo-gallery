@@ -45,7 +45,7 @@ export class GalleryDirective implements OnInit {
             // add click event to the images
             this.renderer.setStyle(img, 'cursor', 'pointer');
             this.renderer.setProperty(img, 'onclick', () => {
-              this.gallery.set(i);
+              this.gallery.selectImage(i);
             });
 
             // create an image item

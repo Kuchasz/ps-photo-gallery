@@ -69,9 +69,12 @@ export class GalleryThumbComponent implements OnInit {
     };
   }
 
+  getImages(){
+      return this.state.directories[this.state.currDirectory].images;
+  }
+
   getThumbImage(i: number) {
-    /** Use thumbnail if presented */
-    return `url(${this.state.images[i].thumbnail || this.state.images[i].src})`;
+    return `url(${this.getImages()[i].thumbnail || this.getImages()[i].src})`;
   }
 
 }

@@ -3,7 +3,7 @@
 <div class="grid">
   <button md-raised-button md-ripple
           *ngFor="let image of images; let i = index"
-          (click)="gallery.set(i)">
+          (click)="gallery.selectImage(i)">
     <div class="grid-image" [style.backgroundImage]="'url(' + image.src + ')'"></div>
   </button>
 </div>

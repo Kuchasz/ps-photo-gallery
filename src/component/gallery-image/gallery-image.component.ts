@@ -54,6 +54,10 @@ export class GalleryImageComponent implements OnInit {
     }
   }
 
+  get currentImage(){
+      return this.state.directories[this.state.currDirectory].images[this.state.currIndex];
+  }
+
   imageLoad(done: boolean) {
     this.loading = !done;
     /** TODO: Add some animation */
