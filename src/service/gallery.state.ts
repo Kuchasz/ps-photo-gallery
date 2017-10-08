@@ -1,7 +1,7 @@
 export interface GalleryState {
-  active: boolean;
   play?: boolean;
-  images?: GalleryImage[];
+  directories: GalleryDirectory[];
+  currDirectory: number;
   prevIndex?: number;
   currIndex?: number;
   hasNext?: boolean;
@@ -12,4 +12,10 @@ export interface GalleryImage {
   src: string;
   thumbnail?: string;
   text?: string;
+}
+
+export interface GalleryDirectory {
+  name: string;
+  rootDir: string;
+  images?: GalleryImage[];
 }

@@ -10,6 +10,10 @@
     "build": "webpack",
     "start": "webpack-dev-server --hot --inline"
   },
+  "browserslist": [
+    "> 1%",
+    "Chrome > 45"
+  ],
   "dependencies": {},
   "devDependencies": {
     "@angular/animations": "^4.4.4",
@@ -20,6 +24,7 @@
     "@angular/platform-browser-dynamic": "^4.4.4",
     "@types/hammerjs": "^2.0.35",
     "@types/node": "^8.0.33",
+    "@types/xml2js": "^0.4.0",
     "angular2-template-loader": "^0.6.2",
     "autoprefixer": "^7.1.5",
     "awesome-typescript-loader": "^3.2.3",
@@ -38,6 +43,7 @@
     "typescript": "^2.5.3",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1",
+    "xml2js": "^0.4.19",
     "zone.js": "^0.8.18"
   }
 }

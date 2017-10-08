@@ -14,9 +14,8 @@ gallery-main {
   overflow: hidden;
   position: relative;
   z-index: 200;
-  max-height: 100%;
-  max-width: 100%;
   display: flex;
+  flex: 1;
   flex-direction: column;
 
   @media (max-width: 480px) {

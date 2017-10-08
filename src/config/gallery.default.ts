@@ -2,12 +2,12 @@ import { GalleryState } from '../service/gallery.state';
 import { GalleryConfig } from './gallery.config';
 
 export const defaultState: GalleryState = {
-  images: undefined,
-  prevIndex: 0,
-  currIndex: 0,
+  directories: [],
+  currDirectory: undefined,
+  prevIndex: undefined,
+  currIndex: undefined,
   hasNext: undefined,
-  hasPrev: undefined,
-  active: false
+  hasPrev: undefined
 };
 
 export const defaultConfig: GalleryConfig = {

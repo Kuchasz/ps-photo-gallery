@@ -51,10 +51,10 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: resolve('src/demo/index.html')
         }),
-        new ExtractTextPlugin('[name].css'),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: { warnings: false }
-        })
+        new ExtractTextPlugin('[name].css')//,
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: { warnings: false }
+        // })
     ],
     devServer: {
         port: 8080,
