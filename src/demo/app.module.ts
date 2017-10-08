@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppComponent } from './app.component';
+import { AppComponent } from './component/app.component';
 import {GalleryModule} from "../gallery.module";
 
 @NgModule({
@@ -16,8 +16,8 @@ import {GalleryModule} from "../gallery.module";
       {
         style: {
           background: "#121519",
-          width: "900px",
-          height: "600px"
+          width: "100%",
+          height: "100%"
         },
         description: {
           position: 'bottom',

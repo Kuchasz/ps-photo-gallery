@@ -1,6 +1,15 @@
 var resolve = require("path").resolve;
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var autoprefixer = require('autoprefixer');
+
+var postcssLoader = {
+    loader: 'postcss-loader',
+    options: {
+        plugins: () => [autoprefixer]
+    }
+};
 
 module.exports = {
     entry: resolve("./src/demo/main.ts"),
@@ -18,15 +27,15 @@ module.exports = {
                 test: /\.html$/,
                 use: 'html-loader'
             },
-            // {
-            //     test: /\.scss$/,
-            //     exclude: resolve('src', 'app'),
-            //     use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader!sass-loader' })
-            // },
             {
                 test: /\.scss$/,
-                // include: resolve('src', 'app'),
-                use: ['raw-loader', 'sass-loader']
+                exclude: [resolve('src/demo/component'), resolve('src/component')],
+                use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: ['css-loader', postcssLoader, 'sass-loader']})
+            },
+            {
+                test: /\.scss$/,
+                include: [resolve('src/demo/component'), resolve('src/component')],
+                use: ['raw-loader', postcssLoader, 'sass-loader']
             }
         ]
     },
@@ -41,6 +50,10 @@ module.exports = {
         ),
         new HtmlWebpackPlugin({
             template: resolve('src/demo/index.html')
+        }),
+        new ExtractTextPlugin('[name].css'),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: { warnings: false }
         })
     ],
     devServer: {
