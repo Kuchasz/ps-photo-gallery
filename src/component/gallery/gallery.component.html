@@ -1,5 +1,5 @@
 <div *ngIf="gallery.state | async as state">
-    <gallery-main *ngIf="state.currDirectory" [state]="state"
+    <gallery-main *ngIf="state.currDirectory !== undefined" [state]="state"
                   [config]="gallery.config"></gallery-main>
-    <h1>We've got: {{state.directories.length}} directores!!</h1>
+    <gallery-directories *ngIf="state.currDirectory === undefined" [state]="state" [config]="gallery.config"></gallery-directories>
 </div>

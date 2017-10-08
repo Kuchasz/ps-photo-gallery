@@ -1,5 +1,5 @@
 <div class="g-container" [style.flexDirection]="thumbDirection" [ngStyle]="config.style">
-
+  <span (click)="gallery.selectDirectory(undefined)" class="g-back-button">Lista katalogów</span>
   <gallery-thumb *ngIf="config.thumbnails" [state]="state" [config]="config.thumbnails"
                  [style.background]="config.style?.background"></gallery-thumb>
 

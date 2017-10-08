@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import {GalleryState} from '../../service/gallery.state';
 import {GalleryConfig} from '../../config';
-import {GalleryService} from '../../service/gallery.service';
+import {GalleryService} from "../../service/gallery.service";
 
 @Component({
   selector: 'gallery-main',
@@ -17,11 +17,11 @@ export class GalleryMainComponent implements OnInit {
   loading: any;
   thumbDirection: string;
 
-  constructor(public gallery: GalleryService) {
-  }
+    constructor(public gallery: GalleryService){
+
+    }
 
   ngOnInit() {
-    // shortcut for thumbnail config
     const thumbPos = this.config.thumbnails.position;
     this.thumbDirection = (thumbPos === 'left' || thumbPos === 'right') ? 'row' : 'column';
   }

@@ -1,0 +1,4 @@
+<div class="g-directories-container">
+    <div class="g-directory" [style.backgroundImage]="'url(' + getRandomPhoto(i).src + ')'" *ngFor="let dir of state.directories; let i = index;" (click)="gallery.selectDirectory(i)">
+    </div>
+</div>

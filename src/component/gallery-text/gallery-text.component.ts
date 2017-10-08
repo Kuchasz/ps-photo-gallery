@@ -35,7 +35,11 @@ export class GalleryTextComponent implements OnInit {
     }
   }
 
+  get images(){
+      return this.state.directories[this.state.currDirectory].images;
+  }
+
   get currentImage(){
-    return this.state.directories[this.state.currDirectory].images[this.state.currIndex];
+    return this.images[this.state.currIndex];
   }
 }

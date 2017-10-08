@@ -50,3 +50,10 @@ gallery-main {
   transition: all linear 0.3s;
   transform: translate3d(0px, 0px, 0px) !important;
 }
+
+.g-back-button{
+  padding: 8px 16px;
+  background: white;
+  align-self: flex-start;
+  text-transform: uppercase;
+}
