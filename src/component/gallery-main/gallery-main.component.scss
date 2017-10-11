@@ -56,4 +56,10 @@ gallery-main {
   background: white;
   align-self: flex-start;
   text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s;
+  &:hover{
+    background: black;
+    color: white;
+  }
 }

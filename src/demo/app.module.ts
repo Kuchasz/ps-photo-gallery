@@ -15,7 +15,7 @@ import {GalleryModule} from "../gallery.module";
     GalleryModule.forRoot(
       {
         style: {
-          background: "#121519",
+          background: "#333",
           width: "100%",
           height: "100%"
         },
@@ -26,9 +26,9 @@ import {GalleryModule} from "../gallery.module";
           counter: true
         },
         thumbnails: {
-          width: 120,
-          height: 90,
-          position: 'top',
+          width: 100,
+          height: 100,
+          position: 'bottom',
           space: 20
         },
         bullets: undefined,

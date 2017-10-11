@@ -1,12 +1,31 @@
-.g-directories-container{
+.g-directories-container {
   display: flex;
   flex-wrap: wrap;
-  .g-directory{
-    display: inline-block;
-    margin: 4px;
-    width: 180px;
-    height: 180px;
-    background-position: 50%;
-    background-size: cover;
+  padding: 10px;
+  justify-content: center;
+  .g-directory {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    margin: 12px;
+    box-shadow: 0 0 14px rgba(0, 0, 0, 0.75);
+    .g-directory-photo {
+      display: inline-block;
+      width: 140px;
+      height: 100px;
+      border-width: 8px 8px 0px 8px;
+      border-style: solid;
+      border-color: white;
+      background-position: 50%;
+      background-size: cover;
+    }
+    .g-directory-name {
+      display: flex;
+      justify-content: center;
+      background: white;
+      text-transform: uppercase;
+      font-size: 0.75em;
+      padding: 8px;
+    }
   }
 }

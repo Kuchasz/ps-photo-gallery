@@ -48,7 +48,7 @@ export class GalleryService {
         });
     }
 
-    selectDirectory(directoryIndex: number){
+    selectDirectory(directoryIndex: number) {
         const state = this.state.getValue();
 
         this.state.next({
@@ -56,10 +56,25 @@ export class GalleryService {
             currDirectory: directoryIndex
         });
 
-        this.selectImage(0);
+        if (directoryIndex !== undefined)
+            this.selectImage(0);
+        else
+            this.clearCurrentImage();
     }
 
-    /** Set current image and update the state */
+    clearCurrentImage() {
+        const state = this.state.getValue();
+
+        this.state.next({
+            ...state, ...{
+                prevIndex: undefined,
+                currIndex: undefined,
+                hasNext: undefined,
+                hasPrev: undefined
+            }
+        });
+    }
+
     selectImage(index: number) {
         const state = this.state.getValue();
 
