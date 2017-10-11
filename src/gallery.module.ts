@@ -7,7 +7,7 @@ import { GalleryConfig } from './config/gallery.config';
 import { GalleryComponent } from './component/gallery/gallery.component';
 import { GalleryNavComponent } from './component/gallery-nav/gallery-nav.component';
 import { GalleryThumbComponent } from './component/gallery-thumb/gallery-thumb.component';
-import { GalleryTextComponent } from './component/gallery-text/gallery-text.component';
+import { GalleryStateComponent } from './component/gallery-state/gallery-state.component';
 import { GalleryImageComponent } from './component/gallery-image/gallery-image.component';
 import { GalleryLoaderComponent } from './component/gallery-loader/gallery-loader.component';
 import { GalleryBulletsComponent } from './component/gallery-bullets/gallery-bullets.component';
@@ -33,7 +33,7 @@ export const CONFIG = new InjectionToken<GalleryConfig>('config');
     GalleryComponent,
     GalleryNavComponent,
     GalleryThumbComponent,
-    GalleryTextComponent,
+    GalleryStateComponent,
     GalleryImageComponent,
     GalleryLoaderComponent,
     GalleryBulletsComponent,

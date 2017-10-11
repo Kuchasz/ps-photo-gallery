@@ -1,5 +1,5 @@
 <div class="g-container" [style.flexDirection]="thumbDirection" [ngStyle]="config.style">
-  <span (click)="gallery.selectDirectory(undefined)" class="g-back-button">Lista katalogów</span>
+  <gallery-state [state]="state"></gallery-state>
   <gallery-thumb *ngIf="config.thumbnails" [state]="state" [config]="config.thumbnails"
                  [style.background]="config.style?.background"></gallery-thumb>
 
@@ -14,8 +14,6 @@
       <!--<div class="g-layer" *ngIf="state.images[state.currIndex].layer" [innerHtml]="state.images[state.currIndex].layer"></div>-->
 
     </div>
-
-    <gallery-text *ngIf="config.description" [state]="state" [config]="config.description"></gallery-text>
 
     <gallery-bullets *ngIf="config.bullets" [state]="state" [config]="config.bullets"></gallery-bullets>
 

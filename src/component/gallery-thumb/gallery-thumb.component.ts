@@ -19,7 +19,10 @@ export class GalleryThumbComponent implements OnInit {
 
   contStyle: any;
 
-  constructor(public gallery: GalleryService, private el: ElementRef, private renderer: Renderer2) {
+  constructor(
+    public gallery: GalleryService, 
+    private el: ElementRef, 
+    private renderer: Renderer2) {
 
   }
 
@@ -64,8 +67,7 @@ export class GalleryThumbComponent implements OnInit {
     this.renderer.setStyle(this.el.nativeElement, 'order', order);
 
     return {
-      height: this.config.height + 'px',
-      margin: this.config.space + 'px'
+      // height: this.config.height + 'px'
     };
   }
 

@@ -35,6 +35,7 @@ gallery-main {
   flex: 1;
   order: 1;
   height: 100%;
+  margin: 16px;
 }
 
 .g-layer {
@@ -49,17 +50,4 @@ gallery-main {
 .g-pan-reset {
   transition: all linear 0.3s;
   transform: translate3d(0px, 0px, 0px) !important;
-}
-
-.g-back-button{
-  padding: 8px 16px;
-  background: white;
-  align-self: flex-start;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background 0.25s, color 0.25s;
-  &:hover{
-    background: black;
-    color: white;
-  }
 }
