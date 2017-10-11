@@ -15,6 +15,7 @@ export interface GalleryImage {
 }
 
 export interface GalleryDirectory {
+  visited: boolean;
   name: string;
   rootDir: string;
   images?: GalleryImage[];

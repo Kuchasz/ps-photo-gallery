@@ -9,6 +9,18 @@
     flex-direction: column;
     margin: 12px;
     box-shadow: 0 0 14px rgba(0, 0, 0, 0.75);
+
+    &.visited {
+      filter: grayscale(1);
+    }
+
+    &:hover{
+      .g-directory-name{
+        transform: scale(1.05);
+        box-shadow: 0 0 14px black;
+      }
+    }
+
     .g-directory-photo {
       display: inline-block;
       width: 140px;
@@ -20,6 +32,8 @@
       background-size: cover;
     }
     .g-directory-name {
+      transition: all 0.25s;
+      box-shadow: 0 0 14px transparent;
       display: flex;
       justify-content: center;
       background: white;

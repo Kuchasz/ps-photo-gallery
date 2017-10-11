@@ -38,6 +38,7 @@ export class AppComponent implements OnInit {
                                     const images = photos.gallery.image;
 
                                     directories.push({
+                                        visited: false,
                                         name: item.$.name.replace("_", " "),
                                         rootDir: item.$.path,
                                         images: images.map(img => ({

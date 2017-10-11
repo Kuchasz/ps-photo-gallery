@@ -51,8 +51,21 @@ export class GalleryService {
     selectDirectory(directoryIndex: number) {
         const state = this.state.getValue();
 
+        const visitedDirectory = state.directories[directoryIndex];
+        const directories = Object.assign(
+            [], 
+            state.directories, 
+            {
+                [directoryIndex]:
+                {
+                    ...visitedDirectory,
+                    visited: true
+                }
+            });
+
         this.state.next({
             ...state,
+            directories,
             currDirectory: directoryIndex
         });
 
