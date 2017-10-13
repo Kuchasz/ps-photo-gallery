@@ -1,5 +1,5 @@
 <div [@imgAnimate]="animate" class="g-image">
-  <img [lazyImage]="currentImage.src" (lazyLoad)="imageLoad($event)">
+  <img [lazyImage]="currentImage.src" [ngStyle]="imageStyle" (lazyLoad)="imageLoad($event)">
 </div>
 
 <gallery-loader *ngIf="loading" [config]="config.loader"></gallery-loader>

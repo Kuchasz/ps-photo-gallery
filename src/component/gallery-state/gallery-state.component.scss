@@ -26,3 +26,14 @@ span{
     background: black;
     color: white;
   }
+
+  .g-fullscreen{
+    cursor: pointer;
+    background: black;
+    color: white;
+    transition: background 0.25s, color 0.25s;
+    &:hover{
+      background: white;
+      color: black;
+    }
+  }

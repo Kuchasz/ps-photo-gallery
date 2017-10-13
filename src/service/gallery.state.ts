@@ -6,6 +6,7 @@ export interface GalleryState {
   currIndex?: number;
   hasNext?: boolean;
   hasPrev?: boolean;
+  fullscreenEnabled: boolean;
 }
 
 export interface GalleryImage {

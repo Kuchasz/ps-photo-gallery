@@ -44,7 +44,8 @@ export class GalleryService {
             currDirectory: undefined,
             currIndex: undefined,
             hasNext: undefined,
-            hasPrev: undefined
+            hasPrev: undefined,
+            fullscreenEnabled: false
         });
     }
 
@@ -73,6 +74,14 @@ export class GalleryService {
             this.selectImage(0);
         else
             this.clearCurrentImage();
+    }
+
+    toggleFullscreen(){
+        const state = this.state.getValue();
+        this.state.next({
+            ...state,
+            fullscreenEnabled: !state.fullscreenEnabled
+        });
     }
 
     clearCurrentImage() {

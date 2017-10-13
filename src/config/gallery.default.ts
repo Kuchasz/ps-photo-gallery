@@ -7,7 +7,8 @@ export const defaultState: GalleryState = {
   prevIndex: undefined,
   currIndex: undefined,
   hasNext: undefined,
-  hasPrev: undefined
+  hasPrev: undefined,
+  fullscreenEnabled: false
 };
 
 export const defaultConfig: GalleryConfig = {
