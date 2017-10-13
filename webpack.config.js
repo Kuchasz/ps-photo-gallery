@@ -36,6 +36,10 @@ module.exports = {
                 test: /\.scss$/,
                 include: [resolve('src/demo/component'), resolve('src/component')],
                 use: ['raw-loader', postcssLoader, 'sass-loader']
+            },
+            {
+                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                use: 'file-loader?name=dist/fonts/[name].[ext]'
             }
         ]
     },

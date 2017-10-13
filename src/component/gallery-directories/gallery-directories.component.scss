@@ -1,7 +1,6 @@
 .g-directories-container {
   display: flex;
   flex-wrap: wrap;
-  padding: 10px;
   justify-content: center;
   .g-directory {
     cursor: pointer;
@@ -30,6 +29,10 @@
       border-color: white;
       background-position: 50%;
       background-size: cover;
+      @media (max-width: 480px){
+        width: 112px;
+        height: 80px;
+      }
     }
     .g-directory-name {
       transition: all 0.25s;
@@ -40,6 +43,9 @@
       text-transform: uppercase;
       font-size: 0.75em;
       padding: 8px;
+      @media (max-width: 480px){
+        font-size: 0.65em;
+      }
     }
   }
 }
