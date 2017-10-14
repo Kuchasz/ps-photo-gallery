@@ -32,7 +32,7 @@ export class GalleryThumbComponent implements OnInit {
 
     /** Enable gestures */
     if (this.gallery.config.gestures) {
-        const el = this.el.nativeElement;
+        const el = this.el.nativeElement.querySelector('.g-thumb-container');
         const mc = new Hammer(el);
 
         mc.on('panstart', () => {

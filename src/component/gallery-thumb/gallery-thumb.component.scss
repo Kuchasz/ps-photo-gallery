@@ -1,6 +1,8 @@
 :host {
   display: block;
   z-index: 1;
+  background: #121212;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
 }
 
 .g-thumb-container {
@@ -12,9 +14,7 @@
   top: 0;
   display: flex;
   margin: 0px;
-  background: #121212;
-  margin-top: 8px;  
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
+  margin-top: 8px;
 }
 
 .g-thumbs {

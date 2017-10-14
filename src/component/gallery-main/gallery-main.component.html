@@ -1,7 +1,5 @@
 <div class="g-container" [style.flexDirection]="thumbDirection" [ngStyle]="config.style">
   <gallery-state [state]="state"></gallery-state>
-  <gallery-thumb *ngIf="!state.fullscreenEnabled && config.thumbnails" [state]="state" [config]="config.thumbnails"
-                 [style.background]="config.style?.background"></gallery-thumb>
 
   <div class="g-box">
 
@@ -15,10 +13,10 @@
 
     </div>
 
-    <gallery-bullets *ngIf="config.bullets" [state]="state" [config]="config.bullets"></gallery-bullets>
-
     <!--<gallery-player *ngIf="config.player" [state]="state" [config]="config.player"></gallery-player>-->
 
   </div>
+
+  <gallery-thumb *ngIf="!state.fullscreenEnabled && config.thumbnails" [state]="state" [config]="config.thumbnails"></gallery-thumb>
 
 </div>

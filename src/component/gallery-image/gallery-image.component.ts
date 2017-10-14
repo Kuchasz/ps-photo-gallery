@@ -58,9 +58,8 @@ export class GalleryImageComponent implements OnInit {
         return this.state.directories[this.state.currDirectory].images[this.state.currIndex];
     }
 
-    get imageStyle() {
+    get containerStyle() {
         return this.state.fullscreenEnabled ? {
-            height: '100%',
             borderStyle: 'none'
         } : {};
     }

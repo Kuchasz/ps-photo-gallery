@@ -25,9 +25,7 @@ gallery-main {
     flex-direction: column !important;
   }
 }
-.g-box{
-  height: 100%;
-}
+
 .g-box, .g-image-box {
   position: relative;
   display: flex;
@@ -35,7 +33,7 @@ gallery-main {
   flex: 1;
   order: 1;
   height: 100%;
-  margin: 16px;
+  margin: 0.5em;
 }
 
 .g-layer {
