@@ -7,15 +7,37 @@ var autoprefixer = require('autoprefixer');
 var postcssLoader = {
     loader: 'postcss-loader',
     options: {
-        plugins: () => [autoprefixer]
+        plugins: function () {
+            return [autoprefixer];
+        }
     }
 };
+
+var plugins = [
+    new webpack.ContextReplacementPlugin(
+        /angular(\\|\/)core(\\|\/)@angular/,
+        resolve('./src'),
+        {}
+    ),
+    new HtmlWebpackPlugin({
+        template: resolve('src/demo/index.html'),
+        title: 'Galeria zdjęć'
+    }),
+    new ExtractTextPlugin('[name].css')
+];
+
+if (process.env.NODE_ENV === 'production')
+    plugins.push(new webpack.optimize.UglifyJsPlugin({
+        compress: {warnings: false}
+    }));
+
 
 module.exports = {
     entry: resolve("./src/demo/main.ts"),
     output: {
         filename: "bundle.js",
-        path: resolve("./dist")
+        path: resolve("./dist"),
+        publicPath: './'
     },
     module: {
         rules: [
@@ -25,12 +47,25 @@ module.exports = {
             },
             {
                 test: /\.html$/,
-                use: 'html-loader'
+                use: {
+                    loader: 'html-loader', options: {
+                        minimize: true,
+                        removeComments: true,
+                        collapseWhitespace: true,
+                        removeAttributeQuotes: false,
+                        keepClosingSlash: true,
+                        caseSensitive: true,
+                        conservativeCollapse: true
+                    }
+                }
             },
             {
                 test: /\.scss$/,
                 exclude: [resolve('src/demo/component'), resolve('src/component')],
-                use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: ['css-loader', postcssLoader, 'sass-loader']})
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: ['css-loader', postcssLoader, 'sass-loader']
+                })
             },
             {
                 test: /\.scss$/,
@@ -39,27 +74,14 @@ module.exports = {
             },
             {
                 test: /\.(eot|svg|ttf|woff|woff2)$/,
-                use: 'file-loader?name=dist/fonts/[name].[ext]'
+                use: 'file-loader?name=fonts/[name].[ext]'
             }
         ]
     },
     resolve: {
         extensions: ['.ts', '.js']
     },
-    plugins: [
-        new webpack.ContextReplacementPlugin(
-            /angular(\\|\/)core(\\|\/)@angular/,
-            resolve('./src'),
-            {}
-        ),
-        new HtmlWebpackPlugin({
-            template: resolve('src/demo/index.html')
-        }),
-        new ExtractTextPlugin('[name].css')
-        // new webpack.optimize.UglifyJsPlugin({
-        //     compress: { warnings: false }
-        // })
-    ],
+    plugins: plugins,
     devServer: {
         port: 8080,
         host: 'localhost',

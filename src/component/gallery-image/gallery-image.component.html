@@ -1,7 +1,7 @@
 <div [@imgAnimate]="animate" class="g-image">
   <div class="g-image-container" [ngStyle]="containerStyle">
     <div class="g-image-img" [lazyImage]="currentImage.src" (lazyLoad)="imageLoad($event)">
+      <gallery-loader *ngIf="loading" [config]="config.loader"></gallery-loader>
+    </div>
   </div>
 </div>
-
-<gallery-loader *ngIf="loading" [config]="config.loader"></gallery-loader>
