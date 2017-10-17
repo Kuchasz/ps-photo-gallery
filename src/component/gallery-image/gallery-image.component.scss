@@ -1,23 +1,12 @@
 :host {
-  //order: 1;
+  position: relative;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transform: translate3d(0px, 0px, 0px);
 }
 
 .g-image {
-  //position: absolute;
-  //left: 0;
-  //right: 0;
-  //top: 0;
-  //bottom: 0;
-  //background-repeat: no-repeat;
-  //background-size: contain;
-  //background-position: center center;
-  //z-index: 3;
-  //background: orange;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -27,38 +16,21 @@
   .g-image-container {
     flex: 1;
     align-self: stretch;
+    flex-direction: column;
     position: relative;
     display: flex;
-    //background: yellow;
     pointer-events: none;
-    //box-shadow: 0 0 20px rgba(0, 0, 0, 0.75);
-    //border-width: 12px;
-    //border-color: white;
-    //border-style: solid;
     .g-image-img {
-
-
-
       display: inline-block;
+      flex: 1;
       height: 100%;
       width: 100%;
-      //flex: 1;
-      //align-self: stretch;
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
-
-      //height: 100%;
-      //width: auto;;
-      //width: auto;
-      //max-height: 100%;
-      //display: block;
-      //height: 100px;
-      //width: 100px;
-      //max-height: 100%;
-      //max-width: 100%;
-      //width: auto;
-      //height: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }

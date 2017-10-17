@@ -26,24 +26,16 @@ export class GalleryImageComponent implements OnInit {
     loading: boolean;
     animate: string;
 
-    constructor(public gallery: GalleryService, private el: ElementRef, private renderer: Renderer2) {
+    constructor(public gallery: GalleryService, private el: ElementRef) {
     }
 
     ngOnInit() {
+
         /** Enable gestures */
         if (this.config.gestures) {
             const el = this.el.nativeElement;
             const mc = new Hammer(el);
 
-            mc.on('panstart', () => {
-                this.renderer.removeClass(el, 'g-pan-reset');
-            });
-            mc.on('panend', () => {
-                this.renderer.addClass(el, 'g-pan-reset');
-            });
-            mc.on('pan', (e: any) => {
-                this.renderer.setStyle(el, 'transform', `translate3d(${e.deltaX}px, 0px, 0px)`);
-            });
             /** Swipe next and prev */
             mc.on('swipeleft', () => {
                 this.gallery.next();

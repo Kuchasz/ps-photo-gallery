@@ -7,7 +7,7 @@
   "main": "./dist",
   "typings": "./dist",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack -p",
     "start": "webpack-dev-server --hot --inline"
   },
   "browserslist": [

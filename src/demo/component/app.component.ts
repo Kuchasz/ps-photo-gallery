@@ -27,6 +27,7 @@ export class AppComponent implements OnInit {
                 const directories: GalleryDirectory[] = [];
 
                 _directories.item.item.forEach(item => {
+                    if(item.$.action !== 'loadalbum') return;
                     fetch(`${root}${item.$.variables}`)
                         .then(response => response.text())
                         .then(photosXmlString => {
