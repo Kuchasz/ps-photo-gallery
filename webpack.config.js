@@ -36,8 +36,8 @@ module.exports = {
     entry: resolve("./src/demo/main.ts"),
     output: {
         filename: "bundle.js",
-        path: resolve("./dist"),
-        publicPath: './'
+        path: resolve("./dist")//,
+        // publicPath: './'
     },
     module: {
         rules: [
@@ -91,6 +91,6 @@ module.exports = {
             poll: 1000
         },
         contentBase: './dist',
-        open: false
+        open: true
     }
 };

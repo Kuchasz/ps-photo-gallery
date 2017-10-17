@@ -1,6 +1,6 @@
-<div #container class="g-thumb-container" [ngStyle]="contStyle">
+<div #container class="g-thumb-container" [style.transform]="translateThumbs()" [ngStyle]="contStyle">
 
-  <div class="g-thumbs" [style.transform]="translateThumbs()">
+  <div class="g-thumbs">
 
     <div class="g-thumb" *ngFor="let image of getImages(); let i = index"
          [class.g-thumb-current]="i === state.currIndex"

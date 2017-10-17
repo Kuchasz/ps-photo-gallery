@@ -18,6 +18,7 @@ export class GalleryThumbComponent implements OnInit {
   @Input() config: GalleryThumbConfig;
 
   contStyle: any;
+  thumbsDelta: number = 0;
 
   constructor(
     public gallery: GalleryService, 
@@ -36,29 +37,43 @@ export class GalleryThumbComponent implements OnInit {
         const mc = new Hammer(el);
 
         mc.on('panstart', () => {
-          this.renderer.removeClass(el, 'g-pan-reset');
+          // this.renderer.removeClass(el, 'g-pan-reset');
         });
-        mc.on('panend', () => {
-          this.renderer.addClass(el, 'g-pan-reset');
+        mc.on('panend', (e) => {
+          this.thumbsDelta += e.deltaX;
+          // this.renderer.addClass(el, 'g-pan-reset');
         });
 
         /** Pan left and right */
         mc.on('pan', (e) => {
-          this.renderer.setStyle(el, 'transform', `translate3d(${e.deltaX}px, 0px, 0px)`);
+          let targetDelta = this.thumbsDelta + e.deltaX;
+
+          targetDelta = targetDelta > (-this.config.width / 2) 
+          ? (-this.config.width / 2)
+          : targetDelta < this.getMaxDelta() 
+            ? this.getMaxDelta() 
+            : targetDelta;
+
+          this.renderer.setStyle(el, 'transform', `translate3d(${targetDelta}px, 0px, 0px)`);
         });
         /** Swipe next and prev */
-        mc.on('swipeleft', () => {
-          this.gallery.next();
-        });
-        mc.on('swiperight', () => {
-          this.gallery.prev();
-        });
+        // mc.on('swipeleft', () => {
+        //   this.gallery.next();
+        // });
+        // mc.on('swiperight', () => {
+        //   this.gallery.prev();
+        // });
       }
   }
 
   translateThumbs() {
     const x = this.state.currIndex * this.config.width + this.config.width / 2;
+    this.thumbsDelta = -x;
     return `translate3d(${-x}px, 0, 0)`;
+  }
+
+  getMaxDelta(){
+    return -(this.getImages().length * this.config.width - this.config.width/2);
   }
 
   getContainerStyle() {
