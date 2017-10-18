@@ -18,7 +18,6 @@ export class GalleryThumbComponent implements OnInit {
     @Input() state: GalleryState;
     @Input() config: GalleryThumbConfig;
 
-    contStyle: any;
     elContainer: any;
     thumbsDelta: number = 0;
 
@@ -30,18 +29,12 @@ export class GalleryThumbComponent implements OnInit {
 
     ngOnInit() {
 
-        this.contStyle = this.getContainerStyle();
-
-        /** Enable gestures */
         if (this.gallery.config.gestures) {
             this.elContainer = this.el.nativeElement.querySelector('.g-thumb-container');
             const mc = new Hammer(this.elContainer);
 
             TweenLite.set(this.elContainer, {x: -this.config.width / 2});
 
-            // mc.on('panstart', () => {
-            // this.renderer.removeClass(el, 'g-pan-reset');
-            // });
             mc.on('panend', (e) => {
                 this.thumbsDelta += e.deltaX;
             });
@@ -61,7 +54,7 @@ export class GalleryThumbComponent implements OnInit {
                 TweenLite.killTweensOf(this.elContainer);
                 TweenLite.to(this.elContainer, 1, {x: this.thumbsDelta});
             });
-            //
+
             mc.on('swiperight', e => {
                 const difference = -this.thumbsDelta - this.config.width / 2;
                 const toApply = e.velocityX / 10 * difference;
@@ -78,7 +71,6 @@ export class GalleryThumbComponent implements OnInit {
                 TweenLite.to(this.elContainer, 1, {x: this.thumbsDelta});
             });
 
-            /** Pan left and right */
             mc.on('pan', (e) => {
                 let targetDelta = this.thumbsDelta + e.deltaX;
 
@@ -90,16 +82,8 @@ export class GalleryThumbComponent implements OnInit {
 
                 TweenLite.killTweensOf(this.elContainer);
                 TweenLite.to(this.elContainer, 1, {x: targetDelta});
-
-                // this.renderer.setStyle(el, 'transform', `translate3d(${targetDelta}px, 0px, 0px)`);
             });
-            /** Swipe next and prev */
-            // mc.on('swipeleft', () => {
-            //   this.gallery.next();
-            // });
-            // mc.on('swiperight', () => {
-            //   this.gallery.prev();
-            // });
+
         }
     }
 
@@ -121,16 +105,6 @@ export class GalleryThumbComponent implements OnInit {
 
     getMaxDelta() {
         return -(this.getImages().length * this.config.width - this.config.width / 2);
-    }
-
-    getContainerStyle() {
-        /** Set thumbnails position (top, bottom) */
-        const order = this.config.position === 'top' ? 0 : 2;
-        this.renderer.setStyle(this.el.nativeElement, 'order', order);
-
-        return {
-            // height: this.config.height + 'px'
-        };
     }
 
     getImages() {
