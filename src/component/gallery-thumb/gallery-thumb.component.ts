@@ -41,7 +41,7 @@ export class GalleryThumbComponent implements OnInit {
 
             mc.on('swipeleft', e => {
                 const difference = this.getMaxDelta() - this.thumbsDelta;
-                const toApply = e.velocityX / 10 * difference;
+                const toApply = e.velocityX / 5 * difference;
 
                 let targetDelta = this.thumbsDelta - toApply;
 
@@ -57,7 +57,7 @@ export class GalleryThumbComponent implements OnInit {
 
             mc.on('swiperight', e => {
                 const difference = -this.thumbsDelta - this.config.width / 2;
-                const toApply = e.velocityX / 10 * difference;
+                const toApply = e.velocityX / 5 * difference;
 
                 let targetDelta = this.thumbsDelta + toApply;
 
