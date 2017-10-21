@@ -32,12 +32,12 @@ export class GalleryThumbComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.gallery.state.subscribe(
-      x => x.currIndex && this._scrollImages(x.currIndex)
-    );
+    window.addEventListener("keydown", e => {
+      if (e.keyCode === 37) this.gallery.prev();
+      if (e.keyCode === 39) this.gallery.next();
+    });
 
     if (this.gallery.config.gestures) {
-
       this.elContainer = this.el.nativeElement.querySelector(
         ".g-thumb-container"
       );
@@ -80,6 +80,11 @@ export class GalleryThumbComponent implements OnInit {
         TweenLite.to(this.elContainer, 0.25, { x: targetDelta });
       });
     }
+
+    this.gallery.state.subscribe(
+      x => x.currIndex !== undefined && this._scrollImages(x.currIndex)
+    );
+    
   }
 
   private _valBetween(v, min, max) {
