@@ -37,46 +37,30 @@ export class GalleryThumbComponent implements OnInit {
     );
 
     if (this.gallery.config.gestures) {
+
       this.elContainer = this.el.nativeElement.querySelector(
         ".g-thumb-container"
       );
-      const mc = new Hammer(this.elContainer);
+
+      const mc = new Hammer(this.el.nativeElement);
 
       TweenLite.set(this.elContainer, { x: -this.config.width / 2 });
 
       mc.on("panend", e => {
-        this.thumbsDelta += e.deltaX;
-      });
+        if (Math.abs(e.velocityX) < 0.5) {
+          this.thumbsDelta += e.deltaX;
+          return;
+        }
 
-      mc.on("swipeleft", e => {
-        const difference = this.getMaxDelta() - this.thumbsDelta;
-        const toApply = e.velocityX / 5 * difference;
+        const targetDelta = e.deltaX * Math.abs(e.velocityX);
 
-        let targetDelta = this.thumbsDelta - toApply;
+        this.thumbsDelta += targetDelta;
 
-        targetDelta =
-          targetDelta < this.getMaxDelta() + this.config.width / 2
-            ? this.getMaxDelta() + this.config.width / 2
-            : targetDelta;
-
-        this.thumbsDelta = targetDelta;
-
-        TweenLite.killTweensOf(this.elContainer);
-        TweenLite.to(this.elContainer, 1, { x: this.thumbsDelta });
-      });
-
-      mc.on("swiperight", e => {
-        const difference = -this.thumbsDelta - this.config.width / 2;
-        const toApply = e.velocityX / 5 * difference;
-
-        let targetDelta = this.thumbsDelta + toApply;
-
-        targetDelta =
-          targetDelta > -this.config.width / 2
-            ? -this.config.width / 2
-            : targetDelta;
-
-        this.thumbsDelta = targetDelta;
+        this.thumbsDelta = this._valBetween(
+          this.thumbsDelta,
+          this.getMaxDelta() + this.config.width / 2,
+          -this.config.width / 2
+        );
 
         TweenLite.killTweensOf(this.elContainer);
         TweenLite.to(this.elContainer, 1, { x: this.thumbsDelta });
@@ -93,9 +77,13 @@ export class GalleryThumbComponent implements OnInit {
               : targetDelta;
 
         TweenLite.killTweensOf(this.elContainer);
-        TweenLite.to(this.elContainer, 1, { x: targetDelta });
+        TweenLite.to(this.elContainer, 0.25, { x: targetDelta });
       });
     }
+  }
+
+  private _valBetween(v, min, max) {
+    return Math.min(max, Math.max(min, v));
   }
 
   translateThumbs() {
