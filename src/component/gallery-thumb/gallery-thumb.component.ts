@@ -84,18 +84,11 @@ export class GalleryThumbComponent implements OnInit {
     this.gallery.state.subscribe(
       x => x.currIndex !== undefined && this._scrollImages(x.currIndex)
     );
-    
+
   }
 
   private _valBetween(v, min, max) {
     return Math.min(max, Math.max(min, v));
-  }
-
-  translateThumbs() {
-    const x =
-      this.state.currIndex / this.getImages().length * this.getMaxDelta();
-    this.thumbsDelta = -x + this.config.width / 2;
-    return `translate3d(${-x}px, 0, 0)`;
   }
 
   selectImage(index: number) {
