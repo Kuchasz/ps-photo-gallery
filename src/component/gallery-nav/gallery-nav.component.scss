@@ -10,9 +10,6 @@
   top: 0;
   bottom: 0;
   display: flex;
-  @media (max-width: 480px) {
-    display: none;
-  }
 }
 
 .g-nav {
@@ -58,10 +55,6 @@
 .next-arrow-ico, .prev-arrow-ico {
   width: 45px;
   height: 80px;
-  //filter: url(#dropshadow);
-  //fill: black;
-  //webkit-filter: drop-shadow( 2px 2px 4px rgba(0,0,0,.4) );
-  //filter: drop-shadow( 2px 2px 4px rgba(0,0,0,.4) );
 }
 
 .next-arrow-ico {

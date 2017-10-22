@@ -58,7 +58,7 @@ export class GalleryThumbComponent implements OnInit {
 
         this.thumbsDelta = this._valBetween(
           this.thumbsDelta,
-          this.getMaxDelta() + this.config.width / 2,
+          this.getMaxDelta(),// + this.config.width / 2,
           -this.config.width / 2
         );
 

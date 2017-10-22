@@ -1,5 +1,5 @@
 <div class="g-container" [style.flexDirection]="thumbDirection" [ngStyle]="config.style">
-  <gallery-state [state]="state"></gallery-state>
+  <gallery-state *ngIf="!fullscreen" [state]="state"></gallery-state>
 
   <div class="g-box">
 
@@ -7,7 +7,7 @@
 
       <gallery-image [state]="state" [config]="config" (loading)="loading = $event"></gallery-image>
 
-      <gallery-nav *ngIf="config.navigation" [state]="state"></gallery-nav>
+      <gallery-nav *ngIf="config.navigation && config.displayMode === 0" [state]="state"></gallery-nav>
 
       <!--<div class="g-layer" *ngIf="state.images[state.currIndex].layer" [innerHtml]="state.images[state.currIndex].layer"></div>-->
 
@@ -17,6 +17,5 @@
 
   </div>
 
-  <gallery-thumb *ngIf="!state.fullscreenEnabled && config.thumbnails" [state]="state" [config]="config.thumbnails"></gallery-thumb>
-
+  <gallery-thumb *ngIf="!fullscreen && !state.fullscreenEnabled && config.thumbnails" [state]="state" [config]="config.thumbnails"></gallery-thumb>
 </div>

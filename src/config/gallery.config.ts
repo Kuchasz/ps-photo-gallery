@@ -5,6 +5,11 @@ import { GalleryPlayConfig } from './gallery-play.config';
 import { GalleryBulletConfig } from './gallery-bullet.config';
 import { GalleryLoaderConfig } from './gallery-loader.config';
 
+export enum DisplayModes{
+  Full,
+  Compact
+}
+
 export interface GalleryConfig {
   animation?: string;
   gestures?: boolean;
@@ -15,4 +20,5 @@ export interface GalleryConfig {
   navigation?: GalleryNavConfig;
   bullets?: GalleryBulletConfig;
   player?: GalleryPlayConfig;
+  displayMode?: DisplayModes;
 }
