@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, Input } from "@angular/core";
 import { GalleryService } from "../../service/gallery.service";
 import { GalleryState } from "../../service/gallery.state";
+import { GalleryConfig } from "../../index";
 
 @Component({
     selector: 'gallery-state',
@@ -10,6 +11,7 @@ import { GalleryState } from "../../service/gallery.state";
 })
 export class GalleryStateComponent{
     @Input() state: GalleryState;
+    @Input() config: GalleryConfig;
 
     constructor(public gallery: GalleryService){
         

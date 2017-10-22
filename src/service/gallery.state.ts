@@ -1,3 +1,5 @@
+export type ScreenOrientation = 'portrait' | 'landscape';
+
 export interface GalleryState {
   play?: boolean;
   directories: GalleryDirectory[];
@@ -7,6 +9,7 @@ export interface GalleryState {
   hasNext?: boolean;
   hasPrev?: boolean;
   fullscreenEnabled: boolean;
+  orientation: ScreenOrientation; 
 }
 
 export interface GalleryImage {

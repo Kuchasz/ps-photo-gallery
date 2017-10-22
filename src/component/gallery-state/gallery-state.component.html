@@ -1,3 +1,3 @@
-<span (click)="gallery.selectDirectory(undefined)" class="g-back-button">Lista katalogów</span>
+<span (mouseup)="gallery.selectDirectory(undefined)" class="g-back-button">Lista katalogów</span>
 <span class="g-directory-name">{{currentDirectory.name}} {{currentImage.text}}</span>
-<span class="g-fullscreen" (click)="gallery.toggleFullscreen()">tryb pełnoekranowy</span>
+<span class="g-fullscreen" *ngIf="config.displayMode === 0" (mouseup)="gallery.toggleFullscreen()">tryb pełnoekranowy</span>

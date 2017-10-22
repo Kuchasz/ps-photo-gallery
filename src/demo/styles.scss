@@ -8,8 +8,9 @@ html, body {
 
 app-root {
   height: 100%;
-  overflow-y: scroll;
   gallery {
+    overflow-y: scroll;
+    overflow-x: hidden;
     display: flex;
     height: 100%;
     > div {
