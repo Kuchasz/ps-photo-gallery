@@ -1,3 +1,9 @@
-<span (mouseup)="gallery.selectDirectory(undefined)" class="g-back-button">Lista katalogów</span>
-<span class="g-directory-name">{{currentDirectory.name}} {{currentImage.text}}</span>
-<span class="g-fullscreen" *ngIf="config.displayMode === 0" (mouseup)="gallery.toggleFullscreen()">tryb pełnoekranowy</span>
+<span (click)="gallery.selectDirectory(undefined)" class="g-back-button"><i class="material-icons">apps</i></span>
+<span class="g-directory-name">
+    <div>{{currentDirectory.name}}</div>
+    <div>{{currentImage.text}}</div>
+</span>
+<span class="g-fullscreen" *ngIf="config.displayMode === 0"
+      (click)="gallery.toggleFullscreen()"><i class="material-icons">call_to_action</i></span>
+<span class="g-fullscreen" *ngIf="fullscreenEnabled"
+      (click)="toggleFullscreen()"><i class="material-icons">fullscreen</i></span>
