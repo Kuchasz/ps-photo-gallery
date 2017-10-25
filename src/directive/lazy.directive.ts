@@ -17,20 +17,19 @@ import {Subject} from 'rxjs/Subject';
 })
 export class LazyDirective {
 
-    // Image source
+    @Input('thumb')
+    thumbUrl: string;
+
     @Input('lazyImage')
     set lazyImage(imagePath: string) {
         this.getImage(imagePath);
     }
 
-    /** A subject to emit only last selected image */
     lazyWorker = new Subject<string>();
 
     @Output() lazyLoad = new EventEmitter<boolean>(false);
 
     constructor(private el: ElementRef, private renderer: Renderer2) {
-
-        // this.lazyTest.switchMap((done) => (done) ? Observable.of(done).delay(1000) : Observable.of(done)
         this.lazyWorker.switchMap((done) => Observable.of(done))
             .subscribe((img) => {
                 if (img) {
@@ -43,18 +42,22 @@ export class LazyDirective {
     }
 
     getImage(imagePath: string): void {
-        this.lazyWorker.next(undefined);
-        const img = this.renderer.createElement('img');
-        img.src = imagePath;
+        this.lazyWorker.next(this.thumbUrl);
+        this.lazyLoad.emit(false);
 
-        img.onload = () => {
-            this.lazyWorker.next(imagePath);
-        };
+        setTimeout(()=>{
+            const img = this.renderer.createElement('img');
+            img.src = imagePath;
 
-        img.onerror = (err: Error) => {
-            console.error('[GalleryLazyDirective]:', err);
-            this.lazyWorker.next(undefined);
-        };
+            img.onload = () => {
+                this.lazyWorker.next(imagePath);
+            };
+
+            img.onerror = (err: Error) => {
+                console.error('[GalleryLazyDirective]:', err);
+                this.lazyWorker.next(undefined);
+            };
+        }, 0);
     }
 
 }

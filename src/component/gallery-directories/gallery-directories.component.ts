@@ -18,9 +18,8 @@ export class GalleryDirectoriesComponent{
 
     }
 
-    getRandomPhoto(directoryIndex: number){
+    getImage(directoryIndex: number){
         const possibleImages = this.state.directories[directoryIndex].images;
-        // return possibleImages[Math.floor(Math.random()*possibleImages.length)];
         return possibleImages[0];
     }
 

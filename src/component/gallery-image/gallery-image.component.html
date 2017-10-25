@@ -1,6 +1,6 @@
 <div [@imgAnimate]="animate" class="g-image">
-  <div class="g-image-container" [ngStyle]="containerStyle">
-    <div class="g-image-img" [lazyImage]="currentImage.src" (lazyLoad)="imageLoad($event)">
+  <div class="g-image-container">
+    <div class="g-image-img" [lazyImage]="currentImage.src" [thumb]="currentImage.thumbnail" (lazyLoad)="imageLoad($event)">
       <gallery-loader *ngIf="loading" [config]="config.loader"></gallery-loader>
     </div>
   </div>

@@ -77,8 +77,6 @@ export class GalleryThumbComponent implements OnInit {
                 TweenLite.to(this.elContainer, 0.25, {x: targetDelta});
             });
 
-            hammer.on('panstart', () => console.log('pan-start'));
-
         }
 
         this.gallery.state.subscribe(

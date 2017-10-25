@@ -23,23 +23,21 @@ export class GalleryImageComponent implements OnInit {
 
     @Input() state: GalleryState;
     @Input() config: GalleryConfig;
-    loading: boolean;
+    loading: boolean = true;
     animate: string;
 
     constructor(public gallery: GalleryService, private el: ElementRef) {
     }
 
     ngOnInit() {
-
-        /** Enable gestures */
         if (this.config.gestures) {
             const el = this.el.nativeElement;
             const mc = new Hammer(el);
 
-            /** Swipe next and prev */
             mc.on('swipeleft', () => {
                 this.gallery.next();
             });
+
             mc.on('swiperight', () => {
                 this.gallery.prev();
             });
@@ -48,12 +46,6 @@ export class GalleryImageComponent implements OnInit {
 
     get currentImage() {
         return this.state.directories[this.state.currDirectory].images[this.state.currIndex];
-    }
-
-    get containerStyle() {
-        return this.state.fullscreenEnabled ? {
-            borderStyle: 'none'
-        } : {};
     }
 
     imageLoad(done: boolean) {
