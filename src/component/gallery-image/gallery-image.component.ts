@@ -51,17 +51,17 @@ export class GalleryImageComponent implements OnInit {
     imageLoad(done: boolean) {
         this.loading = !done;
 
-        if (!done) {
-            this.animate = 'none';
-        } else {
-            switch (this.config.animation) {
-                case 'fade':
-                    this.animate = 'fade';
-                    break;
-                default:
-                    this.animate = 'none';
-            }
-        }
+        // if (!done) {
+        //     this.animate = 'none';
+        // } else {
+        //     switch (this.config.animation) {
+        //         case 'fade':
+        //             this.animate = 'fade';
+        //             break;
+        //         default:
+        //             this.animate = 'none';
+        //     }
+        // }
 
     }
 }

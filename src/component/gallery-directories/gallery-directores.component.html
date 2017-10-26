@@ -1,6 +1,6 @@
 <div class="g-directories-container">
     <div class="g-directory" *ngFor="let dir of state.directories; let i = index;" [ngClass]="{'visited' : dir.visited}" (click)="gallery.selectDirectory(i)">
-        <div class="g-directory-photo" [thumb]="getImage(i).thumbnail" [lazyImage]="getImage(i).src">
+        <div class="g-directory-photo" [lazyImage]="getImage(i).thumbnail">
         </div>
         <div class="g-directory-name">{{dir.name}}</div>
     </div>

@@ -45,19 +45,17 @@ export class LazyDirective {
         this.lazyWorker.next(this.thumbUrl);
         this.lazyLoad.emit(false);
 
-        setTimeout(()=>{
-            const img = this.renderer.createElement('img');
-            img.src = imagePath;
+        const img = this.renderer.createElement('img');
+        img.src = imagePath;
 
-            img.onload = () => {
-                this.lazyWorker.next(imagePath);
-            };
+        img.onload = () => {
+            this.lazyWorker.next(imagePath);
+        };
 
-            img.onerror = (err: Error) => {
-                console.error('[GalleryLazyDirective]:', err);
-                this.lazyWorker.next(undefined);
-            };
-        }, 0);
+        img.onerror = (err: Error) => {
+            console.error('[GalleryLazyDirective]:', err);
+            this.lazyWorker.next(undefined);
+        };
     }
 
 }
