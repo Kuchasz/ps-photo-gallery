@@ -3,6 +3,7 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var postcssLoader = {
     loader: 'postcss-loader',
@@ -23,7 +24,8 @@ var plugins = [
         template: resolve('src/demo/index.html'),
         title: 'Galeria zdjęć'
     }),
-    new ExtractTextPlugin('[name].css')
+    new ExtractTextPlugin('[name].css'),
+    new CopyWebpackPlugin([{from: 'src/demo/example-gallery-images'}])
 ];
 
 if (process.env.NODE_ENV === 'production')

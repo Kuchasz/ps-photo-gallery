@@ -25,16 +25,22 @@ export class GalleryThumbComponent implements OnInit {
     elContainer: any;
     thumbsDelta: number = 0;
 
+    handleKeyStrokes = e => {
+        if (e.keyCode === 37) this.gallery.prev();
+        if (e.keyCode === 39) this.gallery.next();
+    };
+
     constructor(public gallery: GalleryService,
                 private el: ElementRef,
                 private renderer: Renderer2) {
     }
 
+    ngOnDestroy(){
+        window.removeEventListener("keydown", this.handleKeyStrokes);
+    }
+
     ngOnInit() {
-        window.addEventListener("keydown", e => {
-            if (e.keyCode === 37) this.gallery.prev();
-            if (e.keyCode === 39) this.gallery.next();
-        });
+        window.addEventListener("keydown", this.handleKeyStrokes);
 
         if (this.gallery.config.gestures) {
             this.elContainer = this.el.nativeElement.querySelector(
