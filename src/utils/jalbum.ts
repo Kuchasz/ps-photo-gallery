@@ -7,46 +7,47 @@ export const fetchGallery = (path: string) => new Promise<GalleryDirectory[]>((r
         .then(response => response.text())
         .then(foldersXmlString =>
             parseString(foldersXmlString, (_, _directories) => {
-                const directoriesToFetch = _directories.item.item.length - 1;
+                const directoriesToFetch = _directories.item.item.filter(item => item.$.action === "loadalbum").map(item => item.$);
+
                 let fetchedDirectories = 0;
                 const directories: { gallery: GalleryDirectory, index: number }[] = [];
                 let index = 0;
 
-                _directories.item.item.forEach((item) => {
-                    if (item.$.action !== "loadalbum") return;
-
-                    fetch(`${path}${item.$.variables}`)
+                directoriesToFetch.forEach((item) => {
+                    fetch(`${path}${item.variables}`)
                         .then(response => response.text())
                         .then(photosXmlString => {
                             parseString(photosXmlString, (_, photos) => {
                                 if (photos.gallery) {
-                                    const images = photos.gallery.image;
+                                    const images = photos.gallery.image.map(img => img.$);
 
                                     directories.push({
                                         index,
                                         gallery: {
                                             visited: false,
-                                            name: item.$.name.replace("_", " "),
-                                            rootDir: item.$.path,
+                                            name: item.name.replace("_", " "),
+                                            rootDir: item.path,
                                             images: images.map(img => ({
-                                                src: `${path}${item.$.path}${img.$.img}`,
-                                                thumbnail: `${path}${item.$.path}${img.$.thmb}`,
-                                                text: img.$.img.split("/")[1]
+                                                src: `${path}${item.path}${img.img}`,
+                                                thumbnail: `${path}${item.path}${img.thmb}`,
+                                                text: img.img.split("/")[1]
                                             }))
                                         }
                                     });
 
-                                    if (fetchedDirectories === directoriesToFetch) {
+                                    if (fetchedDirectories === directoriesToFetch.length - 1) {
+                                        console.log(directories);
                                         directories.sort((l, r) => l.index - r.index);
+                                        console.log(directories);
                                         res(directories.map(x => x.gallery));
                                     }
 
                                     fetchedDirectories++;
                                 }
                             });
-                        });
 
-                    index++;
+                            index++;
+                        });
                 });
             })
         );
