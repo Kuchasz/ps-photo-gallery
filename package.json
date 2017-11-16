@@ -8,7 +8,9 @@
   "typings": "./dist",
   "scripts": {
     "build": "webpack -p",
-    "start": "webpack-dev-server --hot --inline"
+    "dev": "webpack-dev-server --hot --inline",
+    "postinstall": "node node_modules/webpack/bin/webpack.js",
+    "start": "node server.js"
   },
   "browserslist": [
     "> 1%",
