@@ -14,7 +14,9 @@
     "> 1%",
     "Chrome > 45"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.16.2"
+  },
   "devDependencies": {
     "@angular/animations": "^4.4.4",
     "@angular/common": "^4.4.4",

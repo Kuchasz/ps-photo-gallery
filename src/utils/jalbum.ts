@@ -11,9 +11,8 @@ export const fetchGallery = (path: string) => new Promise<GalleryDirectory[]>((r
 
                 let fetchedDirectories = 0;
                 const directories: { gallery: GalleryDirectory, index: number }[] = [];
-                let index = 0;
+                directoriesToFetch.forEach((item, index) => {
 
-                directoriesToFetch.forEach((item) => {
                     fetch(`${path}${item.variables}`)
                         .then(response => response.text())
                         .then(photosXmlString => {
@@ -46,7 +45,6 @@ export const fetchGallery = (path: string) => new Promise<GalleryDirectory[]>((r
                                 }
                             });
 
-                            index++;
                         });
                 });
             })
