@@ -12,6 +12,9 @@
     "postinstall": "node node_modules/webpack/bin/webpack.js",
     "start": "node server.js"
   },
+  "engines": {
+    "node": "=7.4.0"
+  },
   "browserslist": [
     "> 1%",
     "Chrome > 45"
