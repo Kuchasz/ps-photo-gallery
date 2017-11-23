@@ -1,3 +1,4 @@
+<div class="g-directory-filler"></div>
 <div class="g-directories-container">
     <div class="g-directory" *ngFor="let dir of state.directories; let i = index;"
          [ngClass]="{'visited' : dir.visited}" (click)="gallery.selectDirectory(i)">
@@ -6,3 +7,4 @@
         <div class="g-directory-name">{{dir.name}}</div>
     </div>
 </div>
+<div class="g-directory-filler"></div>

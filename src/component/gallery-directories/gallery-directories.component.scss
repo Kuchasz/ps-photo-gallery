@@ -1,7 +1,12 @@
+.g-directory-filler {
+  flex: 1;
+}
+
 .g-directories-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+
   .g-directory {
 
     cursor: pointer;

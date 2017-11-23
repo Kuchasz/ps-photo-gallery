@@ -7,4 +7,9 @@ div {
   gallery-main {
     display: flex;
   }
+
+  gallery-directories{
+    display: flex;
+    flex-direction: column;
+  }
 }
