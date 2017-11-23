@@ -3,20 +3,29 @@
   flex-wrap: wrap;
   justify-content: center;
   .g-directory {
+
     cursor: pointer;
     display: flex;
     flex-direction: column;
     margin: 12px;
+
     box-shadow: 0 0 14px rgba(0, 0, 0, 0.75);
 
-    &.visited {
-      filter: grayscale(1);
+    :after {
+      content: "";
+      padding: 20px;
+      position: absolute;
+      left: -10px;
+      top: -10px;
     }
 
-    &:hover{
-      .g-directory-name{
-        transform: scale(1.05);
-        box-shadow: 0 0 14px black;
+    &.visited {
+      .g-directory-photo {
+        border-color: black;
+      }
+      .g-directory-name {
+        background: black;
+        color: white;
       }
     }
 
@@ -29,13 +38,12 @@
       border-color: white;
       background-position: 50%;
       background-size: cover;
-      @media (max-width: 480px){
+      @media (max-width: 480px) {
         width: 112px;
         height: 80px;
       }
     }
     .g-directory-name {
-      transition: all 0.25s;
       box-shadow: 0 0 14px transparent;
       display: flex;
       justify-content: center;
@@ -43,7 +51,7 @@
       text-transform: uppercase;
       font-size: 0.75em;
       padding: 8px;
-      @media (max-width: 480px){
+      @media (max-width: 480px) {
         font-size: 0.65em;
       }
     }
