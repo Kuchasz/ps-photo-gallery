@@ -1,11 +1,17 @@
 <div *ngIf="state.currDirectory !== undefined" class="g-nav">
 
   <div class="g-nav-prev" (mouseup)="gallery.prev()">
-    <i class="prev-arrow-ico"></i>
+    <i class="prev-arrow-ico">
+        <span class="bobble"></span>
+    </i>
   </div>
 
+  <div class="g-nav-mid"></div>
+
   <div class="g-nav-next" (mouseup)="gallery.next()">
-    <i class="next-arrow-ico"></i>
+    <i class="next-arrow-ico">
+        <span class="bobble"></span>
+    </i>
   </div>
 
 </div>

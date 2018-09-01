@@ -25,6 +25,18 @@
     opacity: 1;
   }
 
+  .bobble{
+    width: 0px;
+    height: 0px;
+    background: black;
+    position: absolute;
+    left: calc(50% - 0px);
+    top: calc(50% - 0px);
+    border-radius: 80px;
+    transition: all 0.5s;
+    z-index: -1;
+  }
+
   &-next, &-prev {
     display: flex;
     align-items: center;
@@ -39,22 +51,30 @@
 
     &:hover {
       opacity: 1;
+      .bobble{
+        width: 80px;
+        height: 80px;
+        left: calc(50% - 40px);
+        top: calc(50% - 40px);
+      }
     }
   }
   &-next {
-    padding-right: 0.7em;
     flex: 1;
     justify-content: flex-end;
   }
   &-prev {
-    padding-left: 0.7em;
     flex: 1;
+  }
+  &-mid{
+    flex:4;
   }
 }
 
 .next-arrow-ico, .prev-arrow-ico {
   width: 45px;
   height: 80px;
+  position: relative;
 }
 
 .next-arrow-ico {

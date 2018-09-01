@@ -9,7 +9,7 @@ html, body {
 app-root {
   height: 100%;
   gallery {
-    overflow-y: scroll;
+    overflow-y: hidden;
     overflow-x: hidden;
     display: flex;
     height: 100%;

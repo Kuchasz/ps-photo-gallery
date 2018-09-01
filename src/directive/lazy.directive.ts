@@ -10,8 +10,6 @@ import {
 import {Observable} from 'rxjs/Observable';
 import {Subject} from 'rxjs/Subject';
 
-// import 'rxjs/add/operator/delay';
-
 @Directive({
     selector: '[lazyImage]'
 })
