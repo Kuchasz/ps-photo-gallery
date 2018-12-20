@@ -19,14 +19,18 @@ export class GalleryStateComponent {
     }
 
     toggleFullscreen() {
-        if (screenfull.isFullscreen)
-            screenfull.exit();
-        else if (screenfull.enabled)
-            screenfull.request();
+        if(screenfull){
+            if (screenfull.isFullscreen)
+                screenfull.exit();
+            else if (screenfull.enabled)
+                screenfull.request();
+        }
     }
 
     get fullscreenEnabled(){
-        return screenfull.enabled;
+        if(screenfull){
+            return screenfull.enabled;
+        }
     }
 
     get images() {
