@@ -27,6 +27,8 @@ export class LazyDirective {
 
     @Output() lazyLoad = new EventEmitter<boolean>(false);
 
+    imageLoad: any;
+
     constructor(private el: ElementRef, private renderer: Renderer2) {
         this.lazyWorker.switchMap((done) => Observable.of(done))
             .subscribe((img) => {
@@ -43,15 +45,17 @@ export class LazyDirective {
         this.lazyWorker.next(this.thumbUrl);
         this.lazyLoad.emit(false);
 
-        const img = this.renderer.createElement('img');
-        img.src = imagePath;
+        if(this.imageLoad)
+            this.imageLoad.onload = undefined;
 
-        img.onload = () => {
+        this.imageLoad = this.renderer.createElement('img');
+        this.imageLoad.src = imagePath;
+
+        this.imageLoad.onload = () => {
             this.lazyWorker.next(imagePath);
         };
 
-        img.onerror = (err: Error) => {
-            console.error('[GalleryLazyDirective]:', err);
+        this.imageLoad.onerror = (err: Error) => {
             this.lazyWorker.next(undefined);
         };
     }
