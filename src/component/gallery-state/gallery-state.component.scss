@@ -18,12 +18,20 @@ span{
 .g-back-button{
   @extend %state-button;
     background: white;
+    display: flex;
+    flex-direction: row;
     color: black;
+    align-items: center;
+    font-size: 1.5em;
+    font-weight: 100;
     cursor: pointer;
     transition: background 0.25s, color 0.25s;
     &:hover{
       background: black;
       color: white;
+    }
+    div {
+      padding: 0em .5em;
     }
   }
 
@@ -35,7 +43,11 @@ span{
   .g-directory-name{
     background: black;
     flex-grow: 1;
+    align-self: center;
     color: white;
+    div{
+      padding: 0em 1em;
+    }
   }
 
   .g-fullscreen{
