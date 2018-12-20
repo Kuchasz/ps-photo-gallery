@@ -24,8 +24,6 @@ export class GalleryMainComponent implements OnInit {
   loading: any;
   thumbDirection: string;
 
-  constructor() {}
-
   ngOnInit() {
     const thumbPos = this.config.thumbnails.position;
     this.thumbDirection =

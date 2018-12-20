@@ -11,5 +11,6 @@ div {
   gallery-directories{
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
   }
 }
