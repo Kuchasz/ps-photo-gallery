@@ -1,13 +1,22 @@
 :host{
     display: flex;
     font-size: 0.75em;
+    background: black;
 }
 span{
     padding: .5em .75em;
     text-transform: uppercase;
 
 }
+
+%state-button{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .g-back-button{
+  @extend %state-button;
     background: white;
     color: black;
     cursor: pointer;
@@ -25,10 +34,12 @@ span{
 
   .g-directory-name{
     background: black;
+    flex-grow: 1;
     color: white;
   }
 
   .g-fullscreen{
+    @extend %state-button;
     cursor: pointer;
     background: black;
     color: white;

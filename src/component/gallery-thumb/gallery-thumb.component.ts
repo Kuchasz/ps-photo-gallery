@@ -67,7 +67,7 @@ export class GalleryThumbComponent implements OnInit {
                     -this.config.width / 2
                 );
 
-                TweenLite.to(this.elContainer, 1, {x: this.thumbsDelta});
+                TweenLite.to(this.elContainer, 0.5, {x: this.thumbsDelta});
             });
 
             hammer.on("pan", e => {
@@ -80,7 +80,7 @@ export class GalleryThumbComponent implements OnInit {
                         ? this.getMaxDelta()
                         : targetDelta;
 
-                TweenLite.to(this.elContainer, 0.25, {x: targetDelta});
+                TweenLite.to(this.elContainer, 0.5, {x: targetDelta});
             });
 
         }
@@ -106,7 +106,7 @@ export class GalleryThumbComponent implements OnInit {
             (this.getMaxDelta() - this.config.width / 2) -
             this.config.width / 2;
         this.thumbsDelta = x;
-        TweenLite.to(this.elContainer, 1, {x: this.thumbsDelta});
+        TweenLite.to(this.elContainer, 0.5, {x: this.thumbsDelta});
     }
 
     getMaxDelta() {

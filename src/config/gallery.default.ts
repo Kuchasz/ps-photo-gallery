@@ -23,7 +23,7 @@ export const defaultConfig: GalleryConfig = {
     width: '50px',
     height: '50px',
     position: 'center',
-    icon: 'oval'
+    icon: 'puff'
   },
   description: {
     position: 'bottom',
