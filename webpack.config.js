@@ -15,11 +15,7 @@ var postcssLoader = {
 };
 
 var plugins = [
-    new webpack.ContextReplacementPlugin(
-        /angular(\\|\/)core(\\|\/)@angular/,
-        resolve('./src'),
-        {}
-    ),
+    new webpack.ContextReplacementPlugin( /angular(\\|\/)core(\\|\/)/, resolve('./src')) ,
     new HtmlWebpackPlugin({
         template: resolve('src/demo/index.html'),
         title: 'Galeria zdjęć'
@@ -41,11 +37,18 @@ module.exports = {
         path: resolve("./dist")//,
         // publicPath: './'
     },
+    performance: { 
+        hints: false 
+    },
     module: {
         rules: [
             {
                 test: /\.ts$/,
                 use: ['awesome-typescript-loader', 'angular2-template-loader']
+            },
+            {
+              test: /[\/\\]@angular[\/\\]core[\/\\].+\.js$/,
+              parser: { system: true },
             },
             {
                 test: /\.html$/,
@@ -81,8 +84,16 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['.ts', '.js']
+        extensions: ['.ts', '.js'],
+        modules: [
+            resolve('node_modules')
+          ]
     },
+    resolveLoader: {
+        modules: [
+            resolve('node_modules')
+        ]
+      },
     plugins: plugins,
     devServer: {
         port: 8080,

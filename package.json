@@ -9,7 +9,7 @@
   "scripts": {
     "build": "webpack -p",
     "dev": "webpack-dev-server --hot --inline",
-    "postinstall": "node node_modules/webpack/bin/webpack.js",
+    "postinstall": "node node_modules/webpack/bin/webpack.js -p",
     "start": "node server.js"
   },
   "browserslist": [
