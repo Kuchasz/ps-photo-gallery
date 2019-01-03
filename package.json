@@ -12,8 +12,8 @@
     "postinstall": "node node_modules/webpack/bin/webpack.js -p",
     "start": "node server.js"
   },
-  "engines" : { 
-    "node" : "10.0.0",
+  "engines": {
+    "node": "10.0.0",
     "npm": "5.6.0"
   },
   "browserslist": [
@@ -59,9 +59,7 @@
     "webpack-dev-server": "3.1.10",
     "whatwg-fetch": "3.0.0",
     "xml2js": "0.4.19",
-    "zone.js": "0.8.26"
-  },
-  "devDependencies": {
+    "zone.js": "0.8.26",
     "webpack": "^4.28.1",
     "webpack-cli": "^3.1.2",
     "webpack-core": "^0.6.9"
