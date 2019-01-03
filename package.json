@@ -7,7 +7,6 @@
   "main": "./dist",
   "typings": "./dist",
   "scripts": {
-    "prepublish": "rm -Rf node_modules",
     "build": "webpack -p",
     "dev": "webpack-dev-server --hot --inline",
     "postinstall": "node node_modules/webpack/bin/webpack.js -p",
