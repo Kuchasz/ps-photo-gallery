@@ -33,6 +33,14 @@ export class GalleryStateComponent {
         }
     }
 
+    get snappedCount(){
+        return this.state.snappedCount;
+    }
+
+    get currentImageIndex(){
+        return this.state.currIndex;
+    }
+
     get images() {
         return this.currentDirectory.images;
     }

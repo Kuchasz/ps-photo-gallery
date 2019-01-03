@@ -8,7 +8,8 @@
          [style.height.px]="gallery.config.thumbnails.height"
          [tap] (tapClick)="selectImage(i)">
 
-      <div class="g-thumb-image" [style.backgroundImage]="getThumbImage(i)">
+      <div class="g-thumb-image" [class.snapped]="image.snapped" [style.backgroundImage]="getThumbImage(i)">
+          <i *ngIf="image.snapped" class="material-icons">check</i>
       </div>
     </div>
 

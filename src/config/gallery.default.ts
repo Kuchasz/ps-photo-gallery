@@ -9,7 +9,8 @@ export const defaultState: GalleryState = {
   hasNext: undefined,
   hasPrev: undefined,
   fullscreenEnabled: true,
-  orientation: undefined
+  orientation: undefined,
+  snappedCount: 0
 };
 
 export const defaultConfig: GalleryConfig = {

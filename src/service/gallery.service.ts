@@ -128,6 +128,30 @@ export class GalleryService {
     });
   }
 
+  snapImage(index: number){
+    const state = this.state.getValue();
+
+    const snappedCountChange = (snapped) => snapped ? +1 : -1;
+
+    const directory = state.directories[state.currDirectory];
+    const images = directory.images;
+    const imageToSnap = images[index];
+    const snappedImage = {...imageToSnap, snapped: !imageToSnap.snapped};
+
+    const newImages = [...images.slice(0, index), snappedImage, ...images.slice(index + 1)];
+    const changedDirectory:GalleryDirectory = {...directory, images: newImages};
+    const newState = {
+      ...state, 
+      snappedCount: state.snappedCount + snappedCountChange(snappedImage.snapped),
+      directories: [
+        ...state.directories.slice(0, state.currDirectory),
+        changedDirectory,
+        ...state.directories.slice(state.currDirectory + 1) 
+      ]}
+
+    this.state.next(newState);
+  }
+
   next() {
     const state = this.state.getValue();
 

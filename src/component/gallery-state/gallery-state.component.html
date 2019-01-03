@@ -2,10 +2,11 @@
     <i class="material-icons">apps</i>
     <div>{{currentDirectory.name}}</div>
 </span>
-<span class="g-fullscreen"><i class="material-icons">playlist_add</i></span>
-<span class="g-fullscreen"><i class="material-icons">playlist_add_check</i></span>
+<span *ngIf="!currentImage.snapped" (click)="gallery.snapImage(currentImageIndex)" class="g-fullscreen"><i class="material-icons">playlist_add</i></span>
+<span *ngIf="currentImage.snapped" (click)="gallery.snapImage(currentImageIndex)" class="g-fullscreen"><i class="material-icons">playlist_add_check</i></span>
 <span class="g-directory-name">
-    <div>{{currentImage.text}}</div>
+    <span *ngIf="snappedCount > 0">{{snappedCount}} selected</span>
+    <span>{{currentImage.text}}</span>
 </span>
 <span class="g-fullscreen" *ngIf="config.displayMode === 0"
       (click)="gallery.toggleFullscreen()"><i class="material-icons">call_to_action</i></span>

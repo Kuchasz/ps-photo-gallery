@@ -42,6 +42,11 @@
   background-position: center center;
   background-size: cover;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  color: white;
+
+  &.snapped{
+   border: solid 5px white; 
+  }
 }
 
 .g-thumb-current {

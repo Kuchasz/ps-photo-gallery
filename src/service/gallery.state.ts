@@ -9,13 +9,15 @@ export interface GalleryState {
   hasNext?: boolean;
   hasPrev?: boolean;
   fullscreenEnabled: boolean;
-  orientation: ScreenOrientation; 
+  orientation: ScreenOrientation;
+  snappedCount: number;
 }
 
 export interface GalleryImage {
   src: string;
   thumbnail?: string;
   text?: string;
+  snapped: boolean;
 }
 
 export interface GalleryDirectory {
