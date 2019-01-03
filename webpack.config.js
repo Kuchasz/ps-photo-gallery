@@ -24,10 +24,9 @@ var plugins = [
     new CopyWebpackPlugin([{from: 'src/demo/example-gallery-images'}])
 ];
 
-if (process.env.NODE_ENV === 'production')
-    plugins.push(new webpack.optimize.UglifyJsPlugin({
-        compress: {warnings: false}
-    }));
+const optimization = (process.env.NODE_ENV === 'production') 
+    ? { minimize: true, nodeEnv: 'production' } 
+    : { minimize: false, nodeEnv: process.env.NODE_ENV };
 
 
 module.exports = {
@@ -40,6 +39,7 @@ module.exports = {
     performance: { 
         hints: false 
     },
+    optimization,
     module: {
         rules: [
             {
