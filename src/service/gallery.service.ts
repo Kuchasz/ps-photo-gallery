@@ -152,6 +152,12 @@ export class GalleryService {
     this.state.next(newState);
   }
 
+  displayChosenImages(){
+    const state = this.state.getValue();
+
+    this.state.next({...state, displayChosenImages: true});
+  }
+
   next() {
     const state = this.state.getValue();
 

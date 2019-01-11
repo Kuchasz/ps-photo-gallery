@@ -49,6 +49,7 @@ export class LazyDirective {
             this.imageLoad.onload = undefined;
 
         this.imageLoad = this.renderer.createElement('img');
+
         this.imageLoad.src = imagePath;
 
         this.imageLoad.onload = () => {
