@@ -102,7 +102,7 @@ export class GalleryThumbComponent implements OnInit {
     _scrollImages(index) {
         const x =
             index /
-            this.getImages().length *
+            this.images.length *
             (this.getMaxDelta() - this.config.width / 2) -
             this.config.width / 2;
         this.thumbsDelta = x;
@@ -111,16 +111,16 @@ export class GalleryThumbComponent implements OnInit {
 
     getMaxDelta() {
         return -(
-            this.getImages().length * this.config.width -
+            this.images.length * this.config.width -
             this.config.width / 2
         );
     }
 
-    getImages() {
+    get images() {
         return this.state.directories[this.state.currDirectory].images;
     }
 
     getThumbImage(i: number) {
-        return `url(${this.getImages()[i].thumbnail || this.getImages()[i].src})`;
+        return `url(${this.images[i].thumbnail || this.images[i].src})`;
     }
 }

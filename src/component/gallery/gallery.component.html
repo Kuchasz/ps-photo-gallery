@@ -1,6 +1,6 @@
 <div *ngIf="gallery.state | async as state">
-    <gallery-main *ngIf="!state.displayChosenImages && state.currDirectory !== undefined" [state]="state"
+    <gallery-main *ngIf="!state.displaySnappedImages && state.currDirectory !== undefined" [state]="state"
                   [config]="gallery.config"></gallery-main>
-    <gallery-directories *ngIf="!state.displayChosenImages && state.currDirectory === undefined" [state]="state" [config]="gallery.config"></gallery-directories>
-    <gallery-chosen-images *ngIf="state.displayChosenImages"></gallery-chosen-images>
+    <gallery-directories *ngIf="!state.displaySnappedImages && state.currDirectory === undefined" [state]="state" [config]="gallery.config"></gallery-directories>
+    <gallery-snapped-images [config]="gallery.config" [state]="state" *ngIf="state.displaySnappedImages"></gallery-chosen-images>
 </div>

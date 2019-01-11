@@ -152,10 +152,10 @@ export class GalleryService {
     this.state.next(newState);
   }
 
-  displayChosenImages(){
+  displaySnappedImages(){
     const state = this.state.getValue();
 
-    this.state.next({...state, displayChosenImages: true});
+    this.state.next({...state, displaySnappedImages: true});
   }
 
   next() {

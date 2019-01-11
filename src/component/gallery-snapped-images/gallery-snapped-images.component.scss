@@ -1,0 +1,57 @@
+:host {
+    display: block;
+    z-index: 1;
+    background: #121212;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
+  }
+  
+  .g-thumb-container {
+    position: relative;
+    z-index: 206;
+    width: 100%;
+    height: 116px;
+    left: 0;
+    top: 0;
+    display: flex;
+    margin: 0px;
+    margin-top: 8px;
+    background: #121212;
+  }
+  
+  .g-thumbs {
+    padding: 8px 0px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    display: flex;
+    align-items: center;
+    transition: transform ease-in 300ms;
+    transform: translate3d(0, 0, 0);
+  }
+  
+  .g-thumb {
+    padding: 8px;
+    opacity: 0.5;
+    transition: all ease-out 0.25s;
+  }
+  
+  .g-thumb-image {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    background-position: center center;
+    background-size: cover;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    color: white;
+  
+    &.snapped{
+     border: solid 5px white; 
+    }
+  }
+  
+  .g-thumb-current {
+    opacity: 1;
+    padding: 2px;
+  }
+  
+  
