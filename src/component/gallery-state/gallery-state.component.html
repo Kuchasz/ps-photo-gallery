@@ -2,8 +2,8 @@
     <i class="material-icons">apps</i>
     <div>{{currentDirectory.name}}</div>
 </span>
-<span *ngIf="!currentImage.snapped" (click)="gallery.snapImage(currentImageIndex)" class="g-fullscreen"><i class="material-icons">playlist_add</i></span>
-<span *ngIf="currentImage.snapped" (click)="gallery.snapImage(currentImageIndex)" class="g-fullscreen"><i class="material-icons">playlist_add_check</i></span>
+<span *ngIf="!currentImage.snapped" (click)="gallery.snapImage(currentImageIndex)" class="g-fullscreen"><i class="material-icons">star_outline</i></span>
+<span *ngIf="currentImage.snapped" (click)="gallery.snapImage(currentImageIndex)" class="g-fullscreen"><i class="material-icons">star</i></span>
 <span class="g-directory-name">
     <span class="g-snapped-count" *ngIf="snappedCount > 0" (click)="gallery.displaySnappedImages()">{{snappedCount}} selected</span>
     <span>{{currentImage.text}}</span>
