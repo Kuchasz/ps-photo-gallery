@@ -158,6 +158,12 @@ export class GalleryService {
     this.state.next({...state, displaySnappedImages: true});
   }
 
+  goBackToGallery(){
+    const state = this.state.getValue();
+
+    this.state.next({...state, displaySnappedImages: false});
+  }
+
   next() {
     const state = this.state.getValue();
 

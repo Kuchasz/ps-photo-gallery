@@ -14,6 +14,7 @@ import { GalleryBulletsComponent } from './component/gallery-bullets/gallery-bul
 import { GalleryPlayerComponent } from './component/gallery-player/gallery-player.component';
 import { GalleryMainComponent } from './component/gallery-main/gallery-main.component';
 import { GallerySnappedImagesComponent } from './component/gallery-snapped-images/gallery-snapped-images.component';
+import { GallerySnappedStateComponent } from './component/gallery-snapped-state/gallery-snapped-state.component';
 
 import { LazyDirective } from './directive/lazy.directive';
 import { TapDirective } from './directive/tap.directive';
@@ -42,6 +43,7 @@ export const CONFIG = new InjectionToken<GalleryConfig>('config');
     GalleryDirectoriesComponent,
     GalleryMainComponent,
     GallerySnappedImagesComponent,
+    GallerySnappedStateComponent,
     TapDirective,
     LazyDirective
   ],

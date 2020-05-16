@@ -1,8 +1,14 @@
-<h2>Gallery chosen images</h2>
-<div class="g-thumb" *ngFor="let image of snappedImages; let i = index" [class.g-thumb-current]="i === state.currIndex"
-    [style.width.px]="gallery.config.thumbnails.width" [style.height.px]="gallery.config.thumbnails.height">
-
-    <div class="g-thumb-image" [class.snapped]="image.snapped" [style.backgroundImage]="getThumbImage(i)">
-        <i *ngIf="image.snapped" class="material-icons">check</i>
+<gallery-snapped-state [config]="config" [state]="state"></gallery-snapped-state>
+<div class="g-thumb-container">
+    <div
+        class="g-thumb"
+        *ngFor="let image of snappedImages; let i = index"
+        [style.width.px]="gallery.config.thumbnails.width * 2"
+        [style.height.px]="gallery.config.thumbnails.height * 2"
+    >
+        <div [class.deleted]="!image.snapped" class="g-thumb-image" [style.backgroundImage]="getThumbImage(i)"></div>
+        <div (click)="image.snapped ? remove(i) : restore(i)" class="g-thumb-delete">
+            <i class="material-icons">{{image.snapped === true ? 'close' : 'refresh'}}</i>
+        </div>
     </div>
 </div>
