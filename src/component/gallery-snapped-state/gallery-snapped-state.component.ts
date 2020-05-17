@@ -1,8 +1,10 @@
 import { Component, ChangeDetectionStrategy, Input } from "@angular/core";
+import {Location} from "@angular/common";
 import { GalleryService } from "../../service/gallery.service";
 import { GalleryState } from "../../service/gallery.state";
 import { GalleryConfig } from "../../index";
 import * as screenfull from "screenfull";
+import { Router } from "@angular/router";
 
 @Component({
     selector: "gallery-snapped-state",
@@ -11,29 +13,28 @@ import * as screenfull from "screenfull";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GallerySnappedStateComponent {
-    @Input() state: GalleryState;
     @Input() config: GalleryConfig;
 
-    constructor(public gallery: GalleryService) {}
+    constructor(public gallery: GalleryService, private router: Router, private location: Location) {}
 
     toggleFullscreen() {
-        if (screenfull) {
+        if (screenfull.isEnabled) {
             if (screenfull.isFullscreen) screenfull.exit();
-            else if (screenfull.enabled) screenfull.request();
+            else if (screenfull.isEnabled) screenfull.request();
         }
     }
 
     goBack(){
-        this.gallery.goBackToGallery();
+        this.location.back();
     }
 
     get fullscreenEnabled() {
         if (screenfull) {
-            return screenfull.enabled;
+            return screenfull.isEnabled;
         }
     }
 
     get snappedCount() {
-        return this.state.snappedCount;
+        return this.gallery.state.getValue().snappedCount;
     }
 }

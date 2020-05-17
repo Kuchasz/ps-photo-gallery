@@ -4,7 +4,10 @@
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
+    "module": "ES2015",
+    "baseUrl": ".",
     "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
     "experimentalDecorators": true,
     "target": "es5",
     "typeRoots": [

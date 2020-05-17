@@ -1,4 +1,4 @@
-<div [@imgAnimate]="animate" class="g-image">
+<div *ngIf="currentImage$ | async as currentImage" [@imgAnimate]="animate" class="g-image">
   <div class="g-image-container">
     <div class="g-image-img" [lazyImage]="currentImage.src" [thumb]="currentImage.thumbnail" (lazyLoad)="imageLoad($event)">
       <gallery-loader *ngIf="loading" [config]="config.loader"></gallery-loader>

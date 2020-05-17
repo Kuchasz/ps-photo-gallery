@@ -1,24 +1,17 @@
-import {
-    Directive,
-    ElementRef,
-    Input,
-    Output,
-    EventEmitter,
-    Renderer2
-} from '@angular/core';
+import { Directive, ElementRef, Input, Output, EventEmitter, Renderer2 } from "@angular/core";
 
-import {Observable} from 'rxjs';
-import {Subject} from 'rxjs';
+import { Observable, from } from "rxjs";
+import { Subject } from "rxjs";
+import { switchMap } from "rxjs/operators";
 
 @Directive({
-    selector: '[lazyImage]'
+    selector: "[lazyImage]"
 })
 export class LazyDirective {
-
-    @Input('thumb')
+    @Input("thumb")
     thumbUrl: string;
 
-    @Input('lazyImage')
+    @Input("lazyImage")
     set lazyImage(imagePath: string) {
         this.getImage(imagePath);
     }
@@ -30,25 +23,23 @@ export class LazyDirective {
     imageLoad: any;
 
     constructor(private el: ElementRef, private renderer: Renderer2) {
-        this.lazyWorker.switchMap((done) => Observable.of(done))
-            .subscribe((img) => {
-                if (img) {
-                    this.renderer.setStyle(this.el.nativeElement, 'background-image', `url(${img})`);
-                    this.lazyLoad.emit(true)
-                } else {
-                    this.lazyLoad.emit(false);
-                }
-            });
+        this.lazyWorker.subscribe((img) => {
+            if (img) {
+                this.renderer.setStyle(this.el.nativeElement, "background-image", `url(${img})`);
+                this.lazyLoad.emit(true);
+            } else {
+                this.lazyLoad.emit(false);
+            }
+        });
     }
 
     getImage(imagePath: string): void {
         this.lazyWorker.next(this.thumbUrl);
         this.lazyLoad.emit(false);
 
-        if(this.imageLoad)
-            this.imageLoad.onload = undefined;
+        if (this.imageLoad) this.imageLoad.onload = undefined;
 
-        this.imageLoad = this.renderer.createElement('img');
+        this.imageLoad = this.renderer.createElement("img");
 
         this.imageLoad.src = imagePath;
 
@@ -60,6 +51,4 @@ export class LazyDirective {
             this.lazyWorker.next(undefined);
         };
     }
-
 }
-

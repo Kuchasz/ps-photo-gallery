@@ -1,11 +1,6 @@
 import { Injectable, Optional } from "@angular/core";
 
-import {
-  GalleryState,
-  GalleryImage,
-  GalleryDirectory,
-  ScreenOrientation
-} from "./gallery.state";
+import { GalleryState, GalleryImage, GalleryDirectory, ScreenOrientation } from "./gallery.state";
 import { GalleryConfig } from "../config/gallery.config";
 import { defaultState, defaultConfig } from "../config/gallery.default";
 
@@ -13,206 +8,182 @@ import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Observable } from "rxjs/Observable";
 import { Subject } from "rxjs/Subject";
 
-import "rxjs/add/observable/of";
-import "rxjs/add/observable/interval";
-import "rxjs/add/operator/switchMap";
-import "rxjs/add/operator/finally";
-import "rxjs/add/operator/take";
-import "rxjs/add/operator/takeWhile";
-import "rxjs/add/operator/do";
+import { switchMap, take, takeWhile, map, filter, find, tap, finalize, publishLast } from "rxjs/operators";
+import { from, pipe, interval as fromInterval } from "rxjs";
+import { ParamMap, Route, Router, ActivatedRoute } from "@angular/router";
 
 @Injectable()
 export class GalleryService {
-  state: BehaviorSubject<GalleryState>;
+    state: BehaviorSubject<GalleryState>;
 
-  config: GalleryConfig = defaultConfig;
+    config: GalleryConfig = defaultConfig;
 
-  player: Subject<number>;
+    player: Subject<number>;
 
-  constructor(@Optional() config: GalleryConfig) {
-    this.state = new BehaviorSubject<GalleryState>(defaultState);
+    constructor(@Optional() config: GalleryConfig) {
+        this.state = new BehaviorSubject<GalleryState>(defaultState);
 
-    this.config = { ...defaultConfig, ...config };
+        this.config = { ...defaultConfig, ...config };
 
-    this.player = new Subject();
-    this.player
-      .switchMap(
-        interval =>
-          interval ? this.playerEngine(interval) : Observable.of(null)
-      )
-      .subscribe();
-  }
+        this.player = new Subject();
 
-  load(directories: GalleryDirectory[]) {
-    const state = this.state.getValue();
-
-    this.state.next({
-      ...state,
-      directories,
-      currDirectory: undefined,
-      currIndex: undefined,
-      hasNext: undefined,
-      hasPrev: undefined
-    });
-  }
-
-  setOrientation(orientation: ScreenOrientation) {
-    const state = this.state.getValue();
-    this.state.next({ ...state, orientation });
-  }
-
-  toggleOrientation() {
-    const state = this.state.getValue();
-
-    const orientation =
-      state.orientation === "landscape" ? "portrait" : "landscape";
-
-    this.state.next({ ...state, orientation });
-  }
-
-  selectDirectory(directoryIndex: number) {
-    const state = this.state.getValue();
-
-    const visitedDirectory = state.directories[directoryIndex];
-    const directories = Object.assign([], state.directories, {
-      [directoryIndex]: {
-        ...visitedDirectory,
-        visited: true
-      }
-    });
-
-    this.state.next({
-      ...state,
-      directories,
-      currDirectory: directoryIndex
-    });
-
-    if (directoryIndex !== undefined) this.selectImage(0);
-    else this.clearCurrentImage();
-  }
-
-  toggleFullscreen() {
-    const state = this.state.getValue();
-    this.state.next({
-      ...state,
-      fullscreenEnabled: !state.fullscreenEnabled
-    });
-  }
-
-  clearCurrentImage() {
-    const state = this.state.getValue();
-
-    this.state.next({
-      ...state,
-      ...{
-        prevIndex: undefined,
-        currIndex: undefined,
-        hasNext: undefined,
-        hasPrev: undefined
-      }
-    });
-  }
-
-  selectImage(index: number) {
-    const state = this.state.getValue();
-
-    this.state.next({
-      ...state,
-      ...{
-        prevIndex: state.currIndex,
-        currIndex: index,
-        hasNext:
-          index < state.directories[state.currDirectory].images.length - 1,
-        hasPrev: index > 0
-      }
-    });
-  }
-
-  snapImage(index: number){
-    const state = this.state.getValue();
-
-    const snappedCountChange = (snapped) => snapped ? +1 : -1;
-
-    const directory = state.directories[state.currDirectory];
-    const images = directory.images;
-    const imageToSnap = images[index];
-    const snappedImage = {...imageToSnap, snapped: !imageToSnap.snapped};
-
-    const newImages = [...images.slice(0, index), snappedImage, ...images.slice(index + 1)];
-    const changedDirectory:GalleryDirectory = {...directory, images: newImages};
-    const newState = {
-      ...state, 
-      snappedCount: state.snappedCount + snappedCountChange(snappedImage.snapped),
-      directories: [
-        ...state.directories.slice(0, state.currDirectory),
-        changedDirectory,
-        ...state.directories.slice(state.currDirectory + 1) 
-      ]}
-
-    this.state.next(newState);
-  }
-
-  displaySnappedImages(){
-    const state = this.state.getValue();
-
-    this.state.next({...state, displaySnappedImages: true});
-  }
-
-  goBackToGallery(){
-    const state = this.state.getValue();
-
-    this.state.next({...state, displaySnappedImages: false});
-  }
-
-  next() {
-    const state = this.state.getValue();
-
-    if (state.hasNext) {
-      const index = state.currIndex + 1;
-      this.selectImage(index);
-    } else {
-      this.selectImage(0);
+        this.player
+            .pipe(switchMap((interval: number) => (interval ? this.playerEngine(interval) : from(null))))
+            .subscribe();
     }
-  }
 
-  prev() {
-    const state = this.state.getValue();
+    load(directories: { [id: string]: GalleryDirectory }) {
+        const state = this.state.getValue();
 
-    if (state.hasPrev) {
-      const index = state.currIndex - 1;
-      this.selectImage(index);
-    } else {
-      this.selectImage(
-        state.directories[state.currDirectory].images.length - 1
-      );
+        this.state.next({
+            ...state,
+            directories,
+            currIndex: undefined,
+            prevIndex: undefined
+        });
     }
-  }
 
-  reset() {
-    this.state.next(defaultState);
-    this.stop();
-  }
+    setOrientation(orientation: ScreenOrientation) {
+        const state = this.state.getValue();
+        this.state.next({ ...state, orientation });
+    }
 
-  play(interval?: number) {
-    const speed = interval || this.config.player.speed || 2000;
+    toggleOrientation() {
+        const state = this.state.getValue();
 
-    const state = this.state.getValue();
-    this.state.next({ ...state, play: true });
-    this.player.next(speed);
-  }
+        const orientation = state.orientation === "landscape" ? "portrait" : "landscape";
 
-  stop() {
-    this.player.next(0);
-  }
+        this.state.next({ ...state, orientation });
+    }
 
-  playerEngine(interval?: number) {
-    return Observable.interval(interval)
-      .takeWhile(() => this.state.getValue().play)
-      .do(() => {
-        this.next();
-      })
-      .finally(() => {
-        this.state.next({ ...this.state.getValue(), play: false });
-      });
-  }
+    selectDirectory(directoryId: string) {
+        const state = this.state.getValue();
+
+        const directories = {
+            ...state.directories,
+            [directoryId]: { ...state.directories[directoryId], visited: true }
+        };
+
+        this.state.next({
+            ...state,
+            directories
+        });
+
+        this.selectImage(0, directoryId);
+        // this.clearCurrentImage();
+    }
+
+    getDirectory(directoryId: string) {
+        return this.state.pipe(map((x) => x.directories[directoryId]));
+    }
+
+    toggleFullscreen() {
+        const state = this.state.getValue();
+        this.state.next({
+            ...state,
+            fullscreenEnabled: !state.fullscreenEnabled
+        });
+    }
+
+    clearCurrentImage() {
+        const state = this.state.getValue();
+
+        this.state.next({
+            ...state,
+            ...{
+                prevIndex: undefined,
+                currIndex: undefined,
+                nextIndex: undefined
+            }
+        });
+    }
+
+    selectImage(index: number, directoryId: string) {
+        const state = this.state.getValue();
+        const directory = state.directories[directoryId];
+
+        this.state.next({
+            ...state,
+            ...this._getStateIndexes(index, directory)
+        });
+    }
+
+    private _getStateIndexes(index: number, directory: GalleryDirectory) {
+        return {
+            currIndex: index,
+            prevIndex: index === 0 ? directory.images.length - 1 : index - 1,
+            nextIndex: index === directory.images.length - 1 ? 0 : index + 1
+        };
+    }
+
+    snapImage(index: number, directoryId: string) {
+        console.log("SNAPED: | " + index);
+        const state = this.state.getValue();
+
+        const snappedCountChange = (snapped) => (snapped ? +1 : -1);
+
+        const directory = state.directories[directoryId];
+        const images = directory.images;
+        const imageToSnap = images[index];
+        const snappedImage = { ...imageToSnap, snapped: !imageToSnap.snapped };
+
+        const newImages = images.map((i, idx) => (idx != index ? i : snappedImage));
+        const changedDirectory: GalleryDirectory = { ...directory, images: newImages };
+        const newState = {
+            ...state,
+            snappedCount: state.snappedCount + snappedCountChange(snappedImage.snapped),
+            directories: { ...state.directories, [changedDirectory.id]: changedDirectory }
+        };
+
+        this.state.next(newState);
+    }
+
+    displaySnappedImages() {
+        const state = this.state.getValue();
+
+        this.state.next({ ...state, displaySnappedImages: true });
+    }
+
+    goBackToGallery() {
+        const state = this.state.getValue();
+
+        this.state.next({ ...state, displaySnappedImages: false });
+    }
+
+    next(directoryId: string) {
+        const state = this.state.getValue();
+
+        this.selectImage(state.nextIndex, directoryId);
+    }
+
+    prev(directoryId: string) {
+        const state = this.state.getValue();
+
+        this.selectImage(state.prevIndex, directoryId);
+    }
+
+    reset() {
+        this.state.next(defaultState);
+        this.stop();
+    }
+
+    play(interval?: number) {
+        const speed = interval || this.config.player.speed || 2000;
+
+        const state = this.state.getValue();
+        this.state.next({ ...state, play: true });
+        this.player.next(speed);
+    }
+
+    stop() {
+        this.player.next(0);
+    }
+
+    playerEngine(interval?: number) {
+        return fromInterval(interval).pipe(
+            takeWhile(() => this.state.getValue().play),
+            tap(() => this.next(undefined)),
+            finalize(() => this.state.next({ ...this.state.getValue(), play: false }))
+        );
+    }
 }

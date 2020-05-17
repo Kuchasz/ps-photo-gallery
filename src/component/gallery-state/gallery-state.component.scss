@@ -1,4 +1,4 @@
-:host {
+.gallery-state {
     display: flex;
     font-size: 0.75em;
     background: black;
@@ -56,12 +56,18 @@ span {
     @extend %state-button;
     cursor: pointer;
     background: black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     color: white;
     transition: background 0.25s, color 0.25s;
     &:hover {
         background: white;
         color: black;
     }
+    div {
+      padding: 0em 0.5em;
+  }
 }
 
 .g-snapped-count {

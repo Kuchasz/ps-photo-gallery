@@ -2,12 +2,10 @@ import { GalleryState } from '../service/gallery.state';
 import { GalleryConfig } from './gallery.config';
 
 export const defaultState: GalleryState = {
-  directories: [],
-  currDirectory: undefined,
+  directories: {},
   prevIndex: undefined,
   currIndex: undefined,
-  hasNext: undefined,
-  hasPrev: undefined,
+  nextIndex: undefined,
   fullscreenEnabled: true,
   orientation: undefined,
   snappedCount: 0,

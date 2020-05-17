@@ -3,11 +3,10 @@ import {
     Input,
     ChangeDetectionStrategy,
     ElementRef,
-    Renderer2,
     OnInit
 } from "@angular/core";
 import {GalleryService} from "../../service/gallery.service";
-import {GalleryState} from "../../service/gallery.state";
+import {GalleryState, GalleryDirectory} from "../../service/gallery.state";
 import {GalleryThumbConfig} from "../../config";
 import * as Hammer from "hammerjs";
 import {TweenLite} from "gsap";
@@ -19,20 +18,20 @@ import {TweenLite} from "gsap";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GalleryThumbComponent implements OnInit {
-    @Input() state: GalleryState;
     @Input() config: GalleryThumbConfig;
+    @Input() state: GalleryState;
+    @Input() directory: GalleryDirectory;
+    @Input() directoryId: string;
 
     elContainer: any;
     thumbsDelta: number = 0;
 
     handleKeyStrokes = e => {
-        if (e.keyCode === 37) this.gallery.prev();
-        if (e.keyCode === 39) this.gallery.next();
+        if (e.keyCode === 37) this.gallery.prev(this.directoryId);
+        if (e.keyCode === 39) this.gallery.next(this.directoryId);
     };
 
-    constructor(public gallery: GalleryService,
-                private el: ElementRef,
-                private renderer: Renderer2) {
+    constructor(public gallery: GalleryService, private el: ElementRef) {
     }
 
     ngOnDestroy(){
@@ -96,7 +95,7 @@ export class GalleryThumbComponent implements OnInit {
     }
 
     selectImage(index: number) {
-        this.gallery.selectImage(index);
+        this.gallery.selectImage(index, this.directoryId);
     }
 
     _scrollImages(index) {
@@ -117,7 +116,7 @@ export class GalleryThumbComponent implements OnInit {
     }
 
     get images() {
-        return this.state.directories[this.state.currDirectory].images;
+        return this.directory.images;
     }
 
     getThumbImage(i: number) {

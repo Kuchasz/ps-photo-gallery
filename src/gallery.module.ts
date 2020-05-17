@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { GalleryService } from './service/gallery.service';
 import { GalleryConfig } from './config/gallery.config';
+import { AppRoutingModule } from './app-routing.module';
 
 import { GalleryComponent } from './component/gallery/gallery.component';
 import { GalleryNavComponent } from './component/gallery-nav/gallery-nav.component';
@@ -10,7 +11,6 @@ import { GalleryThumbComponent } from './component/gallery-thumb/gallery-thumb.c
 import { GalleryStateComponent } from './component/gallery-state/gallery-state.component';
 import { GalleryImageComponent } from './component/gallery-image/gallery-image.component';
 import { GalleryLoaderComponent } from './component/gallery-loader/gallery-loader.component';
-import { GalleryBulletsComponent } from './component/gallery-bullets/gallery-bullets.component';
 import { GalleryPlayerComponent } from './component/gallery-player/gallery-player.component';
 import { GalleryMainComponent } from './component/gallery-main/gallery-main.component';
 import { GallerySnappedImagesComponent } from './component/gallery-snapped-images/gallery-snapped-images.component';
@@ -19,6 +19,7 @@ import { GallerySnappedStateComponent } from './component/gallery-snapped-state/
 import { LazyDirective } from './directive/lazy.directive';
 import { TapDirective } from './directive/tap.directive';
 import {GalleryDirectoriesComponent} from "./component/gallery-directories/gallery-directories.component";
+import { Router, Route, ActivatedRoute } from '@angular/router';
 
 /** Initialize ConfigService with URL */
 export function galleryFactory(config: GalleryConfig) {
@@ -29,7 +30,8 @@ export const CONFIG = new InjectionToken<GalleryConfig>('config');
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    AppRoutingModule
   ],
   declarations: [
     GalleryComponent,
@@ -38,7 +40,6 @@ export const CONFIG = new InjectionToken<GalleryConfig>('config');
     GalleryStateComponent,
     GalleryImageComponent,
     GalleryLoaderComponent,
-    GalleryBulletsComponent,
     GalleryPlayerComponent,
     GalleryDirectoriesComponent,
     GalleryMainComponent,

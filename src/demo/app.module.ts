@@ -1,5 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {CommonModule} from "@angular/common";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {AppComponent} from './component/app.component';
@@ -14,6 +15,7 @@ import {DisplayModes} from "../config/gallery.config";
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
+        CommonModule,
         GalleryModule.forRoot(
             {
                 style: {
@@ -33,7 +35,6 @@ import {DisplayModes} from "../config/gallery.config";
                     position: 'bottom',
                     space: 20
                 },
-                bullets: undefined,
                 navigation: {},
                 gestures: true,
                 displayMode: checkIfMobile() ? DisplayModes.Compact : DisplayModes.Full

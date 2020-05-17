@@ -11,7 +11,6 @@ import {
   GalleryNavConfig,
   GalleryLoaderConfig,
   GalleryPlayConfig,
-  GalleryBulletConfig,
 } from './config';
 
 export {
@@ -25,5 +24,4 @@ export {
   GalleryNavConfig,
   GalleryLoaderConfig,
   GalleryPlayConfig,
-  GalleryBulletConfig,
 };

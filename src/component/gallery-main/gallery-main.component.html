@@ -1,13 +1,13 @@
-<div class="g-container" [style.flexDirection]="thumbDirection" [ngStyle]="config.style">
-  <gallery-state *ngIf="fullscreen" [config]="config" [state]="state"></gallery-state>
+<div *ngIf="gallery.state | async as state" class="g-container" [style.flexDirection]="thumbDirection" [ngStyle]="gallery.config.style">
+  <gallery-state *ngIf="fullscreen" [config]="gallery.config" [state]="state"></gallery-state>
 
   <div class="g-box">
 
     <div class="g-image-box">
 
-      <gallery-image [state]="state" [config]="config" (loading)="loading = $event"></gallery-image>
+      <gallery-image [state]="state" [config]="gallery.config" (loading)="loading = $event"></gallery-image>
 
-      <gallery-nav *ngIf="config.navigation && config.displayMode === 0" [state]="state"></gallery-nav>
+      <gallery-nav *ngIf="gallery.config.navigation && gallery.config.displayMode === 0" [currentDirectoryId]="currentDirectoryId$ | async" [state]="state"></gallery-nav>
 
       <!--<div class="g-layer" *ngIf="state.images[state.currIndex].layer" [innerHtml]="state.images[state.currIndex].layer"></div>-->
 
@@ -16,5 +16,5 @@
     <!--<gallery-player *ngIf="config.player" [state]="state" [config]="config.player"></gallery-player>-->
 
   </div>
-  <gallery-thumb [style.height]="(state.fullscreenEnabled && fullscreen) ? 'auto' : '0px'" [state]="state" [config]="config.thumbnails"></gallery-thumb>
+  <gallery-thumb [style.height]="(state.fullscreenEnabled && fullscreen) ? 'auto' : '0px'" [directoryId]="currentDirectoryId$ | async" [state]="state" [directory]="currentDirectory | async" [config]="gallery.config.thumbnails"></gallery-thumb>
 </div>

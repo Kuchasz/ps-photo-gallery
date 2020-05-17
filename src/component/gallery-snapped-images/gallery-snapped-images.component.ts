@@ -17,7 +17,7 @@ export class GallerySnappedImagesComponent {
     snappedImages: GalleryImage[];
 
     constructor(public gallery: GalleryService) {
-        this.snappedImages = this.gallery.state.getValue().directories.map(d => d.images).reduce((cur, agg) => agg.concat(cur), []).filter(img => img.snapped);
+        // this.snappedImages = this.gallery.state.getValue().directories.map(d => d.images).reduce((cur, agg) => agg.concat(cur), []).filter(img => img.snapped);
     }
 
     remove(i: number){

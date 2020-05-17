@@ -1,51 +1,85 @@
+import { ChangeDetectionStrategy, Component, OnInit, Input, ElementRef, Renderer2 } from "@angular/core";
+import { GalleryState, GalleryImage, GalleryDirectory } from "../../service/gallery.state";
+import { GalleryConfig } from "../../config";
+import { GalleryService } from "../../service/gallery.service";
+import { animation } from "./gallery-image.animation";
+import * as Hammer from "hammerjs";
+import { ActivatedRoute, ParamMap } from "@angular/router";
+import { Observable, fromEvent, from } from "rxjs";
 import {
-    ChangeDetectionStrategy,
-    Component,
-    OnInit,
-    Input,
-    ElementRef,
-    Renderer2
-} from '@angular/core';
-import {GalleryState} from '../../service/gallery.state';
-import {GalleryConfig} from '../../config';
-import {GalleryService} from '../../service/gallery.service';
-import {animation} from './gallery-image.animation';
-import * as Hammer from 'hammerjs';
+    switchMap,
+    flatMap,
+    find,
+    tap,
+    map,
+    mergeMap,
+    mergeAll,
+    zipAll,
+    switchAll,
+    merge,
+    concatMap,
+    last,
+    publishLast,
+    takeLast,
+    filter,
+    single,
+    take,
+    first
+} from "rxjs/operators";
 
 @Component({
-    selector: 'gallery-image',
-    templateUrl: './gallery-image.component.html',
-    styleUrls: ['./gallery-image.component.scss'],
+    selector: "gallery-image",
+    templateUrl: "./gallery-image.component.html",
+    styleUrls: ["./gallery-image.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: animation
 })
 export class GalleryImageComponent implements OnInit {
-
     @Input() state: GalleryState;
     @Input() config: GalleryConfig;
     loading: boolean = true;
     animate: string;
 
-    constructor(public gallery: GalleryService, private el: ElementRef) {
-    }
+    currentDirectoryId: Observable<string>;
+    currentImage$: Observable<GalleryImage>;
+    currentDirectory: Observable<GalleryDirectory>;
+
+    constructor(public gallery: GalleryService, private el: ElementRef, private route: ActivatedRoute) {}
 
     ngOnInit() {
+        this.currentDirectoryId = this.route.paramMap.pipe(
+            map((x) => x.get("id"))
+        );
+
+        this.currentDirectory = this.currentDirectoryId.pipe(
+            switchMap((directoryId) => this.gallery.getDirectory(directoryId))
+        );
+
+        this.currentImage$ = this.gallery.state
+            .pipe(
+                map((x) => x.currIndex),
+                flatMap((currIndex) =>
+                    this.currentDirectory.pipe(
+                        flatMap((x) => x.images),
+                        first((_, idx) => idx === currIndex)
+                    )
+                )
+            );
+
         if (this.config.gestures) {
             const el = this.el.nativeElement;
             const mc = new Hammer(el);
 
-            mc.on('swipeleft', () => {
-                this.gallery.next();
-            });
+            fromEvent(mc, "swipeLeft").pipe(
+                flatMap(() => this.currentDirectoryId),
+                tap((g) => this.gallery.next(g))
+            );
 
-            mc.on('swiperight', () => {
-                this.gallery.prev();
-            });
+            fromEvent(mc, "swiperight").pipe(
+                flatMap(() => this.currentDirectoryId),
+                tap((g) => this.gallery.next(g))
+            );
         }
-    }
-
-    get currentImage() {
-        return this.state.directories[this.state.currDirectory].images[this.state.currIndex];
     }
 
     imageLoad(done: boolean) {
@@ -62,6 +96,5 @@ export class GalleryImageComponent implements OnInit {
         //             this.animate = 'none';
         //     }
         // }
-
     }
 }

@@ -1,12 +1,13 @@
 var resolve = require("path").resolve;
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var autoprefixer = require('autoprefixer');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
+var webpack = require("webpack");
+var HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+var autoprefixer = require("autoprefixer");
+var CopyWebpackPlugin = require("copy-webpack-plugin");
+var ngtools = require("@ngtools/webpack");
 
 var postcssLoader = {
-    loader: 'postcss-loader',
+    loader: "postcss-loader",
     options: {
         plugins: function () {
             return [autoprefixer];
@@ -14,96 +15,94 @@ var postcssLoader = {
     }
 };
 
+var miniCssExtractLoader = {
+    loader: MiniCssExtractPlugin.loader,
+    options: {
+        hmr: process.env.NODE_ENV === "development"
+    }
+};
+
 var plugins = [
-    new webpack.ContextReplacementPlugin( /angular(\\|\/)core(\\|\/)/, resolve('./src')) ,
+    new webpack.ContextReplacementPlugin(/angular(\\|\/)core(\\|\/)/, resolve("./src")),
     new HtmlWebpackPlugin({
-        template: resolve('src/demo/index.html'),
-        title: 'Galeria zdjęć'
+        template: resolve("src/demo/index.html"),
+        title: "Galeria zdjęć"
     }),
-    new ExtractTextPlugin('[name].css'),
-    new CopyWebpackPlugin([{from: 'src/demo/example-gallery-images'}])
+    new MiniCssExtractPlugin({
+        filename: "[name].css"
+    }),
+    new CopyWebpackPlugin({ patterns: [{ from: "src/demo/example-gallery-images" }], options: { concurrency: 20 } }),
+    new ngtools.AngularCompilerPlugin({
+        tsConfigPath: "tsconfig.json",
+        // entryModule: 'src/demo/app.module#AppModule',
+        sourceMap: true,
+        locale: "en"
+    })
 ];
 
-const optimization = (process.env.NODE_ENV === 'production') 
-    ? { minimize: true, nodeEnv: 'production' } 
-    : { minimize: false, nodeEnv: process.env.NODE_ENV };
-
+const optimization =
+    process.env.NODE_ENV === "production"
+        ? { minimize: true, nodeEnv: "production" }
+        : { minimize: false, nodeEnv: process.env.NODE_ENV };
 
 module.exports = {
     entry: resolve("./src/demo/main.ts"),
     output: {
         filename: "bundle.js",
-        path: resolve("./dist")//,
+        path: resolve("./dist") //,
         // publicPath: './'
     },
-    performance: { 
-        hints: false 
+    performance: {
+        hints: false
     },
     optimization,
     module: {
         rules: [
             {
-                test: /\.ts$/,
-                use: ['awesome-typescript-loader', 'angular2-template-loader']
+                test: /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
+                loader: "@ngtools/webpack"
             },
             {
-              test: /[\/\\]@angular[\/\\]core[\/\\].+\.js$/,
-              parser: { system: true },
+                test: /[\/\\]@angular[\/\\]core[\/\\].+\.js$/,
+                parser: { system: true }
             },
             {
                 test: /\.html$/,
-                use: {
-                    loader: 'html-loader', options: {
-                        minimize: true,
-                        removeComments: true,
-                        collapseWhitespace: true,
-                        removeAttributeQuotes: false,
-                        keepClosingSlash: true,
-                        caseSensitive: true,
-                        conservativeCollapse: true
-                    }
-                }
+                loader: "raw-loader"
             },
             {
                 test: /\.scss$/,
-                exclude: [resolve('src/demo/component'), resolve('src/component')],
-                use: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: ['css-loader', postcssLoader, 'sass-loader']
-                })
+                exclude: [resolve("src/demo/component"), resolve("src/component")],
+                use: [miniCssExtractLoader, "css-loader", postcssLoader, "sass-loader"]
             },
             {
                 test: /\.scss$/,
-                include: [resolve('src/demo/component'), resolve('src/component')],
-                use: ['raw-loader', postcssLoader, 'sass-loader']
+                include: [resolve("src/demo/component"), resolve("src/component")],
+                use: ["to-string-loader", postcssLoader, "sass-loader"]
             },
             {
                 test: /\.(eot|svg|ttf|woff|woff2)$/,
-                use: 'file-loader?name=fonts/[name].[ext]'
+                use: "file-loader?name=fonts/[name].[ext]"
             }
         ]
     },
     resolve: {
-        extensions: ['.ts', '.js'],
-        modules: [
-            resolve('node_modules')
-          ]
+        extensions: [".ts", ".js"],
+        modules: [resolve("node_modules")]
     },
     resolveLoader: {
-        modules: [
-            resolve('node_modules')
-        ]
-      },
+        modules: [resolve("node_modules")]
+    },
     plugins: plugins,
     devServer: {
         port: 8080,
-        host: '192.168.56.102',
+        host: "192.168.56.102",
         historyApiFallback: true,
         watchOptions: {
             aggregateTimeout: 300,
             poll: 1000
         },
-        contentBase: './dist',
+        contentBase: "./dist",
         open: true
     }
 };

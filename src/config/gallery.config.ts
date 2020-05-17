@@ -2,7 +2,6 @@ import { GalleryDescConfig } from './gallery-desc.config';
 import { GalleryNavConfig } from './gallery-nav.config';
 import { GalleryThumbConfig } from './gallery-thumb.config';
 import { GalleryPlayConfig } from './gallery-play.config';
-import { GalleryBulletConfig } from './gallery-bullet.config';
 import { GalleryLoaderConfig } from './gallery-loader.config';
 
 export enum DisplayModes{
@@ -18,7 +17,6 @@ export interface GalleryConfig {
   thumbnails?: GalleryThumbConfig;
   loader?: GalleryLoaderConfig;
   navigation?: GalleryNavConfig;
-  bullets?: GalleryBulletConfig;
   player?: GalleryPlayConfig;
   displayMode?: DisplayModes;
 }

@@ -10,6 +10,7 @@ import { GalleryState } from "../../service/gallery.state";
 })
 export class GalleryNavComponent {
   @Input() state: GalleryState;
+  @Input() currentDirectoryId: number;
 
   constructor(public gallery: GalleryService) {}
 }
