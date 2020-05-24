@@ -1,4 +1,4 @@
-<div *ngIf="gallery.state | async as state">
+<ng-container *ngIf="gallery.state | async as state">
     <div class="g-directory-filler"></div>
     <div class="g-directories-container">
         <div
@@ -8,8 +8,8 @@
             (click)="selectDirectory(dir)"
         >
             <div class="g-directory-photo" [lazyImage]="getImage(dir).src"></div>
-            <div class="g-directory-name">{{ state.directories[dir].name }}</div>
+            <div class="g-state-text">{{ state.directories[dir].name }}</div>
         </div>
     </div>
     <div class="g-directory-filler"></div>
-</div>
+</ng-container>

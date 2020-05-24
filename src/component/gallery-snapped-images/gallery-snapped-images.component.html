@@ -1,5 +1,5 @@
 <ng-container *ngIf="gallery.state | async as state">
-    <gallery-snapped-state [config]="config" [state]="state"></gallery-snapped-state>
+    <gallery-snapped-state [snappedCount]="getSnappedCount()" [config]="config" [state]="state"></gallery-snapped-state>
     <div class="g-thumb-container">
         <div
             class="g-thumb"

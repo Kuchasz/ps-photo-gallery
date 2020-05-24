@@ -1,6 +1,7 @@
-<span (click)="goBack()" class="g-fullscreen"><i class="material-icons">arrow_back</i></span>
-    <span class="g-snapped-count" *ngIf="snappedCount > 0" (click)="gallery.displaySnappedImages()">{{snappedCount}} selected</span>
-<span class="g-directory-name">
+<span (click)="goBack()" class="g-state-button"><i class="material-icons">arrow_back</i></span>
+<span *ngIf="snappedCount > 0" class="g-state-text">
+    <span>{{ snappedCount }} selected</span>
 </span>
-<span class="g-fullscreen" *ngIf="fullscreenEnabled"
-      (click)="toggleFullscreen()"><i class="material-icons">fullscreen</i></span>
+<span class="g-state-button" *ngIf="fullscreenEnabled" (click)="toggleFullscreen()"
+    ><i class="material-icons">fullscreen</i></span
+>

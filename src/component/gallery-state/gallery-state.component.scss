@@ -38,7 +38,7 @@ span {
     color: white;
 }
 
-.g-directory-name {
+.g-state-text {
     background: black;
     display: flex;
     flex-grow: 1;
@@ -52,7 +52,7 @@ span {
     }
 }
 
-.g-fullscreen {
+.g-state-button {
     @extend %state-button;
     cursor: pointer;
     background: black;

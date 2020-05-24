@@ -1,26 +1,28 @@
-<ng-container *ngIf="currentDirectoryId$ | async as currentDirectoryId"
-    ><div class="gallery-state" *ngIf="currentImage$ | async as currentImage">
-        <span routerLink="/" class="g-fullscreen">
-            <i class="material-icons">arrow_back</i>
-            <div>{{ currentDirectory.name }}</div>
-        </span>
-        <span *ngIf="!currentImage.snapped" (click)="snapImage(currentDirectoryId)" class="g-fullscreen"
-            ><i class="material-icons">star_outline</i></span
-        >
-        <span *ngIf="currentImage.snapped" (click)="snapImage(currentDirectoryId)" class="g-fullscreen"
-            ><i class="material-icons">star</i></span
-        >
-        <span class="g-directory-name">
-            <span class="g-snapped-count" *ngIf="snappedCount > 0" (click)="displaySnappedImages()"
-                >{{ snappedCount }} selected</span
+<ng-container *ngIf="currentDirectoryId$ | async as currentDirectoryId">
+    <ng-container *ngIf="currentDirectory$ | async as currentDirectory"
+        ><div class="gallery-state" *ngIf="currentImage$ | async as currentImage">
+            <span (click)="goBack()" class="g-state-button">
+                <i class="material-icons">arrow_back</i>
+                <div>{{ currentDirectory.name }}</div>
+            </span>
+            <span *ngIf="!currentImage.snapped" (click)="snapImage(currentDirectoryId)" class="g-state-button"
+                ><i class="material-icons">star_outline</i></span
             >
-            <span>{{ currentImage.text }}</span>
-        </span>
-        <span class="g-fullscreen" *ngIf="config.displayMode === 0" (click)="gallery.toggleFullscreen()"
-            ><i class="material-icons">call_to_action</i></span
-        >
-        <span class="g-fullscreen" *ngIf="fullscreenEnabled" (click)="toggleFullscreen()"
-            ><i class="material-icons">fullscreen</i></span
-        >
-    </div>
+            <span *ngIf="currentImage.snapped" (click)="snapImage(currentDirectoryId)" class="g-state-button"
+                ><i class="material-icons">star</i></span
+            >
+            <span class="g-state-text">
+                <span class="g-snapped-count" *ngIf="snappedCount > 0" (click)="displaySnappedImages()"
+                    >{{ snappedCount }} selected</span
+                >
+                <span>{{ currentImage.text }}</span>
+            </span>
+            <span class="g-state-button" *ngIf="config.displayMode === 0" (click)="gallery.toggleFullscreen()"
+                ><i class="material-icons">call_to_action</i></span
+            >
+            <span class="g-state-button" *ngIf="fullscreenEnabled" (click)="toggleFullscreen()"
+                ><i class="material-icons">fullscreen</i></span
+            >
+        </div>
+    </ng-container>
 </ng-container>

@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input } from "@angular/core";
-import {Location} from "@angular/common";
+import { Location } from "@angular/common";
 import { GalleryService } from "../../service/gallery.service";
 import { GalleryState } from "../../service/gallery.state";
 import { GalleryConfig } from "../../index";
@@ -14,6 +14,7 @@ import { Router } from "@angular/router";
 })
 export class GallerySnappedStateComponent {
     @Input() config: GalleryConfig;
+    @Input() snappedCount: number;
 
     constructor(public gallery: GalleryService, private router: Router, private location: Location) {}
 
@@ -24,7 +25,7 @@ export class GallerySnappedStateComponent {
         }
     }
 
-    goBack(){
+    public goBack() {
         this.location.back();
     }
 
@@ -32,9 +33,5 @@ export class GallerySnappedStateComponent {
         if (screenfull) {
             return screenfull.isEnabled;
         }
-    }
-
-    get snappedCount() {
-        return this.gallery.state.getValue().snappedCount;
     }
 }

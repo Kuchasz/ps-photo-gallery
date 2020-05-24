@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input } from "@angular/core";
 import { GalleryService } from "../../service/gallery.service";
+import { Location } from "@angular/common";
 import { GalleryState, GalleryImage, GalleryDirectory } from "../../service/gallery.state";
 import { GalleryConfig } from "../../index";
 import * as screenfull from "screenfull";
@@ -19,28 +20,28 @@ export class GalleryStateComponent {
 
     currentDirectoryId$: Observable<string>;
     currentImage$: Observable<GalleryImage>;
-    currentDirectory: Observable<GalleryDirectory>;
+    currentDirectory$: Observable<GalleryDirectory>;
     images: Observable<GalleryImage[]>;
 
-    constructor(public gallery: GalleryService, private route: ActivatedRoute, private router: Router) {}
+    constructor(public gallery: GalleryService, private route: ActivatedRoute, private router: Router, private location: Location) {}
 
     ngOnInit() {
         this.currentDirectoryId$ = this.route.paramMap.pipe(map((x) => x.get("id")));
-        this.currentDirectory = this.currentDirectoryId$.pipe(
+        this.currentDirectory$ = this.currentDirectoryId$.pipe(
             switchMap((directoryId) => this.gallery.getDirectory(directoryId))
         );
 
         this.currentImage$ = this.gallery.state.pipe(
             map((x) => x.currIndex),
             flatMap((currIndex) =>
-                this.currentDirectory.pipe(
+                this.currentDirectory$.pipe(
                     flatMap((x) => x.images),
                     first((_, idx) => idx === currIndex)
                 )
             )
         );
 
-        this.images = this.currentDirectory.pipe(map((d) => d.images));
+        this.images = this.currentDirectory$.pipe(map((d) => d.images));
     }
 
     toggleFullscreen() {
@@ -64,8 +65,11 @@ export class GalleryStateComponent {
         this.router.navigate(["/snapped"]);
     }
 
+    goBack(){
+        this.location.back();
+    }
+
     public snapImage(directoryId: string) {
-        console.log("SNAP: | " + this.currentImageIndex);
         this.gallery.snapImage(this.currentImageIndex, directoryId);
     }
 
