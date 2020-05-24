@@ -1,6 +1,6 @@
 {
   "name": "ps-photo-gallery",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "Angular Image Gallery",
   "author": "",
   "license": "MIT",
@@ -15,8 +15,8 @@
     "packages:bump": "ncu -u"
   },
   "engines": {
-    "node": "10.6.0",
-    "npm": "5.6.0"
+    "node": "10.15.2",
+    "npm": "5.8.0"
   },
   "browserslist": [
     "> 1%",
