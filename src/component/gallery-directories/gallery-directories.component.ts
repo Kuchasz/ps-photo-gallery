@@ -22,6 +22,11 @@ export class GalleryDirectoriesComponent {
         return state.images.find((i) => i.id === imageId);
     }
 
+    getImageCount(directoryId: string) {
+        const state = this.gallery.state.getValue();
+        return state.directoryImages[directoryId].length;
+    }
+
     selectDirectory(directoryId: string) {
         this.gallery.selectDirectory(directoryId);
         this.router.navigate([`/directory/${directoryId}`]);
