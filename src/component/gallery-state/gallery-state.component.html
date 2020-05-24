@@ -5,10 +5,10 @@
                 <i class="material-icons">arrow_back</i>
                 <div>{{ currentDirectory.name }}</div>
             </span>
-            <span *ngIf="!currentImage.snapped" (click)="snapImage(currentDirectoryId)" class="g-state-button"
+            <span *ngIf="!currentImage.snapped" (click)="snapImage()" class="g-state-button"
                 ><i class="material-icons">star_outline</i></span
             >
-            <span *ngIf="currentImage.snapped" (click)="snapImage(currentDirectoryId)" class="g-state-button"
+            <span *ngIf="currentImage.snapped" (click)="snapImage()" class="g-state-button"
                 ><i class="material-icons">star</i></span
             >
             <span class="g-state-text">

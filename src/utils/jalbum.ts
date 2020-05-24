@@ -1,4 +1,4 @@
-import { GalleryDirectory } from "../service/gallery.state";
+import { GalleryDirectory, GalleryImage } from "../service/gallery.state";
 import { parseString } from "xml2js";
 
 const getId = () => {
@@ -7,19 +7,28 @@ const getId = () => {
         let newId = "";
         let tries = 0;
         do {
-            newId = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() + "-" + tries;
+            newId =
+                name
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "")
+                    .toLowerCase() +
+                "-" +
+                tries;
             tries++;
         } while (usedIds.includes(newId));
 
         usedIds.push(newId);
-        
 
         return newId;
     };
 };
 
 export const fetchGallery = (path: string) =>
-    new Promise<{ [id: string]: GalleryDirectory }>((res) => {
+    new Promise<{
+        images: GalleryImage[];
+        directoryImages: { [id: string]: string[] };
+        directories: { [id: string]: GalleryDirectory };
+    }>((res) => {
         fetch(`${path}folders.xml`)
             .then((response) => response.text())
             .then((foldersXmlString) =>
@@ -31,38 +40,63 @@ export const fetchGallery = (path: string) =>
                     const getIdFromName = getId();
 
                     let fetchedDirectories = 0;
-                    const directories: { gallery: GalleryDirectory; index: number }[] = [];
+
+                    const directories: { directory: GalleryDirectory; index: number }[] = [];
+                    const images: GalleryImage[] = [];
+                    const directoryImages: { images: string[]; directoryId: string }[] = [];
+
                     directoriesToFetch.forEach((item, index) => {
                         fetch(`${path}${item.variables}`)
                             .then((response) => response.text())
                             .then((photosXmlString) => {
                                 parseString(photosXmlString, (_, photos) => {
                                     if (photos.gallery) {
-                                        const images = photos.gallery.image.map((img) => img.$);
+                                        const _images = photos.gallery.image.map((img) => img.$);
+
+                                        const directoryId = getIdFromName(item.name.replace("_", "-"));
 
                                         directories.push({
                                             index,
-                                            gallery: {
-                                                id: getIdFromName(item.name.replace("_", "-")),
+                                            directory: {
+                                                id: directoryId,
                                                 visited: false,
                                                 name: item.name.replace("_", " "),
-                                                rootDir: item.path,
-                                                images: images.map((img) => ({
-                                                    src: `${path}${item.path}${img.img}`,
-                                                    thumbnail: `${path}${item.path}${img.thmb}`,
-                                                    text: img.img.split("/")[1]
-                                                }))
+                                                rootDir: item.path
                                             }
                                         });
+
+                                        const galleryImages = _images.map((img) => ({
+                                            id: `${directoryId}-${img.img}`,
+                                            src: `${path}${item.path}${img.img}`,
+                                            thumbnail: `${path}${item.path}${img.thmb}`,
+                                            text: img.img.split("/")[1]
+                                        }));
+
+                                        galleryImages.forEach(i => images.push(i));
+
+                                        directoryImages.push({directoryId: directoryId, images: galleryImages.map(x => x.id)});
 
                                         if (fetchedDirectories === directoriesToFetch.length - 1) {
                                             directories.sort((l, r) => l.index - r.index);
 
-                                            const result = directories.reduce(
-                                                (acc, cur) => ({ ...acc, [cur.gallery.id]: cur.gallery }),
+                                            const resultDirectories = directories.reduce(
+                                                (acc, cur) => ({ ...acc, [cur.directory.id]: cur.directory }),
                                                 {}
                                             );
-                                            console.log(result);
+
+                                            const resultDirectoryImages = directoryImages.reduce(
+                                                (acc, cur) => ({ ...acc, [cur.directoryId]: cur.images }),
+                                                {}
+                                            );
+
+                                            const resultImages = images;
+
+                                            const result = {
+                                                directories: resultDirectories,
+                                                directoryImages: resultDirectoryImages,
+                                                images: resultImages
+                                            };
+
                                             res(result);
                                         }
 

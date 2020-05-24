@@ -13,7 +13,7 @@ import { GalleryConfig } from "../../config";
 import { DisplayModes } from "../../config/gallery.config";
 import { Observable } from "rxjs";
 import { ActivatedRoute, ParamMap } from "@angular/router";
-import { switchMap, find, flatMap, map, tap, first } from "rxjs/operators";
+import { switchMap, find, flatMap, map, tap, first, filter } from "rxjs/operators";
 
 @Component({
     selector: "gallery-main",
@@ -27,8 +27,9 @@ export class GalleryMainComponent implements OnInit {
     thumbDirection: string;
 
     currentDirectoryId$: Observable<string>;
-    currentPhoto: Observable<GalleryImage>;
     currentDirectory: Observable<GalleryDirectory>;
+
+    images$: Observable<GalleryImage[]>;
 
     constructor(public gallery: GalleryService, private route: ActivatedRoute) {}
 
@@ -40,18 +41,17 @@ export class GalleryMainComponent implements OnInit {
             map((x) => x.get("id"))
         );
 
-        this.currentDirectory = this.currentDirectoryId$.pipe(
-            switchMap((directoryIndex) => this.gallery.getDirectory(directoryIndex))
+        this.images$ = this.currentDirectoryId$.pipe(
+            flatMap((directoryId) => this.gallery.state.pipe(
+                map(s => {
+                    const ids = s.directoryImages[directoryId];
+                    return s.images.filter((i) => ids.includes(i.id));
+                })
+            ))
         );
 
-        this.currentPhoto = this.gallery.state.pipe(
-            map((x) => x.currIndex),
-            flatMap((currIndex) =>
-                this.currentDirectory.pipe(
-                    flatMap((x) => x.images),
-                    first((_, idx) => idx === currIndex)
-                )
-            )
+        this.currentDirectory = this.currentDirectoryId$.pipe(
+            switchMap((directoryIndex) => this.gallery.getDirectory(directoryIndex))
         );
     }
 

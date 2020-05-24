@@ -21,7 +21,6 @@ export class GalleryStateComponent {
     currentDirectoryId$: Observable<string>;
     currentImage$: Observable<GalleryImage>;
     currentDirectory$: Observable<GalleryDirectory>;
-    images: Observable<GalleryImage[]>;
 
     constructor(public gallery: GalleryService, private route: ActivatedRoute, private router: Router, private location: Location) {}
 
@@ -32,16 +31,8 @@ export class GalleryStateComponent {
         );
 
         this.currentImage$ = this.gallery.state.pipe(
-            map((x) => x.currIndex),
-            flatMap((currIndex) =>
-                this.currentDirectory$.pipe(
-                    flatMap((x) => x.images),
-                    first((_, idx) => idx === currIndex)
-                )
-            )
+            map((x) => x.images.find(i => i.id === x.currId))
         );
-
-        this.images = this.currentDirectory$.pipe(map((d) => d.images));
     }
 
     toggleFullscreen() {
@@ -58,7 +49,7 @@ export class GalleryStateComponent {
     }
 
     get snappedCount() {
-        return this.state.snappedCount;
+        return this.state.images.filter(x => x.snapped).length;
     }
 
     public displaySnappedImages() {
@@ -69,11 +60,11 @@ export class GalleryStateComponent {
         this.location.back();
     }
 
-    public snapImage(directoryId: string) {
-        this.gallery.snapImage(this.currentImageIndex, directoryId);
+    public snapImage() {
+        this.gallery.snapImage(this.currentImageId);
     }
 
-    get currentImageIndex() {
-        return this.state.currIndex;
+    get currentImageId() {
+        return this.state.currId;
     }
 }

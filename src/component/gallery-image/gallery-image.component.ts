@@ -4,26 +4,13 @@ import { GalleryConfig } from "../../config";
 import { GalleryService } from "../../service/gallery.service";
 import { animation } from "./gallery-image.animation";
 import * as Hammer from "hammerjs";
-import { ActivatedRoute, ParamMap } from "@angular/router";
-import { Observable, fromEvent, from } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
+import { Observable, fromEvent } from "rxjs";
 import {
     switchMap,
     flatMap,
-    find,
     tap,
     map,
-    mergeMap,
-    mergeAll,
-    zipAll,
-    switchAll,
-    merge,
-    concatMap,
-    last,
-    publishLast,
-    takeLast,
-    filter,
-    single,
-    take,
     first
 } from "rxjs/operators";
 
@@ -57,11 +44,11 @@ export class GalleryImageComponent implements OnInit {
 
         this.currentImage$ = this.gallery.state
             .pipe(
-                map((x) => x.currIndex),
-                flatMap((currIndex) =>
-                    this.currentDirectory.pipe(
+                map((x) => x.currId),
+                flatMap((currId) =>
+                    this.gallery.state.pipe(
                         flatMap((x) => x.images),
-                        first((_, idx) => idx === currIndex)
+                        first((img) => img.id === currId)
                     )
                 )
             );

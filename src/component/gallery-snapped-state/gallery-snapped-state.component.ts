@@ -1,5 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input } from "@angular/core";
-import { Location } from "@angular/common";
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from "@angular/core";
 import { GalleryService } from "../../service/gallery.service";
 import { GalleryState } from "../../service/gallery.state";
 import { GalleryConfig } from "../../index";
@@ -14,9 +13,10 @@ import { Router } from "@angular/router";
 })
 export class GallerySnappedStateComponent {
     @Input() config: GalleryConfig;
-    @Input() snappedCount: number;
+    @Input() snappedCount: number;    
+    @Output() onBack: EventEmitter<void> = new EventEmitter<void>(false);
 
-    constructor(public gallery: GalleryService, private router: Router, private location: Location) {}
+    constructor(public gallery: GalleryService, private router: Router) {}
 
     toggleFullscreen() {
         if (screenfull.isEnabled) {
@@ -26,7 +26,7 @@ export class GallerySnappedStateComponent {
     }
 
     public goBack() {
-        this.location.back();
+        this.onBack.emit();
     }
 
     get fullscreenEnabled() {

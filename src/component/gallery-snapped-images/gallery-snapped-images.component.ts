@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, Input } from "@angular/core";
 import { GalleryService } from "../../service/gallery.service";
 import { GalleryState, GalleryImage } from "../../service/gallery.state";
+import { Location } from "@angular/common";
 import { GalleryConfig } from "../../config/gallery.config";
 
 @Component({
@@ -15,15 +16,17 @@ export class GallerySnappedImagesComponent {
 
     snappedImages: GalleryImage[];
 
-    constructor(public gallery: GalleryService) {
-        this.snappedImages = Object.values(this.gallery.state.getValue().directories)
-            .map((d) => d.images)
-            .reduce((cur, agg) => agg.concat(cur), [])
-            .filter((img) => img.snapped);
+    constructor(public gallery: GalleryService, private location: Location) {
+        this.snappedImages = Object.values(this.gallery.state.getValue().images).filter((img) => img.snapped);
     }
 
     remove(i: number) {
         this.snappedImages[i].snapped = false;
+    }
+
+    goBack() {
+        // this.gallery.snapImage
+        this.location.back();
     }
 
     restore(i: number) {
@@ -31,7 +34,7 @@ export class GallerySnappedImagesComponent {
     }
 
     getSnappedCount() {
-        return this.snappedImages.filter(x => x.snapped).length;
+        return this.snappedImages.filter((x) => x.snapped).length;
     }
 
     getThumbImage(i: number) {

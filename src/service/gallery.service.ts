@@ -32,14 +32,21 @@ export class GalleryService {
             .subscribe();
     }
 
-    load(directories: { [id: string]: GalleryDirectory }) {
+    load(result: {
+        images: GalleryImage[];
+        directoryImages: { [id: string]: string[] };
+        directories: { [id: string]: GalleryDirectory };
+    }) {
         const state = this.state.getValue();
 
         this.state.next({
             ...state,
-            directories,
-            currIndex: undefined,
-            prevIndex: undefined
+            directories: result.directories,
+            images: result.images,
+            directoryImages: result.directoryImages,
+            currId: undefined,
+            prevId: undefined,
+            nextId: undefined
         });
     }
 
@@ -69,8 +76,7 @@ export class GalleryService {
             directories
         });
 
-        this.selectImage(0, directoryId);
-        // this.clearCurrentImage();
+        this.selectImage(state.directoryImages[directoryId][0], directoryId);
     }
 
     getDirectory(directoryId: string) {
@@ -91,52 +97,46 @@ export class GalleryService {
         this.state.next({
             ...state,
             ...{
-                prevIndex: undefined,
-                currIndex: undefined,
-                nextIndex: undefined
+                prevId: undefined,
+                currId: undefined,
+                nextId: undefined
             }
         });
     }
 
-    selectImage(index: number, directoryId: string) {
+    selectImage(id: string, directoryId: string) {
         const state = this.state.getValue();
-        const directory = state.directories[directoryId];
+        const images = state.directoryImages[directoryId];
 
         this.state.next({
             ...state,
-            ...this._getStateIndexes(index, directory)
+            ...this._getStateIds(id, images)
         });
     }
 
-    private _getStateIndexes(index: number, directory: GalleryDirectory) {
+    private _getStateIds(id: string, images: string[]) {
+        const currIndex = images.indexOf(id);
+        const prevIndex = currIndex === 0 ? images.length - 1 : currIndex - 1;
+        const nextIndex = currIndex === images.length - 1 ? 0 : currIndex + 1;
         return {
-            currIndex: index,
-            prevIndex: index === 0 ? directory.images.length - 1 : index - 1,
-            nextIndex: index === directory.images.length - 1 ? 0 : index + 1
+            currId: id,
+            prevId: images[prevIndex],
+            nextId: images[nextIndex]
         };
     }
 
-    snapImage(index: number, directoryId: string) {
-        console.log("SNAPED: | " + index);
+    snapImage(id: string) {
         const state = this.state.getValue();
 
-        const snappedCountChange = (snapped) => (snapped ? +1 : -1);
-
-        const directory = state.directories[directoryId];
-        const images = directory.images;
-        const imageToSnap = images[index];
-        const snappedImage = { ...imageToSnap, snapped: !imageToSnap.snapped };
-
-        const newImages = images.map((i, idx) => (idx != index ? i : snappedImage));
-        const changedDirectory: GalleryDirectory = { ...directory, images: newImages };
         const newState = {
             ...state,
-            snappedCount: state.snappedCount + snappedCountChange(snappedImage.snapped),
-            directories: { ...state.directories, [changedDirectory.id]: changedDirectory }
+            images: state.images.map((x) => (x.id !== id ? x : { ...x, snapped: !x.snapped }))
         };
 
         this.state.next(newState);
     }
+
+    snapImages(images: GalleryImage[]) {}
 
     displaySnappedImages() {
         const state = this.state.getValue();
@@ -153,13 +153,13 @@ export class GalleryService {
     next(directoryId: string) {
         const state = this.state.getValue();
 
-        this.selectImage(state.nextIndex, directoryId);
+        this.selectImage(state.nextId, directoryId);
     }
 
     prev(directoryId: string) {
         const state = this.state.getValue();
 
-        this.selectImage(state.prevIndex, directoryId);
+        this.selectImage(state.prevId, directoryId);
     }
 
     reset() {

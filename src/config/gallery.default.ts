@@ -3,12 +3,13 @@ import { GalleryConfig } from './gallery.config';
 
 export const defaultState: GalleryState = {
   directories: {},
-  prevIndex: undefined,
-  currIndex: undefined,
-  nextIndex: undefined,
+  images: [],
+  directoryImages: {},
+  prevId: undefined,
+  currId: undefined,
+  nextId: undefined,
   fullscreenEnabled: true,
   orientation: undefined,
-  snappedCount: 0,
   displaySnappedImages: false
 };
 

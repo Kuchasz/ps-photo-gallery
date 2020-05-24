@@ -17,12 +17,12 @@ export class GalleryDirectoriesComponent {
     constructor(public gallery: GalleryService, private router: Router) {}
 
     getImage(directoryId: string) {
-        const possibleImages = this.gallery.state.getValue().directories[directoryId].images;
-        return possibleImages[0];
+        const state = this.gallery.state.getValue();
+        const imageId = state.directoryImages[directoryId][0];
+        return state.images.find((i) => i.id === imageId);
     }
 
     selectDirectory(directoryId: string) {
-        console.log(directoryId);
         this.gallery.selectDirectory(directoryId);
         this.router.navigate([`/directory/${directoryId}`]);
     }

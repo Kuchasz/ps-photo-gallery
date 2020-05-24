@@ -3,17 +3,19 @@ export type ScreenOrientation = 'portrait' | 'landscape';
 export interface GalleryState {
   play?: boolean;
   directories: {[id: string]: GalleryDirectory};
-  currIndex?: number;
-  prevIndex?: number;
-  nextIndex?: number;
+  images: GalleryImage[];
+  directoryImages: {[directoryId: string]: string[]};
+  currId?: string;
+  prevId?: string;
+  nextId?: string;
   fullscreenEnabled: boolean;
   orientation: ScreenOrientation;
-  snappedCount: number;
   displaySnappedImages: boolean;
 }
 
 export interface GalleryImage {
   src: string;
+  id: string;
   thumbnail?: string;
   text?: string;
   snapped: boolean;
@@ -24,5 +26,4 @@ export interface GalleryDirectory {
   visited: boolean;
   name: string;
   rootDir: string;
-  images?: GalleryImage[];
 }
