@@ -52,6 +52,7 @@ module.exports = {
         path: resolve("./dist") //,
         // publicPath: './'
     },
+    devtool: 'eval-source-map',
     performance: {
         hints: false
     },

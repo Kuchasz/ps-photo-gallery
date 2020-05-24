@@ -4,8 +4,8 @@ import { GalleryState, GalleryDirectory, GalleryImage } from "../../service/gall
 import { GalleryThumbConfig } from "../../config";
 import * as Hammer from "hammerjs";
 import { TweenLite } from "gsap";
-import { Observable } from "rxjs";
-import { map, flatMap, first, filter } from "rxjs/operators";
+import CSSPlugin from 'gsap/CSSPlugin';
+const C = CSSPlugin;  // here is the gotcha....
 
 @Component({
     selector: "gallery-thumb",
