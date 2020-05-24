@@ -1,6 +1,6 @@
 # Node
 node_modules
-# dist
+dist
 coverage
 npm-debug.log
 debug.log

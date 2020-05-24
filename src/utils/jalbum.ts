@@ -65,8 +65,8 @@ export const fetchGallery = (path: string) =>
                                             }
                                         });
 
-                                        const galleryImages = _images.map((img) => ({
-                                            id: `${directoryId}-${img.img}`,
+                                        const galleryImages = _images.map((img, idx) => ({
+                                            id: `${directoryId}-${img.img}-${idx}`,
                                             src: `${path}${item.path}${img.img}`,
                                             thumbnail: `${path}${item.path}${img.thmb}`,
                                             text: img.img.split("/")[1]

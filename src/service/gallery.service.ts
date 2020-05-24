@@ -118,6 +118,11 @@ export class GalleryService {
         const currIndex = images.indexOf(id);
         const prevIndex = currIndex === 0 ? images.length - 1 : currIndex - 1;
         const nextIndex = currIndex === images.length - 1 ? 0 : currIndex + 1;
+
+        console.log(prevIndex, currIndex, nextIndex);
+
+        console.log(images);
+
         return {
             currId: id,
             prevId: images[prevIndex],

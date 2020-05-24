@@ -6,13 +6,7 @@ import { animation } from "./gallery-image.animation";
 import * as Hammer from "hammerjs";
 import { ActivatedRoute } from "@angular/router";
 import { Observable, fromEvent } from "rxjs";
-import {
-    switchMap,
-    flatMap,
-    tap,
-    map,
-    first
-} from "rxjs/operators";
+import { switchMap, flatMap, tap, map, first } from "rxjs/operators";
 
 @Component({
     selector: "gallery-image",
@@ -34,38 +28,33 @@ export class GalleryImageComponent implements OnInit {
     constructor(public gallery: GalleryService, private el: ElementRef, private route: ActivatedRoute) {}
 
     ngOnInit() {
-        this.currentDirectoryId = this.route.paramMap.pipe(
-            map((x) => x.get("id"))
-        );
+        this.currentDirectoryId = this.route.paramMap.pipe(map((x) => x.get("id")));
 
         this.currentDirectory = this.currentDirectoryId.pipe(
             switchMap((directoryId) => this.gallery.getDirectory(directoryId))
         );
 
-        this.currentImage$ = this.gallery.state
-            .pipe(
-                map((x) => x.currId),
-                flatMap((currId) =>
-                    this.gallery.state.pipe(
-                        flatMap((x) => x.images),
-                        first((img) => img.id === currId)
-                    )
+        this.currentImage$ = this.gallery.state.pipe(
+            map((x) => x.currId),
+            flatMap((currId) =>
+                this.gallery.state.pipe(
+                    flatMap((x) => x.images),
+                    first((img) => img.id === currId)
                 )
-            );
+            )
+        );
 
         if (this.config.gestures) {
             const el = this.el.nativeElement;
             const mc = new Hammer(el);
 
-            fromEvent(mc, "swipeLeft").pipe(
-                flatMap(() => this.currentDirectoryId),
-                tap((g) => this.gallery.next(g))
-            );
+            fromEvent(mc, "swiperight")
+                .pipe(flatMap(() => this.currentDirectoryId))
+                .subscribe((g) => this.gallery.prev(g));
 
-            fromEvent(mc, "swiperight").pipe(
-                flatMap(() => this.currentDirectoryId),
-                tap((g) => this.gallery.next(g))
-            );
+            fromEvent(mc, "swipeleft")
+                .pipe(flatMap(() => this.currentDirectoryId))
+                .subscribe((g) => this.gallery.next(g));
         }
     }
 
