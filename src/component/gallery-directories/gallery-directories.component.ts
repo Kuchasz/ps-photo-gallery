@@ -6,8 +6,8 @@ import { Router } from "@angular/router";
 
 @Component({
     selector: "gallery-directories",
-    templateUrl: require("./gallery-directores.component.html"),
-    styleUrls: [require("./gallery-directories.component.scss")],
+    templateUrl: "./gallery-directores.component.html",
+    styleUrls: ["./gallery-directories.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GalleryDirectoriesComponent {
