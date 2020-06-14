@@ -1,36 +1,53 @@
 :host {
-  position: relative;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .g-image {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  .g-image-container {
     flex: 1;
-    align-self: stretch;
-    flex-direction: column;
-    position: relative;
     display: flex;
-    pointer-events: none;
-    .g-image-img {
-      display: inline-block;
-      flex: 1;
-      height: 100%;
-      width: 100%;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .g-image-container {
+        flex: 1;
+        align-self: stretch;
+        // flex-direction: column;
+        position: relative;
+        // padding: 30px;
+        // display: flex;
+        // transition: transform 0.5s ease-out;
+        pointer-events: none;
+        .g-image-img {
+            display: inline-block;
+            flex: 1;
+            padding: 30px;
+            height: 100%;
+            width: 100%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &.prev,
+            &.next {
+                position: absolute;
+                background-color: rgba(255, 0, 0, 0.2);
+            }
+
+            &.prev {
+                left: -90%;
+            }
+
+            &.next {
+                left: 90%;
+                top: 0;
+            }
+        }
     }
-  }
 }

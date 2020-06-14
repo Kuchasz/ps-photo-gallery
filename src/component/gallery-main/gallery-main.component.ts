@@ -57,8 +57,7 @@ export class GalleryMainComponent implements OnInit {
 
     get fullscreen() {
         return (
-            this.gallery.config.displayMode !== DisplayModes.Compact ||
-            this.gallery.state.getValue().orientation === "portrait"
+            this.gallery.config.displayMode !== DisplayModes.Compact
         );
     }
 }

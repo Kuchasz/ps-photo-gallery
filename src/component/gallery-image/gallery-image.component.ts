@@ -44,18 +44,36 @@ export class GalleryImageComponent implements OnInit {
             )
         );
 
-        if (this.config.gestures) {
+        // if (this.config.gestures) {
             const el = this.el.nativeElement;
+            const elToMove = this.el.nativeElement.querySelector(".g-image-container");
+
+            // console.log(el);
+
             const mc = new Hammer(el);
 
-            fromEvent(mc, "swiperight")
-                .pipe(flatMap(() => this.currentDirectoryId))
-                .subscribe((g) => this.gallery.prev(g));
+            // el.
+            // console.log(el);
 
-            fromEvent(mc, "swipeleft")
-                .pipe(flatMap(() => this.currentDirectoryId))
-                .subscribe((g) => this.gallery.next(g));
-        }
+            fromEvent(mc, "panmove").subscribe((e: any) => {
+                console.log(e.deltaX);
+                elToMove.style.transform = `translate(${e.deltaX}px, 0px)`;
+            });
+
+            // fromEvent(mc, "swiperight")
+            //     .pipe(flatMap((e: any) => this.currentDirectoryId.pipe(map((id) => ({ id, e })))))
+            //     .subscribe((g) => {
+            //         elToMove.style.transform = `translate(100%, 0px)`;
+            //         // this.gallery.prev(g.id);
+            //     });
+
+            // fromEvent(mc, "swipeleft")
+            //     .pipe(flatMap((e: any) => this.currentDirectoryId.pipe(map((id) => ({ id, e })))))
+            //     .subscribe((g) => {
+            //         elToMove.style.transform = `translate(-100%, 0px)`;
+            //         // this.gallery.next(g.id);
+            //     });
+        // }
     }
 
     imageLoad(done: boolean) {

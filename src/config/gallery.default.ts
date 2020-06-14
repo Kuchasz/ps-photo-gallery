@@ -40,8 +40,8 @@ export const defaultConfig: GalleryConfig = {
     speed: 3000
   },
   thumbnails: {
-    width: 120,
-    height: 90,
+    width: 50,
+    height: 50,
     position: 'left',
     space: 30
   }

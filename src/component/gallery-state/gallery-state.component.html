@@ -17,9 +17,6 @@
                 >
                 <span>{{ currentImage.text }}</span>
             </span>
-            <span class="g-state-button" *ngIf="config.displayMode === 0" (click)="gallery.toggleFullscreen()"
-                ><i class="material-icons">call_to_action</i></span
-            >
             <span class="g-state-button" *ngIf="fullscreenEnabled" (click)="toggleFullscreen()"
                 ><i class="material-icons">fullscreen</i></span
             >

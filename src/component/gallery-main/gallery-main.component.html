@@ -1,5 +1,5 @@
 <div *ngIf="gallery.state | async as state" class="g-container" [style.flexDirection]="thumbDirection" [ngStyle]="gallery.config.style">
-  <gallery-state *ngIf="fullscreen" [config]="gallery.config" [state]="state"></gallery-state>
+  <gallery-state [config]="gallery.config" [state]="state"></gallery-state>
 
   <div class="g-box">
 

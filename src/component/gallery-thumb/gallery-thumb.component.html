@@ -1,17 +1,29 @@
-<div #container class="g-thumb-container">
-
-  <div class="g-thumbs">
-    <div class="g-thumb" *ngFor="let image of images;"
-         [class.g-thumb-current]="image.id === state.currId"
-         [style.width.px]="gallery.config.thumbnails.width"
-         [style.height.px]="gallery.config.thumbnails.height"
-         [tap] (tapClick)="selectImage(image.id)">
-
-      <div class="g-thumb-image" [class.snapped]="image.snapped" [style.backgroundImage]="getThumbImage(image)">
-          <i *ngIf="image.snapped" class="material-icons">check</i>
-      </div>
+<div class="g-thumb-container" #container>
+    <div class="g-nav-prev" (mouseup)="gallery.prev(directoryId)">
+        <i class="material-icons">keyboard_arrow_left</i>
     </div>
-
-  </div>
-
+    <div class="g-thumbs-container">
+        <div class="g-thumbs">
+            <div
+                class="g-thumb"
+                *ngFor="let image of images"
+                [class.g-thumb-current]="image.id === state.currId"
+                [style.width.px]="gallery.config.thumbnails.width"
+                [style.height.px]="gallery.config.thumbnails.height"
+                [tap]
+                (tapClick)="selectImage(image.id)"
+            >
+                <div
+                    class="g-thumb-image"
+                    [class.snapped]="image.snapped"
+                    [style.backgroundImage]="getThumbImage(image)"
+                >
+                    <i *ngIf="image.snapped" class="material-icons">check</i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="g-nav-next" (mouseup)="gallery.next(directoryId)">
+        <i class="material-icons">keyboard_arrow_right</i>
+    </div>
 </div>

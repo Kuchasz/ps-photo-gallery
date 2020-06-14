@@ -4,8 +4,8 @@ import { GalleryState, GalleryDirectory, GalleryImage } from "../../service/gall
 import { GalleryThumbConfig } from "../../config";
 import * as Hammer from "hammerjs";
 import { TweenLite } from "gsap";
-import CSSPlugin from 'gsap/CSSPlugin';
-const C = CSSPlugin;  // here is the gotcha....
+import CSSPlugin from "gsap/CSSPlugin";
+const C = CSSPlugin; // here is the gotcha....
 
 @Component({
     selector: "gallery-thumb",
@@ -37,45 +37,45 @@ export class GalleryThumbComponent implements OnInit {
     ngOnInit() {
         window.addEventListener("keydown", this.handleKeyStrokes);
 
-        if (this.gallery.config.gestures) {
-            this.elContainer = this.el.nativeElement.querySelector(".g-thumb-container");
+        // if (this.gallery.config.gestures) {
+        this.elContainer = this.el.nativeElement.querySelector(".g-thumbs");
 
-            const hammer = new Hammer(this.elContainer);
+        // const hammer = new Hammer(this.elContainer);
 
-            TweenLite.set(this.elContainer, { x: -this.config.width / 2 });
+        // TweenLite.set(this.elContainer, { x: -this.config.width / 2 });
 
-            hammer.on("panend", (e) => {
-                if (Math.abs(e.velocityX) < 0.5) {
-                    this.thumbsDelta += e.deltaX;
-                    return;
-                }
+        // hammer.on("panend", (e) => {
+        //     if (Math.abs(e.velocityX) < 0.5) {
+        //         this.thumbsDelta += e.deltaX;
+        //         return;
+        //     }
 
-                const targetDelta = e.deltaX * Math.abs(e.velocityX);
+        //     const targetDelta = e.deltaX * Math.abs(e.velocityX);
 
-                this.thumbsDelta += targetDelta;
+        //     this.thumbsDelta += targetDelta;
 
-                this.thumbsDelta = this._valBetween(
-                    this.thumbsDelta,
-                    this.getMaxDelta(), // + this.config.width / 2,
-                    -this.config.width / 2
-                );
+        //     this.thumbsDelta = this._valBetween(
+        //         this.thumbsDelta,
+        //         this.getMaxDelta(), // + this.config.width / 2,
+        //         -this.config.width / 2
+        //     );
 
-                TweenLite.to(this.elContainer, 0.5, { x: this.thumbsDelta });
-            });
+        //     TweenLite.to(this.elContainer, 0.5, { x: this.thumbsDelta });
+        // });
 
-            hammer.on("pan", (e) => {
-                let targetDelta = this.thumbsDelta + e.deltaX;
+        // hammer.on("pan", (e) => {
+        //     let targetDelta = this.thumbsDelta + e.deltaX;
 
-                targetDelta =
-                    targetDelta > -this.config.width / 2
-                        ? -this.config.width / 2
-                        : targetDelta < this.getMaxDelta()
-                        ? this.getMaxDelta()
-                        : targetDelta;
+        //     targetDelta =
+        //         targetDelta > -this.config.width / 2
+        //             ? -this.config.width / 2
+        //             : targetDelta < this.getMaxDelta()
+        //             ? this.getMaxDelta()
+        //             : targetDelta;
 
-                TweenLite.to(this.elContainer, 0.5, { x: targetDelta });
-            });
-        }
+        //     TweenLite.to(this.elContainer, 0.5, { x: targetDelta });
+        // });
+        // }
 
         this.gallery.state.subscribe((x) => x.currId !== undefined && this._scrollImages(x.currId));
     }
@@ -89,14 +89,17 @@ export class GalleryThumbComponent implements OnInit {
     }
 
     _scrollImages(id: string) {
-        const index = this.images.map(x => x.id).indexOf(id);
-        const x = (index / this.images.length) * (this.getMaxDelta() - this.config.width / 2) - this.config.width / 2;
+        const index = this.images.map((x) => x.id).indexOf(id);
+        const x = (index / this.images.length) * this.getMaxDelta(); //(this.getMaxDelta() - this.config.width / 2) - this.config.width / 2;
         this.thumbsDelta = x;
-        TweenLite.to(this.elContainer, 0.5, { x: this.thumbsDelta });
+        // TweenLite.to(this.elContainer, 0.25, { x: this.thumbsDelta });
+        this.elContainer.style.transform = `translate(${this.thumbsDelta}px, 0px)`;
     }
 
     getMaxDelta() {
-        return -(this.images.length * this.config.width - this.config.width / 2);
+        const width = this.config.width;
+        // console.log(this.images.length * width - width / 2);
+        return -(this.images.length * width);
     }
 
     getThumbImage(image: GalleryImage) {

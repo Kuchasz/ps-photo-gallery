@@ -98,7 +98,9 @@ module.exports = {
     devServer: {
         port: 8080,
         host: "192.168.56.102",
-        historyApiFallback: true,
+        historyApiFallback: {
+            index: 'index.html'
+        },
         watchOptions: {
             aggregateTimeout: 300,
             poll: 1000
