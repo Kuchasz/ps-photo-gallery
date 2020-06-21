@@ -3,27 +3,27 @@
         <ng-container *ngIf="currentImage$ | async as currentImage">
             <div
                 class="prev g-image-img"
-                [lazyImage]="currentImage.src"
-                [thumb]="currentImage.thumbnail"
+                [lazyImage]="currentImage[0].src"
+                [thumb]="currentImage[0].thumbnail"
                 (lazyLoad)="imageLoad($event)"
             >
-                <gallery-loader *ngIf="loading" [config]="config.loader"></gallery-loader>
+                <!-- <gallery-loader *ngIf="loading" [config]="config.loader"></gallery-loader> -->
             </div>
             <div
                 class="g-image-img"
-                [lazyImage]="currentImage.src"
-                [thumb]="currentImage.thumbnail"
+                [lazyImage]="currentImage[1].src"
+                [thumb]="currentImage[1].thumbnail"
                 (lazyLoad)="imageLoad($event)"
             >
-                <gallery-loader *ngIf="loading" [config]="config.loader"></gallery-loader>
+                <!-- <gallery-loader *ngIf="loading" [config]="config.loader"></gallery-loader> -->
             </div>
             <div
                 class="next g-image-img"
-                [lazyImage]="currentImage.src"
-                [thumb]="currentImage.thumbnail"
+                [lazyImage]="currentImage[2].src"
+                [thumb]="currentImage[2].thumbnail"
                 (lazyLoad)="imageLoad($event)"
             >
-                <gallery-loader *ngIf="loading" [config]="config.loader"></gallery-loader>
+                <!-- <gallery-loader *ngIf="loading" [config]="config.loader"></gallery-loader> -->
             </div>
         </ng-container>
     </div>

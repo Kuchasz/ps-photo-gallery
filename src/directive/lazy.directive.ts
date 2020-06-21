@@ -16,6 +16,7 @@ export class LazyDirective {
         this.getImage(imagePath);
     }
 
+    img: string = "";
     lazyWorker = new Subject<string>();
 
     @Output() lazyLoad = new EventEmitter<boolean>(false);
@@ -23,32 +24,34 @@ export class LazyDirective {
     imageLoad: any;
 
     constructor(private el: ElementRef, private renderer: Renderer2) {
-        this.lazyWorker.subscribe((img) => {
-            if (img) {
-                this.renderer.setStyle(this.el.nativeElement, "background-image", `url(${img})`);
-                this.lazyLoad.emit(true);
-            } else {
-                this.lazyLoad.emit(false);
-            }
-        });
+        // this.lazyWorker.subscribe((img) => {
+        //     if (img) {
+                                // this.lazyLoad.emit(true);
+        //     } else {
+        //         // this.lazyLoad.emit(false);
+        //     }
+        // });
     }
 
     getImage(imagePath: string): void {
-        this.lazyWorker.next(this.thumbUrl);
-        this.lazyLoad.emit(false);
+        this.renderer.setStyle(this.el.nativeElement, "background-image", `url(${imagePath})`);
 
-        if (this.imageLoad) this.imageLoad.onload = undefined;
+        // this.lazyWorker.next(this.thumbUrl);
+        // this.lazyLoad.emit(false);
 
-        this.imageLoad = this.renderer.createElement("img");
+        // if (this.imageLoad) this.imageLoad.onload = undefined;
 
-        this.imageLoad.src = imagePath;
+        // this.imageLoad = this.renderer.createElement("img");
 
-        this.imageLoad.onload = () => {
-            this.lazyWorker.next(imagePath);
-        };
+        // this.imageLoad.src = imagePath;
 
-        this.imageLoad.onerror = (err: Error) => {
-            this.lazyWorker.next(undefined);
-        };
+        // this.imageLoad.onload = () => {
+            // this.lazyWorker.next(imagePath);
+        // };
+
+        // this.imageLoad.onerror = (err: Error) => {
+            // this.lazyWorker.next(undefined);
+        // };
+
     }
 }

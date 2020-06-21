@@ -4,7 +4,7 @@ import { GalleryConfig } from "../../config";
 import { GalleryService } from "../../service/gallery.service";
 import { animation } from "./gallery-image.animation";
 import * as Hammer from "hammerjs";
-import { TweenLite } from "gsap";
+import { TweenLite, Expo } from "gsap";
 import { ActivatedRoute } from "@angular/router";
 import { Observable, fromEvent } from "rxjs";
 import { switchMap, flatMap, tap, map, first } from "rxjs/operators";
@@ -23,7 +23,7 @@ export class GalleryImageComponent implements OnInit {
     animate: string;
 
     currentDirectoryId: Observable<string>;
-    currentImage$: Observable<GalleryImage>;
+    currentImage$: Observable<[GalleryImage, GalleryImage, GalleryImage]>;
     currentDirectory: Observable<GalleryDirectory>;
 
     constructor(public gallery: GalleryService, private el: ElementRef, private route: ActivatedRoute) {}
@@ -36,13 +36,8 @@ export class GalleryImageComponent implements OnInit {
         );
 
         this.currentImage$ = this.gallery.state.pipe(
-            map((x) => x.currId),
-            flatMap((currId) =>
-                this.gallery.state.pipe(
-                    flatMap((x) => x.images),
-                    first((img) => img.id === currId)
-                )
-            )
+            map((x) =>({ images: x.images, currId: x.currId, prevId: x.prevId, nextId: x.nextId})),
+            map(x => [x.images.find(xx => xx.id === x.prevId), x.images.find(xx => xx.id === x.currId), x.images.find(xx => xx.id === x.nextId)])
         );
 
         // if (this.config.gestures) {
@@ -83,18 +78,44 @@ export class GalleryImageComponent implements OnInit {
         //     console.log(ev.type +" gesture detected.");
         // });
 
+        let screenWidth = 0;
+
+   
+
+        fromEvent(mc, "panstart").subscribe((e: any) => {
+            screenWidth = window.innerWidth;
+        });
+
         fromEvent(mc, "panleft panright").subscribe((e: any) => {
-            console.log(e.deltaX);
-            elToMove.style.transform = `translate(${e.deltaX}px, 0px)`;
+            const ratio = (e.deltaX / screenWidth) * 100;
+            console.log(ratio);
+
+            TweenLite.set(elToMove, { translateX: `${ratio}%` });
+        });
+
+        let currentDirectoryId = "";
+
+        this.currentDirectoryId.subscribe((v) => {
+            currentDirectoryId = v;
         });
 
         fromEvent(mc, "panend").subscribe((e: any) => {
-            console.log("PANEND: e.deltaX");
+            const ratio = (e.deltaX / screenWidth) * 100;
+            // elToMove.style.transform = `translateX(${ratio}%)`;
 
-            const options = e.deltaX > 200 ? {} : e.deltaX < -200 ? {} : {};
+            const toVars =
+                e.deltaX > 100
+                    ? { translateX: "100%", onComplete: () => this.gallery.prev(currentDirectoryId) }
+                    : e.deltaX < -100
+                    ? { translateX: "-100%", onComplete: () => this.gallery.next(currentDirectoryId) }
+                    : { translateX: "0%" };
             // { translateX: e.deltaX > 0 ? "100%" : "-100%" }
-            TweenLite.to(elToMove, 1, options);
+            TweenLite.fromTo(elToMove, 0.25, { translateX: `${ratio}%` }, {...toVars, ease: Expo.easeOut});
             // elToMove.style.transform = `translate(${e.deltaX}px, 0px)`;
+        });
+
+        this.currentImage$.subscribe(() => {
+            TweenLite.set(elToMove, { translateX: `0%` });
         });
 
         // fromEvent(mc, "swiperight")
