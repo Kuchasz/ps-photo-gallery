@@ -60,7 +60,7 @@ export class GalleryThumbComponent implements OnInit {
         //         -this.config.width / 2
         //     );
 
-        //     TweenLite.to(this.elContainer, 0.5, { x: this.thumbsDelta });
+            // TweenLite.to(this.elContainer, 0.5, { x: this.thumbsDelta });
         // });
 
         // hammer.on("pan", (e) => {

@@ -4,6 +4,7 @@ import { GalleryConfig } from "../../config";
 import { GalleryService } from "../../service/gallery.service";
 import { animation } from "./gallery-image.animation";
 import * as Hammer from "hammerjs";
+import { TweenLite } from "gsap";
 import { ActivatedRoute } from "@angular/router";
 import { Observable, fromEvent } from "rxjs";
 import { switchMap, flatMap, tap, map, first } from "rxjs/operators";
@@ -45,34 +46,70 @@ export class GalleryImageComponent implements OnInit {
         );
 
         // if (this.config.gestures) {
-            const el = this.el.nativeElement;
-            const elToMove = this.el.nativeElement.querySelector(".g-image-container");
+        const el = this.el.nativeElement;
+        const elToMove = this.el.nativeElement.querySelector(".g-image-container");
 
-            // console.log(el);
+        // console.log(el);
 
-            const mc = new Hammer(el);
+        const mc = new Hammer(el);
 
-            // el.
-            // console.log(el);
+        // TweenLite.set(this.elContainer, { x: -this.config.width / 2 });
 
-            fromEvent(mc, "panmove").subscribe((e: any) => {
-                console.log(e.deltaX);
-                elToMove.style.transform = `translate(${e.deltaX}px, 0px)`;
-            });
+        // hammer.on("panend", (e) => {
+        //     if (Math.abs(e.velocityX) < 0.5) {
+        //         this.thumbsDelta += e.deltaX;
+        //         return;
+        //     }
 
-            // fromEvent(mc, "swiperight")
-            //     .pipe(flatMap((e: any) => this.currentDirectoryId.pipe(map((id) => ({ id, e })))))
-            //     .subscribe((g) => {
-            //         elToMove.style.transform = `translate(100%, 0px)`;
-            //         // this.gallery.prev(g.id);
-            //     });
+        //     const targetDelta = e.deltaX * Math.abs(e.velocityX);
 
-            // fromEvent(mc, "swipeleft")
-            //     .pipe(flatMap((e: any) => this.currentDirectoryId.pipe(map((id) => ({ id, e })))))
-            //     .subscribe((g) => {
-            //         elToMove.style.transform = `translate(-100%, 0px)`;
-            //         // this.gallery.next(g.id);
-            //     });
+        //     this.thumbsDelta += targetDelta;
+
+        //     this.thumbsDelta = this._valBetween(
+        //         this.thumbsDelta,
+        //         this.getMaxDelta(), // + this.config.width / 2,
+        //         -this.config.width / 2
+        //     );
+
+        // TweenLite.to(el, 1, { translateX: '100%' });
+        // });
+
+        // el.
+        // console.log(el);
+
+        // mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+
+        // mc.on("panmove", function(ev) {
+        //     console.log(ev.type +" gesture detected.");
+        // });
+
+        fromEvent(mc, "panleft panright").subscribe((e: any) => {
+            console.log(e.deltaX);
+            elToMove.style.transform = `translate(${e.deltaX}px, 0px)`;
+        });
+
+        fromEvent(mc, "panend").subscribe((e: any) => {
+            console.log("PANEND: e.deltaX");
+
+            const options = e.deltaX > 200 ? {} : e.deltaX < -200 ? {} : {};
+            // { translateX: e.deltaX > 0 ? "100%" : "-100%" }
+            TweenLite.to(elToMove, 1, options);
+            // elToMove.style.transform = `translate(${e.deltaX}px, 0px)`;
+        });
+
+        // fromEvent(mc, "swiperight")
+        //     .pipe(flatMap((e: any) => this.currentDirectoryId.pipe(map((id) => ({ id, e })))))
+        //     .subscribe((g) => {
+        //         elToMove.style.transform = `translate(100%, 0px)`;
+        //         // this.gallery.prev(g.id);
+        //     });
+
+        // fromEvent(mc, "swipeleft")
+        //     .pipe(flatMap((e: any) => this.currentDirectoryId.pipe(map((id) => ({ id, e })))))
+        //     .subscribe((g) => {
+        //         elToMove.style.transform = `translate(-100%, 0px)`;
+        //         // this.gallery.next(g.id);
+        //     });
         // }
     }
 

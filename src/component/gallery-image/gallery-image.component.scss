@@ -21,7 +21,7 @@
         // padding: 30px;
         // display: flex;
         // transition: transform 0.5s ease-out;
-        pointer-events: none;
+        // pointer-events: none;
         .g-image-img {
             display: inline-block;
             flex: 1;
@@ -41,11 +41,11 @@
             }
 
             &.prev {
-                left: -90%;
+                left: -100%;
             }
 
             &.next {
-                left: 90%;
+                left: 100%;
                 top: 0;
             }
         }
