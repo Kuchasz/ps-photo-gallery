@@ -19,6 +19,9 @@
             <span class="g-state-directory">
                 <div>{{ currentDirectory.name }}</div>
             </span>
+            <span class="g-state-button rate" (click)="toggleFullscreen()"
+                ><i class="material-icons">message</i></span
+            >
             <span class="g-state-button" *ngIf="fullscreenEnabled" (click)="toggleFullscreen()"
                 ><i class="material-icons">fullscreen</i></span
             >

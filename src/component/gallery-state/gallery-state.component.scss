@@ -1,3 +1,24 @@
+@keyframes wiggle {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    1% {
+        transform: translateY(25px) rotateZ(-45deg) scale(3);
+    }
+    2% {
+        transform: rotateZ(0deg) scale(1);
+    }
+    3% {
+        transform: translateY(25px) rotateZ(45deg) scale(3);
+    }
+    5% {
+        transform: rotateZ(0deg) scale(1);
+    }
+    100% {
+        transform: rotateZ(0deg);
+    }
+}
+
 .gallery-state {
     display: flex;
     font-size: 0.75em;
@@ -52,7 +73,7 @@ span {
     }
 }
 
-.g-state-directory{
+.g-state-directory {
     color: white;
     flex-grow: 1;
     align-self: center;
@@ -72,8 +93,16 @@ span {
         color: black;
     }
     div {
-      padding: 0em 0.5em;
-  }
+        padding: 0em 0.5em;
+    }
+    &.rate {
+        i {
+            animation-name: wiggle;
+            animation-duration: 20s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-out;
+        }
+    }
 }
 
 .g-snapped-count {
