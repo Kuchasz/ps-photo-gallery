@@ -1,47 +1,60 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {CommonModule} from "@angular/common";
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule, APP_INITIALIZER } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-import {AppComponent} from './component/app.component';
-import {GalleryModule} from "../gallery.module";
-import {checkIfMobile} from "../utils/browser";
-import {DisplayModes} from "../config/gallery.config";
+import { AppComponent } from "./component/app.component";
+import { GalleryModule } from "../gallery.module";
+import { checkIfMobile } from "../utils/browser";
+import { DisplayModes } from "../config/gallery.config";
+import { GalleryService } from "../service/gallery.service";
+import { fetchGallery } from "../utils/jalbum";
 
 @NgModule({
-    declarations: [
-        AppComponent
-    ],
+    declarations: [AppComponent],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
         CommonModule,
-        GalleryModule.forRoot(
-            {
-                style: {
-                    background: "#333",
-                    width: "100vw",
-                    height: "100vh"
-                },
-                description: {
-                    position: 'bottom',
-                    overlay: false,
-                    text: true,
-                    counter: true
-                },
-                thumbnails: {
-                    width: 95,
-                    height: 95,
-                    position: 'bottom',
-                    space: 20
-                },
-                navigation: {},
-                gestures: true,
-                displayMode: checkIfMobile() ? DisplayModes.Compact : DisplayModes.Full
-            }
-        )
+        GalleryModule.forRoot({
+            style: {
+                background: "#333",
+                width: "100vw",
+                height: "100vh"
+            },
+            description: {
+                position: "bottom",
+                overlay: false,
+                text: true,
+                counter: true
+            },
+            thumbnails: {
+                width: 95,
+                height: 95,
+                position: "bottom",
+                space: 20
+            },
+            navigation: {},
+            gestures: true,
+            displayMode: checkIfMobile() ? DisplayModes.Compact : DisplayModes.Full
+        })
+    ],
+    providers: [
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (galleries: GalleryService) => {
+                return () => new Promise((res, rej) => {
+                    const root = "/";
+                    fetchGallery(root).then((gallery) => {
+                        galleries.load(gallery);
+                        res();
+                    });
+                });
+            },
+            deps: [GalleryService],
+            multi: true
+        }
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

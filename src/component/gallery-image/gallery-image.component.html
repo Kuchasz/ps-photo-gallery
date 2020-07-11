@@ -4,7 +4,7 @@
             <div
                 class="prev g-image-img"
                 [lazyImage]="currentImage[0].src"
-                [thumb]="currentImage[0].thumbnail"
+                [thumb]="currentImage[0].thumb"
                 (lazyLoad)="imageLoad($event)"
             >
                 <!-- <gallery-loader *ngIf="loading" [config]="config.loader"></gallery-loader> -->
@@ -12,7 +12,7 @@
             <div
                 class="g-image-img"
                 [lazyImage]="currentImage[1].src"
-                [thumb]="currentImage[1].thumbnail"
+                [thumb]="currentImage[1].thumb"
                 (lazyLoad)="imageLoad($event)"
             >
                 <!-- <gallery-loader *ngIf="loading" [config]="config.loader"></gallery-loader> -->
@@ -20,7 +20,7 @@
             <div
                 class="next g-image-img"
                 [lazyImage]="currentImage[2].src"
-                [thumb]="currentImage[2].thumbnail"
+                [thumb]="currentImage[2].thumb"
                 (lazyLoad)="imageLoad($event)"
             >
                 <!-- <gallery-loader *ngIf="loading" [config]="config.loader"></gallery-loader> -->

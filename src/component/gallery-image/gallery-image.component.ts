@@ -36,6 +36,7 @@ export class GalleryImageComponent implements OnInit {
         );
 
         this.currentImage$ = this.gallery.state.pipe(
+            tap(console.log),
             map((x) =>({ images: x.images, currId: x.currId, prevId: x.prevId, nextId: x.nextId})),
             map(x => [x.images.find(xx => xx.id === x.prevId), x.images.find(xx => xx.id === x.currId), x.images.find(xx => xx.id === x.nextId)])
         );
@@ -80,8 +81,6 @@ export class GalleryImageComponent implements OnInit {
 
         let screenWidth = 0;
 
-   
-
         fromEvent(mc, "panstart").subscribe((e: any) => {
             screenWidth = window.innerWidth;
         });
@@ -104,9 +103,9 @@ export class GalleryImageComponent implements OnInit {
             // elToMove.style.transform = `translateX(${ratio}%)`;
 
             const toVars =
-                e.deltaX > 100
+                e.deltaX > 50
                     ? { translateX: "100%", onComplete: () => this.gallery.prev(currentDirectoryId) }
-                    : e.deltaX < -100
+                    : e.deltaX < -50
                     ? { translateX: "-100%", onComplete: () => this.gallery.next(currentDirectoryId) }
                     : { translateX: "0%" };
             // { translateX: e.deltaX > 0 ? "100%" : "-100%" }

@@ -28,7 +28,6 @@ export class GalleryDirectoriesComponent {
     }
 
     selectDirectory(directoryId: string) {
-        this.gallery.selectDirectory(directoryId);
         this.router.navigate([`/directory/${directoryId}`]);
     }
 }

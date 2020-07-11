@@ -49,8 +49,8 @@ module.exports = {
     entry: resolve("./src/demo/main.ts"),
     output: {
         filename: "bundle.js",
-        path: resolve("./dist") //,
-        // publicPath: './'
+        path: resolve("./dist"), //,
+        publicPath: '/'
     },
     devtool: 'eval-source-map',
     performance: {
@@ -98,9 +98,7 @@ module.exports = {
     devServer: {
         port: 8080,
         host: "192.168.56.102",
-        historyApiFallback: {
-            index: 'index.html'
-        },
+        historyApiFallback: true,
         watchOptions: {
             aggregateTimeout: 300,
             poll: 1000
