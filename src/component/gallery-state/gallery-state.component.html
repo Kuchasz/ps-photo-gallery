@@ -3,7 +3,6 @@
         ><div class="gallery-state" *ngIf="currentImage$ | async as currentImage">
             <span (click)="goBack()" class="g-state-button">
                 <i class="material-icons">arrow_back</i>
-                <div>{{ currentDirectory.name }}</div>
             </span>
             <span *ngIf="!currentImage.snapped" (click)="snapImage()" class="g-state-button"
                 ><i class="material-icons">star_outline</i></span
@@ -15,7 +14,10 @@
                 <span class="g-snapped-count" *ngIf="snappedCount > 0" (click)="displaySnappedImages()"
                     >{{ snappedCount }} selected</span
                 >
-                <span>{{ currentImage.text }}</span>
+                <!-- <span>{{ currentImage.text }}</span> -->
+            </span>
+            <span class="g-state-directory">
+                <div>{{ currentDirectory.name }}</div>
             </span>
             <span class="g-state-button" *ngIf="fullscreenEnabled" (click)="toggleFullscreen()"
                 ><i class="material-icons">fullscreen</i></span

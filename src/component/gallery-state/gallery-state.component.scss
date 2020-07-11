@@ -52,6 +52,12 @@ span {
     }
 }
 
+.g-state-directory{
+    color: white;
+    flex-grow: 1;
+    align-self: center;
+}
+
 .g-state-button {
     @extend %state-button;
     cursor: pointer;
