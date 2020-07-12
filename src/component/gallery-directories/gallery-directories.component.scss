@@ -57,6 +57,7 @@
             border-color: white;
             background-position: 50%;
             background-size: cover;
+            user-select: none;
             @media (max-width: 480px) {
                 // width: 112px;
                 height: 160px;
