@@ -60,6 +60,10 @@ export class GalleryStateComponent {
         this.location.back();
     }
 
+    orderPhotos(){
+        
+    }
+
     public snapImage() {
         this.gallery.snapImage(this.currentImageId);
     }

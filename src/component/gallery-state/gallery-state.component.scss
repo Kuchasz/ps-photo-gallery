@@ -103,6 +103,12 @@ span {
             animation-timing-function: ease-out;
         }
     }
+    &.count {
+        font-size: 20px;
+        i {
+            margin-right: 8px;
+        }
+    }
 }
 
 .g-snapped-count {
