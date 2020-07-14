@@ -60,6 +60,8 @@ export class GalleryImageGridComponent implements OnInit {
                 { left: [], right: [] }
             );
 
+            console.log(sumHeights(finalImages.left), sumHeights(finalImages.right));
+
             this.leftColImages = finalImages.left;
             this.rightColImages = finalImages.right;
         });
