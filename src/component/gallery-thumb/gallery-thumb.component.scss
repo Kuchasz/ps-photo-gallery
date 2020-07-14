@@ -1,14 +1,14 @@
 :host {
     display: block;
     z-index: 1;
-    background: #eee;
+    background: #fff;
 }
 
 .g-thumbs-container {
   position: relative;
   z-index: 206;
   overflow-x: hidden;
-  width: 620px;
+  width: 650px;
   display: flex;
   margin: 0px;
 }
@@ -67,8 +67,8 @@
     display: flex;
     align-items: center;
     height: 100%;
-    opacity: 0.25;
-    padding: 50px;
+    opacity: 0.5;
+    padding: 50px 25px;
     user-select: none;
     cursor: pointer;
 

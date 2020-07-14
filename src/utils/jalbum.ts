@@ -69,7 +69,9 @@ export const fetchGallery = (path: string) =>
                                             id: `${directoryId}-${img.img}-${idx}`,
                                             src: `${path}${item.path}${img.img}`,
                                             thumbnail: `${path}${item.path}${img.thmb}`,
-                                            text: img.img.split("/")[1]
+                                            text: img.img.split("/")[1],
+                                            width: Number(img.printwidth),
+                                            height: Number(img.printheight)
                                         }));
 
                                         galleryImages.forEach(i => images.push(i));

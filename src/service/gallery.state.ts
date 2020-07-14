@@ -19,6 +19,8 @@ export interface GalleryImage {
   thumbnail?: string;
   text?: string;
   snapped: boolean;
+  width: number;
+  height: number;
 }
 
 export interface GalleryDirectory {

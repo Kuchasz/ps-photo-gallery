@@ -15,6 +15,7 @@ import { GalleryPlayerComponent } from './component/gallery-player/gallery-playe
 import { GalleryMainComponent } from './component/gallery-main/gallery-main.component';
 import { GallerySnappedImagesComponent } from './component/gallery-snapped-images/gallery-snapped-images.component';
 import { GallerySnappedStateComponent } from './component/gallery-snapped-state/gallery-snapped-state.component';
+import { GalleryImageGridComponent } from './component/gallery-image-grid/gallery-image-grid.component';
 
 import { LazyDirective } from './directive/lazy.directive';
 import { TapDirective } from './directive/tap.directive';
@@ -45,6 +46,7 @@ export const CONFIG = new InjectionToken<GalleryConfig>('config');
     GalleryMainComponent,
     GallerySnappedImagesComponent,
     GallerySnappedStateComponent,
+    GalleryImageGridComponent,
     TapDirective,
     LazyDirective
   ],
