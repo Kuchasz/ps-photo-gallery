@@ -7,9 +7,9 @@
             [ngClass]="{ visited: state.directories[dir].visited }"
             (click)="selectDirectory(dir)"
         >
-            <div class="g-directory-photo" [lazyImage]="getImage(dir).src">
-                <div class="g-state-text">{{ state.directories[dir].name }}<br/>{{ getImageCount(dir) }}</div>
-            </div>
+            <div class="g-directory-photo" [lazyImage]="getImage(dir).src"></div>
+            <div class="g-directory-background"></div>
+            <div class="g-state-text">{{ state.directories[dir].name }}</div>
         </div>
     </div>
     <div class="g-directory-filler"></div>

@@ -28,7 +28,8 @@ export class GalleryImageGridComponent implements OnInit {
     currentDirectory: Observable<GalleryDirectory>;
 
     images$: Observable<GalleryImage[]>;
-    columnsOfImages: GalleryImage[][];
+    leftColImages: GalleryImage[];
+    rightColImages: GalleryImage[];
 
     constructor(public gallery: GalleryService, private route: ActivatedRoute) {}
 
@@ -48,14 +49,22 @@ export class GalleryImageGridComponent implements OnInit {
             )
         );
 
-        const sumHeights = sum((x: GalleryImage) => x.height + 20);
-        const sortByHeight = sort((x: {height: number}) => x.height);
+        const sumHeights = sum((x: GalleryImage) => x.height + 4);
+        const sortByHeight = sort((x: { height: number }) => x.height);
 
         this.images$.subscribe((images) => {
             const finalImages = images.reduce(
-                (agg, image) => agg.map(col => {height: sumHeights(col), col})
-                [[],[],[],[]]
+                ({ left, right }, col) => {
+                    const leftOrRight = sumHeights(left) > sumHeights(right);
+                    return leftOrRight ? ({left, right: [...right, col]}) : ({right, left: [...left, col]});
+                },
+                { left: [], right: [] }
             );
+
+            // const finalImages = images.reduce(
+            //     (agg, image) => agg.map(col => {height: sumHeights(col), col}),
+            //     [[],[],[],[]]
+            // );
 
             console.log(sumHeights(finalImages.left), sumHeights(finalImages.right));
 
