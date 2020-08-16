@@ -14,7 +14,7 @@ import { DisplayModes } from "../../config/gallery.config";
 import { Observable } from "rxjs";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { switchMap, find, flatMap, map, tap, first, filter } from "rxjs/operators";
-import { sum } from "../../utils/array";
+import { sum, sort } from "../../utils/array";
 
 @Component({
     selector: "gallery-image-grid",
@@ -28,8 +28,7 @@ export class GalleryImageGridComponent implements OnInit {
     currentDirectory: Observable<GalleryDirectory>;
 
     images$: Observable<GalleryImage[]>;
-    leftColImages: GalleryImage[];
-    rightColImages: GalleryImage[];
+    columnsOfImages: GalleryImage[][];
 
     constructor(public gallery: GalleryService, private route: ActivatedRoute) {}
 
@@ -50,14 +49,12 @@ export class GalleryImageGridComponent implements OnInit {
         );
 
         const sumHeights = sum((x: GalleryImage) => x.height + 20);
+        const sortByHeight = sort((x: {height: number}) => x.height);
 
         this.images$.subscribe((images) => {
             const finalImages = images.reduce(
-                (agg, image) =>
-                    sumHeights(agg.left) < sumHeights(agg.right)
-                        ? { ...agg, left: [...agg.left, image] }
-                        : { ...agg, right: [...agg.right, image] },
-                { left: [], right: [] }
+                (agg, image) => agg.map(col => {height: sumHeights(col), col})
+                [[],[],[],[]]
             );
 
             console.log(sumHeights(finalImages.left), sumHeights(finalImages.right));
