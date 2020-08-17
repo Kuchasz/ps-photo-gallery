@@ -1,33 +1,7 @@
 <div class="images-container" *ngIf="images$ | async as images">
-    <div class="column left">
-        <div *ngFor="let image of leftColImages" class="image-container">
-            <img [src]="image.src" />
-        </div>
-    </div>
-    <div class="column right">
-        <div *ngFor="let image of rightColImages" class="image-container">
+    <div *ngFor="let columnImages of columnsImages" class="column">
+        <div *ngFor="let image of columnImages" class="image-container">
             <img [src]="image.src" />
         </div>
     </div>
 </div>
-
-<!-- <div *ngIf="gallery.state | async as state" class="g-container" [style.flexDirection]="thumbDirection" [ngStyle]="gallery.config.style">
-  <gallery-state [config]="gallery.config" [state]="state"></gallery-state>
-
-  <div class="g-box">
-
-    <div class="g-image-box">
-
-      <gallery-image [state]="state" [config]="gallery.config" (loading)="loading = $event"></gallery-image>
-
-      <gallery-nav *ngIf="gallery.config.navigation && gallery.config.displayMode === 0" [currentDirectoryId]="currentDirectoryId$ | async" [state]="state"></gallery-nav> -->
-
-<!--<div class="g-layer" *ngIf="state.images.find(s => s.id === state.currId).layer" [innerHtml]="state.images.find(s => s.id === state.currId).layer"></div>-->
-
-<!-- </div> -->
-
-<!--<gallery-player *ngIf="config.player" [state]="state" [config]="config.player"></gallery-player>-->
-
-<!-- </div>
-  <gallery-thumb [style.height]="(state.fullscreenEnabled && fullscreen) ? 'auto' : '0px'" [images]="images$ | async" [directoryId]="currentDirectoryId$ | async" [state]="state" [directory]="currentDirectory | async" [config]="gallery.config.thumbnails"></gallery-thumb>
-</div> -->

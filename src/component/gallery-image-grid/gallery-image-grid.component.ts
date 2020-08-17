@@ -31,6 +31,8 @@ export class GalleryImageGridComponent implements OnInit {
     leftColImages: GalleryImage[];
     rightColImages: GalleryImage[];
 
+    columnsImages: GalleryImage[][];
+
     constructor(public gallery: GalleryService, private route: ActivatedRoute) {}
 
     ngOnInit() {
@@ -54,11 +56,20 @@ export class GalleryImageGridComponent implements OnInit {
 
         this.images$.subscribe((images) => {
             const finalImages = images.reduce(
-                ({ left, right }, col) => {
-                    const leftOrRight = sumHeights(left) > sumHeights(right);
-                    return leftOrRight ? ({left, right: [...right, col]}) : ({right, left: [...left, col]});
+                (columns, img) => {
+                    const shorttestColumn = [...columns]
+                        .map((items, index) => ({ index, items, height: sumHeights(items) }))
+                        .sort((l, r) => l.height - r.height)[0];
+
+                    return [
+                        ...columns.slice(0, shorttestColumn.index),
+                        [...shorttestColumn.items, img],
+                        ...columns.slice(shorttestColumn.index + 1)
+                    ];
+                    // const leftOrRight = sumHeights(left) > sumHeights(right);
+                    // return leftOrRight ? ({left, right: [...right, img]}) : ({right, left: [...left, img]});
                 },
-                { left: [], right: [] }
+                [[], [], [], []]
             );
 
             // const finalImages = images.reduce(
@@ -66,10 +77,12 @@ export class GalleryImageGridComponent implements OnInit {
             //     [[],[],[],[]]
             // );
 
-            console.log(sumHeights(finalImages.left), sumHeights(finalImages.right));
+            this.columnsImages = finalImages;
 
-            this.leftColImages = finalImages.left;
-            this.rightColImages = finalImages.right;
+            console.log(finalImages);
+
+            // this.leftColImages = finalImages.left;
+            // this.rightColImages = finalImages.right;
         });
 
         this.currentDirectory = this.currentDirectoryId$.pipe(

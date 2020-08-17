@@ -2,12 +2,13 @@
     display: flex;
     justify-content: center;
     background-color: white;
-    padding: 4px;
+    padding: 2px;
 }
 
 .column {
   flex-grow: 1;
   max-width: 800px;
+  padding: 0px 1.5px;
     // width: 600px;
     // padding: 0px 4px;
 
@@ -20,14 +21,15 @@
 }
 
 .image-container {
-    padding: 2px 4px;
+    padding: 0px;
+    margin-bottom: -1px;
 }
 
 img {
     box-sizing: border-box;
     width: 100%;
 
-    border-radius: 8px;
+    // border-radius: 8px;
     // padding: 4px 0px;
     // margin: 10px;
 }
