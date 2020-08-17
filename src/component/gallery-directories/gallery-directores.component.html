@@ -9,7 +9,9 @@
         >
             <div class="g-directory-photo" [lazyImage]="getImage(dir).src"></div>
             <div class="g-directory-background"></div>
-            <div class="g-state-text">{{ state.directories[dir].name }}</div>
+            <div class="g-state-text">
+                <span>{{ state.directories[dir].name }}</span>
+            </div>
         </div>
     </div>
     <div class="g-directory-filler"></div>

@@ -24,6 +24,7 @@
         height: 350px;
         position: relative;
         user-select: none;
+        overflow: hidden;
 
         @media (max-width: 480px) {
             flex-basis: 150px;
@@ -48,6 +49,19 @@
             // }
         }
 
+        &:hover {
+            .g-directory-photo {
+                transform: scale(1.1);
+            }
+            .g-state-text {
+                background-color: rgba(0, 0, 0, 0.8);
+                span {
+                    border-bottom: 2px solid rgba(255, 255, 255, 1);
+                    margin: 20px 20px 40px 60px;
+                }
+            }
+        }
+
         .g-directory-background {
             background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6) 90%, rgba(0, 0, 0, 0.8));
             height: 100%;
@@ -58,10 +72,12 @@
         .g-directory-photo {
             height: 100%;
             width: 100%;
+            transition: transform 4s linear;
             position: absolute;
             display: inline-block;
             border-width: 0px;
             border-style: solid;
+            filter: saturate(0.75);
             border-color: white;
             background-position: 50%;
             background-size: cover;
@@ -72,18 +88,24 @@
             }
         }
         .g-state-text {
-            box-shadow: 0 0 14px transparent;
             display: flex;
             justify-content: flex-start;
+            transition: background-color 0.5s linear;
             align-items: flex-end;
 
-            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            span {
+                border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+                padding-bottom: 10px;
+                margin: 00px 20px 20px 60px;
+                transition: border-bottom, margin 0.25s ease-out;
+            }
+
             color: white;
             font-weight: bolder;
             // background: white;
             user-select: none;
             box-sizing: border-box;
-            // width: 100%;
+            width: 100%;
             height: 100%;
             text-transform: uppercase;
             position: absolute;
