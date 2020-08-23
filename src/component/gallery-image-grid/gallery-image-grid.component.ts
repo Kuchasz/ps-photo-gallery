@@ -55,7 +55,7 @@ export class GalleryImageGridComponent implements OnInit {
         const sortByHeight = sort((x: { height: number }) => x.height);
 
         this.images$.subscribe((images) => {
-            const finalImages = images.reduce(
+            let finalImages: GalleryImage[][] = images.reduce(
                 (columns, img) => {
                     const shorttestColumn = [...columns]
                         .map((items, index) => ({ index, items, height: sumHeights(items) }))
@@ -70,6 +70,19 @@ export class GalleryImageGridComponent implements OnInit {
                     // return leftOrRight ? ({left, right: [...right, img]}) : ({right, left: [...left, img]});
                 },
                 [[], [], [], []]
+            );
+
+            const columnsWithHeights = finalImages.map((images) => ({ height: sumHeights(images), images }));
+
+            const shortestColumn = sortByHeight(columnsWithHeights)[0];
+
+            const columnsWithAdjustments = columnsWithHeights.map((c) => ({
+                images: c.images,
+                adjustment: shortestColumn.height / c.height
+            }));
+
+            finalImages = columnsWithAdjustments.map((c) =>
+                c.images.map((img) => ({ ...img, height: img.height * c.adjustment }))
             );
 
             // const finalImages = images.reduce(
