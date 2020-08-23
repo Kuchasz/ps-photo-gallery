@@ -16,5 +16,5 @@
     <!--<gallery-player *ngIf="config.player" [state]="state" [config]="config.player"></gallery-player>-->
 
   </div>
-  <gallery-thumb [style.height]="(state.fullscreenEnabled && fullscreen) ? 'auto' : '0px'" [images]="images$ | async" [directoryId]="currentDirectoryId$ | async" [state]="state" [directory]="currentDirectory | async" [config]="gallery.config.thumbnails"></gallery-thumb>
+  <gallery-thumb [images]="images$ | async" [directoryId]="currentDirectoryId$ | async" [state]="state" [directory]="currentDirectory | async" [config]="gallery.config.thumbnails"></gallery-thumb>
 </div>
