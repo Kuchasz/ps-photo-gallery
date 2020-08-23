@@ -18,7 +18,7 @@ import { fetchGallery } from "../utils/jalbum";
         CommonModule,
         GalleryModule.forRoot({
             style: {
-                background: "#333",
+                background: "rgba(0, 0, 0, 0.9)",
                 width: "100vw",
                 height: "100vh"
             },

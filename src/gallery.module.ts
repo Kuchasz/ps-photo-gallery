@@ -12,10 +12,10 @@ import { GalleryStateComponent } from './component/gallery-state/gallery-state.c
 import { GalleryImageComponent } from './component/gallery-image/gallery-image.component';
 import { GalleryLoaderComponent } from './component/gallery-loader/gallery-loader.component';
 import { GalleryPlayerComponent } from './component/gallery-player/gallery-player.component';
-import { GalleryMainComponent } from './component/gallery-main/gallery-main.component';
+import { GalleryImagesFullscreenComponent } from './component/gallery-images-fullscreen/gallery-images-fullscreen.component';
 import { GallerySnappedImagesComponent } from './component/gallery-snapped-images/gallery-snapped-images.component';
 import { GallerySnappedStateComponent } from './component/gallery-snapped-state/gallery-snapped-state.component';
-import { GalleryImageGridComponent } from './component/gallery-image-grid/gallery-image-grid.component';
+import { GalleryImagesGridComponent } from './component/gallery-images-grid/gallery-images-grid.component';
 
 import { LazyDirective } from './directive/lazy.directive';
 import { TapDirective } from './directive/tap.directive';
@@ -43,10 +43,10 @@ export const CONFIG = new InjectionToken<GalleryConfig>('config');
     GalleryLoaderComponent,
     GalleryPlayerComponent,
     GalleryDirectoriesComponent,
-    GalleryMainComponent,
+    GalleryImagesFullscreenComponent,
     GallerySnappedImagesComponent,
     GallerySnappedStateComponent,
-    GalleryImageGridComponent,
+    GalleryImagesGridComponent,
     TapDirective,
     LazyDirective
   ],

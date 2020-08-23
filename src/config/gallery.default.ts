@@ -15,7 +15,7 @@ export const defaultState: GalleryState = {
 
 export const defaultConfig: GalleryConfig = {
   style: {
-    background: '#444',
+    background: '#555',
     width: '900px',
     height: '500px'
   },

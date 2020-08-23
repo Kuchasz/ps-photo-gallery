@@ -22,7 +22,7 @@
 .gallery-state {
     display: flex;
     font-size: 0.75em;
-    background: black;
+    // background: black;
 }
 span {
     padding: 0.5em 0.75em;
@@ -37,17 +37,19 @@ span {
 
 .g-back-button {
     @extend %state-button;
-    background: white;
+    // background: white;
     display: flex;
     flex-direction: row;
-    color: black;
+    color: white;
+    opacity: 0.25;
     align-items: center;
     font-weight: 100;
     cursor: pointer;
-    transition: background 0.25s, color 0.25s;
+    transition: opacity 0.25s;
     &:hover {
-        background: black;
-        color: white;
+        // background: black;
+        // color: white;
+        opacity: 1;
     }
     div {
         padding: 0em 0.5em;
@@ -60,7 +62,7 @@ span {
 }
 
 .g-state-text {
-    background: black;
+    // background: black;
     display: flex;
     flex-grow: 1;
     align-self: center;
@@ -82,15 +84,17 @@ span {
 .g-state-button {
     @extend %state-button;
     cursor: pointer;
-    background: black;
+    // background: black;
     display: flex;
     flex-direction: row;
     align-items: center;
     color: white;
-    transition: background 0.25s, color 0.25s;
+    opacity: 0.25;
+    transition: opacity 0.25s;
     &:hover {
-        background: white;
-        color: black;
+        // background: white;
+        // color: black;
+        opacity: 1;
     }
     div {
         padding: 0em 0.5em;

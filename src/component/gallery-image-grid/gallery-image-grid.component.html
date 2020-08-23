@@ -1,7 +1,0 @@
-<div class="images-container" *ngIf="images$ | async as images">
-    <div *ngFor="let columnImages of columnsImages" class="column">
-        <div *ngFor="let image of columnImages" [style.flex]="image.height" class="image-container">
-            <img [src]="image.src" />
-        </div>
-    </div>
-</div>

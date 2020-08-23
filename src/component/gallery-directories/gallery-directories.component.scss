@@ -51,15 +51,15 @@
 
         &:hover {
             .g-directory-photo {
-                transition: transform 4s linear;
-                transition-delay: 500ms;
+                // transition: transform 4s linear;
+                // transition-delay: 500ms;
                 transform: scale(1.1);
             }
             .g-state-text {
                 background-color: rgba(0, 0, 0, 0.5);
                 span {
                     border-bottom: 2px solid rgba(255, 255, 255, 1);
-                    margin: 20px 20px 40px 60px;
+                    margin: 20px 20px 80px 60px;
                 }
             }
         }
@@ -74,7 +74,7 @@
         .g-directory-photo {
             height: 100%;
             width: 100%;
-            transition: transform 0.25s ease-out;
+            transition: transform 4s linear;
             position: absolute;
             display: inline-block;
             border-width: 0px;
@@ -99,7 +99,7 @@
                 border-bottom: 2px solid rgba(255, 255, 255, 0.3);
                 padding-bottom: 10px;
                 margin: 00px 20px 20px 60px;
-                transition: border-bottom, margin 0.25s ease-out;
+                transition: border-bottom, margin 0.4s ease-in-out;
                 @media (max-width: 480px) {
                     margin: 0px;
                 }

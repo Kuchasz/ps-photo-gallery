@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input } from "@angular/core";
+import { Component, ChangeDetectionStrategy, Input, EventEmitter, Output } from "@angular/core";
 import { GalleryService } from "../../service/gallery.service";
 import { Location } from "@angular/common";
 import { GalleryState, GalleryImage, GalleryDirectory } from "../../service/gallery.state";
@@ -17,6 +17,7 @@ import { map, switchMap, flatMap, find, first } from "rxjs/operators";
 export class GalleryStateComponent {
     @Input() state: GalleryState;
     @Input() config: GalleryConfig;
+    @Output() onBack: EventEmitter<void> = new EventEmitter<void>(false);
 
     currentDirectoryId$: Observable<string>;
     currentImage$: Observable<GalleryImage>;
@@ -57,11 +58,11 @@ export class GalleryStateComponent {
     }
 
     goBack(){
-        this.location.back();
+        this.onBack.emit();
+        // this.location.back();
     }
 
     orderPhotos(){
-        
     }
 
     public snapImage() {

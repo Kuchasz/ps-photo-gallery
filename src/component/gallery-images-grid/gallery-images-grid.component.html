@@ -1,0 +1,17 @@
+<div class="images-container" *ngIf="images$ | async as images">
+    <ng-container *ngIf="currentDirectoryId$ | async as directoryId">
+        <div *ngFor="let columnImages of columnsImages" class="column">
+            <div
+                *ngFor="let image of columnImages"
+                (click)="enableFullscreenMode(image.id, directoryId)"
+                [style.flex]="image.height"
+                class="image-container"
+            >
+                <img [src]="image.src" />
+            </div>
+        </div>
+    </ng-container>
+</div>
+<div *ngIf="fullscreenModeEnabled" class="images-fullscreen-container">
+    <gallery-images-fullscreen (onBack)="disableFullscreenMode()"></gallery-images-fullscreen>
+</div>

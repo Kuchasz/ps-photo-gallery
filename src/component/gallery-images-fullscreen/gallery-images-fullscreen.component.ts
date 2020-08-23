@@ -5,7 +5,9 @@ import {
     Component,
     Input,
     OnInit,
-    ViewEncapsulation
+    ViewEncapsulation,
+    EventEmitter,
+    Output
 } from "@angular/core";
 import { GalleryState, GalleryDirectory, GalleryImage } from "../../service/gallery.state";
 import { GalleryService } from "../../service/gallery.service";
@@ -16,13 +18,15 @@ import { ActivatedRoute, ParamMap } from "@angular/router";
 import { switchMap, find, flatMap, map, tap, first, filter } from "rxjs/operators";
 
 @Component({
-    selector: "gallery-main",
-    templateUrl: "./gallery-main.component.html",
-    styleUrls: ["./gallery-main.component.scss"],
+    selector: "gallery-images-fullscreen",
+    templateUrl: "./gallery-images-fullscreen.component.html",
+    styleUrls: ["./gallery-images-fullscreen.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class GalleryMainComponent implements OnInit {
+export class GalleryImagesFullscreenComponent implements OnInit {
+    @Output() onBack: EventEmitter<void> = new EventEmitter<void>(false);
+
     loading: any;
     thumbDirection: string;
 
@@ -59,5 +63,9 @@ export class GalleryMainComponent implements OnInit {
         return (
             this.gallery.config.displayMode !== DisplayModes.Compact
         );
+    }
+
+    goBack(){
+        this.onBack.emit();
     }
 }

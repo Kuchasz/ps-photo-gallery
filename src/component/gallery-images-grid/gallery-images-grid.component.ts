@@ -17,13 +17,13 @@ import { switchMap, find, flatMap, map, tap, first, filter } from "rxjs/operator
 import { sum, sort } from "../../utils/array";
 
 @Component({
-    selector: "gallery-image-grid",
-    templateUrl: "./gallery-image-grid.component.html",
-    styleUrls: ["./gallery-image-grid.component.scss"],
+    selector: "gallery-images-grid",
+    templateUrl: "./gallery-images-grid.component.html",
+    styleUrls: ["./gallery-images-grid.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class GalleryImageGridComponent implements OnInit {
+export class GalleryImagesGridComponent implements OnInit {
     currentDirectoryId$: Observable<string>;
     currentDirectory: Observable<GalleryDirectory>;
 
@@ -32,6 +32,7 @@ export class GalleryImageGridComponent implements OnInit {
     rightColImages: GalleryImage[];
 
     columnsImages: GalleryImage[][];
+    fullscreenModeEnabled: boolean = false;
 
     constructor(public gallery: GalleryService, private route: ActivatedRoute) {}
 
@@ -54,25 +55,22 @@ export class GalleryImageGridComponent implements OnInit {
         const sumHeights = sum((x: GalleryImage) => x.height + 4);
         const sortByHeight = sort((x: { height: number }) => x.height);
 
-        const columns = this.gallery.config.displayMode === DisplayModes.Compact ? [[],[]] : [[], [], [], []];
+        const columns = this.gallery.config.displayMode === DisplayModes.Compact ? [[], []] : [[], [], [], []];
 
         this.images$.subscribe((images) => {
-            let finalImages: GalleryImage[][] = images.reduce(
-                (columns, img) => {
-                    const shorttestColumn = [...columns]
-                        .map((items, index) => ({ index, items, height: sumHeights(items) }))
-                        .sort((l, r) => l.height - r.height)[0];
+            let finalImages: GalleryImage[][] = images.reduce((columns, img) => {
+                const shorttestColumn = [...columns]
+                    .map((items, index) => ({ index, items, height: sumHeights(items) }))
+                    .sort((l, r) => l.height - r.height)[0];
 
-                    return [
-                        ...columns.slice(0, shorttestColumn.index),
-                        [...shorttestColumn.items, img],
-                        ...columns.slice(shorttestColumn.index + 1)
-                    ];
-                    // const leftOrRight = sumHeights(left) > sumHeights(right);
-                    // return leftOrRight ? ({left, right: [...right, img]}) : ({right, left: [...left, img]});
-                },
-                columns
-            );
+                return [
+                    ...columns.slice(0, shorttestColumn.index),
+                    [...shorttestColumn.items, img],
+                    ...columns.slice(shorttestColumn.index + 1)
+                ];
+                // const leftOrRight = sumHeights(left) > sumHeights(right);
+                // return leftOrRight ? ({left, right: [...right, img]}) : ({right, left: [...left, img]});
+            }, columns);
 
             const columnsWithHeights = finalImages.map((images) => ({ height: sumHeights(images), images }));
 
@@ -94,8 +92,6 @@ export class GalleryImageGridComponent implements OnInit {
 
             this.columnsImages = finalImages;
 
-            console.log(finalImages);
-
             // this.leftColImages = finalImages.left;
             // this.rightColImages = finalImages.right;
         });
@@ -103,5 +99,14 @@ export class GalleryImageGridComponent implements OnInit {
         this.currentDirectory = this.currentDirectoryId$.pipe(
             switchMap((directoryIndex) => this.gallery.getDirectory(directoryIndex))
         );
+    }
+
+    enableFullscreenMode(imageId: string, directoryId: string) {
+        this.fullscreenModeEnabled = true;
+        this.gallery.selectImage(imageId, directoryId);
+    }
+
+    disableFullscreenMode(){
+        this.fullscreenModeEnabled = false;
     }
 }
