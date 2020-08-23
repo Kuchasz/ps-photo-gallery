@@ -9,7 +9,19 @@ import { GalleryImagesGridComponent } from "./component/gallery-images-grid/gall
 const routes: Routes = [
     { path: "", component: GalleryDirectoriesComponent },
     { path: "snapped", component: GallerySnappedImagesComponent },
-    { path: "directory/:id", component: GalleryImagesGridComponent }
+    {
+        path: "directory/:id",
+        children: [
+            {
+                path: "",
+                component: GalleryImagesGridComponent
+            },
+            {
+                path: "fullscreen",
+                component: GalleryImagesGridComponent
+            }
+        ]
+    }
 ]; // sets up routes constant where you define your routes
 
 @NgModule({

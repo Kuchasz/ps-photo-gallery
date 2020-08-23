@@ -99,18 +99,16 @@ span {
     div {
         padding: 0em 0.5em;
     }
+    p{
+        margin: 0px 5px;
+    }
     &.rate {
         i {
+            font-size: 2em;
             animation-name: wiggle;
             animation-duration: 20s;
             animation-iteration-count: infinite;
             animation-timing-function: ease-out;
-        }
-    }
-    &.count {
-        font-size: 20px;
-        i {
-            margin-right: 8px;
         }
     }
 }

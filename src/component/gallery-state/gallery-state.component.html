@@ -1,31 +1,31 @@
 <ng-container *ngIf="currentDirectoryId$ | async as currentDirectoryId">
     <ng-container *ngIf="currentDirectory$ | async as currentDirectory"
         ><div class="gallery-state" *ngIf="currentImage$ | async as currentImage">
-            <span (click)="goBack()" class="g-state-button">
-                <i class="material-icons">arrow_back</i>
-            </span>
-            <span *ngIf="!currentImage.snapped" (click)="snapImage()" class="g-state-button count"
-                ><i class="material-icons">star_outline</i>{{ snappedCount }}</span
+            <span *ngIf="!currentImage.snapped" (click)="snapImage()" class="g-state-button"
+                ><i class="material-icons">favorite_border</i><p>like {{ snappedCount }}</p></span
             >
-            <span *ngIf="currentImage.snapped" (click)="snapImage()" class="g-state-button count"
-                ><i class="material-icons">star</i>{{ snappedCount }}</span
+            <span *ngIf="currentImage.snapped" (click)="snapImage()" class="g-state-button"
+                ><i class="material-icons">favorite</i><p>like {{ snappedCount }}</p></span
             >
             <!-- <span class="g-state-text">
                 <span class="g-snapped-count" *ngIf="snappedCount > 0" (click)="displaySnappedImages()"
                     >{{ snappedCount }} selected</span
                 > -->
-                <!-- <span>{{ currentImage.text }}</span> -->
+            <!-- <span>{{ currentImage.text }}</span> -->
             <!-- </span> -->
             <span class="g-state-directory">
-                <div>{{ currentDirectory.name }}</div>
+                <!-- <div>{{ currentDirectory.name }}</div> -->
             </span>
-            <span class="g-state-button" *ngIf="fullscreenEnabled" (click)="orderPhotos()"
-                ><i class="material-icons">shopping_cart</i></span>
-            <span class="g-state-button rate" (click)="toggleFullscreen()"
-                ><i class="material-icons">message</i></span>
+            <!-- <span class="g-state-button" *ngIf="fullscreenEnabled" (click)="orderPhotos()"
+                ><i class="material-icons">shopping_cart</i></span
+            > -->
+            <!-- <span class="g-state-button rate" (click)="toggleFullscreen()"><i class="material-icons">message</i></span> -->
             <span class="g-state-button" *ngIf="fullscreenEnabled" (click)="toggleFullscreen()"
-                ><i class="material-icons">fullscreen</i></span
+                ><p>fullscreen</p><i class="material-icons">fullscreen</i></span
             >
+            <span (click)="goBack()" class="g-state-button"><p>close</p>
+                <i class="material-icons">close</i>
+            </span>
         </div>
     </ng-container>
 </ng-container>

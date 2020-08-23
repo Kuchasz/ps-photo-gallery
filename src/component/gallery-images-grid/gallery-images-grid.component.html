@@ -12,6 +12,8 @@
         </div>
     </ng-container>
 </div>
+<ng-container *ngIf="fullscreenModeEnabled$ | async as fullscreenModeEnabled">
 <div *ngIf="fullscreenModeEnabled" class="images-fullscreen-container">
     <gallery-images-fullscreen (onBack)="disableFullscreenMode()"></gallery-images-fullscreen>
 </div>
+</ng-container>

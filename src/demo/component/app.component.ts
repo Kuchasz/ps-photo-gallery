@@ -1,8 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, NgZone } from "@angular/core";
 import { GalleryService } from "../../index";
-import { parseString } from "xml2js";
-import { GalleryDirectory } from "../../service/gallery.state";
-import { fetchGallery } from "../../utils/jalbum";
 import { Router, NavigationStart } from "@angular/router";
 
 @Component({

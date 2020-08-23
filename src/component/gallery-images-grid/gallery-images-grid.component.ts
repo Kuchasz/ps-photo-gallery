@@ -12,7 +12,7 @@ import { GalleryService } from "../../service/gallery.service";
 import { GalleryConfig } from "../../config";
 import { DisplayModes } from "../../config/gallery.config";
 import { Observable } from "rxjs";
-import { ActivatedRoute, ParamMap } from "@angular/router";
+import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { switchMap, find, flatMap, map, tap, first, filter } from "rxjs/operators";
 import { sum, sort } from "../../utils/array";
 
@@ -32,15 +32,16 @@ export class GalleryImagesGridComponent implements OnInit {
     rightColImages: GalleryImage[];
 
     columnsImages: GalleryImage[][];
-    fullscreenModeEnabled: boolean = false;
+    fullscreenModeEnabled$: Observable<boolean>;
 
-    constructor(public gallery: GalleryService, private route: ActivatedRoute) {}
+    constructor(public gallery: GalleryService, private route: ActivatedRoute, private router: Router) {}
 
     ngOnInit() {
         const thumbPos = this.gallery.config.thumbnails.position;
 
         this.currentDirectoryId$ = this.route.paramMap.pipe(map((x) => x.get("id")));
-
+        this.fullscreenModeEnabled$ = this.route.url.pipe(map((segments) => segments.filter(s => s.path === 'fullscreen').length === 1));
+        
         this.images$ = this.currentDirectoryId$.pipe(
             flatMap((directoryId) =>
                 this.gallery.state.pipe(
@@ -102,11 +103,20 @@ export class GalleryImagesGridComponent implements OnInit {
     }
 
     enableFullscreenMode(imageId: string, directoryId: string) {
-        this.fullscreenModeEnabled = true;
+        // this.fullscreenModeEnabled = true;
         this.gallery.selectImage(imageId, directoryId);
+
+
+        this.router.routeReuseStrategy.shouldReuseRoute = () => true;
+
+        // this.router.onSameUrlNavigation = 'ignore';
+
+        this.router.navigate([`/directory/${directoryId}/fullscreen`]);
+        // this.location.
+        // this.router.lo
     }
 
-    disableFullscreenMode(){
-        this.fullscreenModeEnabled = false;
-    }
+    // disableFullscreenMode(){
+    //     this.fullscreenModeEnabled = false;
+    // }
 }

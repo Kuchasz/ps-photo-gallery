@@ -58,8 +58,8 @@ export class GalleryStateComponent {
     }
 
     goBack(){
-        this.onBack.emit();
-        // this.location.back();
+        // this.onBack.emit();
+        this.location.back();
     }
 
     orderPhotos(){
