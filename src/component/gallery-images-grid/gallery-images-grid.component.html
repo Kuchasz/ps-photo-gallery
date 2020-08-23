@@ -12,8 +12,10 @@
         </div>
     </ng-container>
 </div>
-<ng-container *ngIf="fullscreenModeEnabled$ | async as fullscreenModeEnabled">
-<div *ngIf="fullscreenModeEnabled" class="images-fullscreen-container">
-    <gallery-images-fullscreen (onBack)="disableFullscreenMode()"></gallery-images-fullscreen>
-</div>
-</ng-container>
+<router-outlet></router-outlet>
+<!-- <ng-container *ngIf="fullscreenModeEnabled$ | async as fullscreenModeEnabled"> -->
+    <!-- <router-outlet class="images-fullscreen-container"></router-outlet> -->
+    <!-- <gallery-images-fullscreen (onBack)="disableFullscreenMode()"></gallery-images-fullscreen> -->
+    <!-- <div class="images-fullscreen-container">
+    </div> -->
+<!-- </ng-container> -->

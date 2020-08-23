@@ -41,17 +41,17 @@ export class GalleryImagesFullscreenComponent implements OnInit {
         const thumbPos = this.gallery.config.thumbnails.position;
         this.thumbDirection = thumbPos === "left" || thumbPos === "right" ? "row" : "column";
 
-        this.currentDirectoryId$ = this.route.paramMap.pipe(
-            map((x) => x.get("id"))
-        );
+        this.currentDirectoryId$ = this.route.parent.paramMap.pipe(map((x) => x.get("id")));
 
         this.images$ = this.currentDirectoryId$.pipe(
-            flatMap((directoryId) => this.gallery.state.pipe(
-                map(s => {
-                    const ids = s.directoryImages[directoryId];
-                    return s.images.filter((i) => ids.includes(i.id));
-                })
-            ))
+            flatMap((directoryId) =>
+                this.gallery.state.pipe(
+                    map((s) => {
+                        const ids = s.directoryImages[directoryId];
+                        return s.images.filter((i) => ids.includes(i.id));
+                    })
+                )
+            )
         );
 
         this.currentDirectory = this.currentDirectoryId$.pipe(
@@ -60,12 +60,10 @@ export class GalleryImagesFullscreenComponent implements OnInit {
     }
 
     get fullscreen() {
-        return (
-            this.gallery.config.displayMode !== DisplayModes.Compact
-        );
+        return this.gallery.config.displayMode !== DisplayModes.Compact;
     }
 
-    goBack(){
+    goBack() {
         this.onBack.emit();
     }
 }

@@ -3,7 +3,7 @@ import { Routes, RouterModule } from "@angular/router"; // CLI imports router
 import { APP_BASE_HREF } from "@angular/common";
 import { GalleryDirectoriesComponent } from "./component/gallery-directories/gallery-directories.component";
 import { GallerySnappedImagesComponent } from "./component/gallery-snapped-images/gallery-snapped-images.component";
-// import { GalleryMainComponent } from "./component/gallery-main/gallery-main.component";
+import { GalleryImagesFullscreenComponent } from "./component/gallery-images-fullscreen/gallery-images-fullscreen.component";
 import { GalleryImagesGridComponent } from "./component/gallery-images-grid/gallery-images-grid.component";
 
 const routes: Routes = [
@@ -11,18 +11,32 @@ const routes: Routes = [
     { path: "snapped", component: GallerySnappedImagesComponent },
     {
         path: "directory/:id",
+        component: GalleryImagesGridComponent,
         children: [
             {
-                path: "",
-                component: GalleryImagesGridComponent
-            },
-            {
                 path: "fullscreen",
-                component: GalleryImagesGridComponent
+                // outlet: "sub",
+                component: GalleryImagesFullscreenComponent
             }
         ]
     }
 ]; // sets up routes constant where you define your routes
+
+const routesForDirectory: Routes = [
+    { path: "", component: GalleryDirectoriesComponent },
+    { path: "snapped", component: GallerySnappedImagesComponent },
+    {
+        path: "directory/:id",
+        component: GalleryImagesGridComponent,
+        children: [
+            {
+                path: "fullscreen",
+                // outlet: "sub",
+                component: GalleryImagesFullscreenComponent
+            }
+        ]
+    }
+];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],

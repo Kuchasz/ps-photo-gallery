@@ -22,7 +22,6 @@ export class GalleryService {
 
     constructor(@Optional() config: GalleryConfig) {
         this.state = new BehaviorSubject<GalleryState>(defaultState);
-
         this.config = { ...defaultConfig, ...config };
 
         this.player = new Subject();
@@ -64,6 +63,7 @@ export class GalleryService {
     }
 
     selectDirectory(directoryId: string) {
+        console.log("SELECT_DIRECTORY");
         const state = this.state.getValue();
 
         const directories = {
@@ -105,6 +105,8 @@ export class GalleryService {
     }
 
     selectImage(id: string, directoryId: string) {
+        console.log("SELECT_IMAGE");
+
         const state = this.state.getValue();
         const images = state.directoryImages[directoryId];
 

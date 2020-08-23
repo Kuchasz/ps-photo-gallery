@@ -40,8 +40,10 @@ export class GalleryImagesGridComponent implements OnInit {
         const thumbPos = this.gallery.config.thumbnails.position;
 
         this.currentDirectoryId$ = this.route.paramMap.pipe(map((x) => x.get("id")));
-        this.fullscreenModeEnabled$ = this.route.url.pipe(map((segments) => segments.filter(s => s.path === 'fullscreen').length === 1));
-        
+        this.fullscreenModeEnabled$ = this.route.url.pipe(
+            map((segments) => segments.filter((s) => s.path === "fullscreen").length === 0)
+        );
+
         this.images$ = this.currentDirectoryId$.pipe(
             flatMap((directoryId) =>
                 this.gallery.state.pipe(
@@ -106,14 +108,14 @@ export class GalleryImagesGridComponent implements OnInit {
         // this.fullscreenModeEnabled = true;
         this.gallery.selectImage(imageId, directoryId);
 
-
-        this.router.routeReuseStrategy.shouldReuseRoute = () => true;
-
         // this.router.onSameUrlNavigation = 'ignore';
 
-        this.router.navigate([`/directory/${directoryId}/fullscreen`]);
-        // this.location.
-        // this.router.lo
+        this.router.navigate([`fullscreen`], {relativeTo: this.route});
+
+        // this.router.routeReuseStrategy.shouldReuseRoute = () => true;
+        
+        // this.router.navigate([`fullscreen`], { relativeTo: this.route });
+        // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
 
     // disableFullscreenMode(){

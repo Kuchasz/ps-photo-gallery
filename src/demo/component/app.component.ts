@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
     constructor(public gallery: GalleryService, private router: Router) {
         router.events.subscribe((e) => {
             if (e instanceof NavigationStart) {
-                if (/\/directory\/\w+/.test(e.url)) {
+                if (/\/directory\/\w+\/{0}$/g.test(e.url)) {
                     this.gallery.selectDirectory(e.url.split("/")[2]);
                 }
             }

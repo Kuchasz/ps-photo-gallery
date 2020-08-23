@@ -26,7 +26,7 @@ export class GalleryStateComponent {
     constructor(public gallery: GalleryService, private route: ActivatedRoute, private router: Router, private location: Location) {}
 
     ngOnInit() {
-        this.currentDirectoryId$ = this.route.paramMap.pipe(map((x) => x.get("id")));
+        this.currentDirectoryId$ = this.route.parent.paramMap.pipe(map((x) => x.get("id")));
         this.currentDirectory$ = this.currentDirectoryId$.pipe(
             switchMap((directoryId) => this.gallery.getDirectory(directoryId))
         );
