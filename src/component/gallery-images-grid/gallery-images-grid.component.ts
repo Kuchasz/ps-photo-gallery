@@ -13,7 +13,7 @@ import { GalleryConfig } from "../../config";
 import { DisplayModes } from "../../config/gallery.config";
 import { Observable } from "rxjs";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
-import { switchMap, find, flatMap, map, tap, first, filter } from "rxjs/operators";
+import { switchMap, find, flatMap, map, tap, first, filter, pluck, distinctUntilChanged } from "rxjs/operators";
 import { sum, sort } from "../../utils/array";
 
 @Component({
@@ -37,6 +37,7 @@ export class GalleryImagesGridComponent implements OnInit {
     constructor(public gallery: GalleryService, private route: ActivatedRoute, private router: Router) {}
 
     ngOnInit() {
+        console.log("RENDER: gallery-images-grid");
         const thumbPos = this.gallery.config.thumbnails.position;
 
         this.currentDirectoryId$ = this.route.paramMap.pipe(map((x) => x.get("id")));
@@ -47,6 +48,8 @@ export class GalleryImagesGridComponent implements OnInit {
         this.images$ = this.currentDirectoryId$.pipe(
             flatMap((directoryId) =>
                 this.gallery.state.pipe(
+                    map(s => ({images: s.images, directoryImages: s.directoryImages})),
+                    distinctUntilChanged((prev, curr) => prev.images === curr.images),
                     map((s) => {
                         const ids = s.directoryImages[directoryId];
                         return s.images.filter((i) => ids.includes(i.id));
