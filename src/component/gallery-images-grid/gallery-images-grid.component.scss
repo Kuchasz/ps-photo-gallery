@@ -27,6 +27,30 @@ gallery-images-grid {
 .image-container {
     padding: 0px;
     margin-bottom: 5px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+
+    .background {
+        transition: background-color 0.5s linear;
+        height: 100%;
+        width: 100%;
+        top: 0px;
+        position: absolute;
+    }
+
+    img {
+        transition: transform 4s linear;
+    }
+
+    &:hover {
+        img {
+            transform: scale(1.1);
+        }
+        .background {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+    }
 }
 
 img {

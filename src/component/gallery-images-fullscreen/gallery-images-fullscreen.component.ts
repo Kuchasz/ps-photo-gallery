@@ -7,13 +7,15 @@ import {
     OnInit,
     ViewEncapsulation,
     EventEmitter,
-    Output
+    Output,
+    HostListener
 } from "@angular/core";
+import { Location } from "@angular/common";
 import { GalleryState, GalleryDirectory, GalleryImage } from "../../service/gallery.state";
 import { GalleryService } from "../../service/gallery.service";
 import { GalleryConfig } from "../../config";
 import { DisplayModes } from "../../config/gallery.config";
-import { Observable } from "rxjs";
+import { Observable, fromEvent } from "rxjs";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { switchMap, find, flatMap, map, tap, first, filter } from "rxjs/operators";
 
@@ -35,7 +37,7 @@ export class GalleryImagesFullscreenComponent implements OnInit {
 
     images$: Observable<GalleryImage[]>;
 
-    constructor(public gallery: GalleryService, private route: ActivatedRoute) {}
+    constructor(public gallery: GalleryService, private route: ActivatedRoute, private location: Location) {}
 
     ngOnInit() {
         const thumbPos = this.gallery.config.thumbnails.position;
@@ -59,11 +61,18 @@ export class GalleryImagesFullscreenComponent implements OnInit {
         );
     }
 
+    @HostListener("document:keyup", ["$event"])
+    onKeyUp(ev: KeyboardEvent) {
+        if (ev.key !== "Escape") return;
+
+        this.goBack();
+    }
+
     get fullscreen() {
         return this.gallery.config.displayMode !== DisplayModes.Compact;
     }
 
     goBack() {
-        this.onBack.emit();
+        this.location.back();
     }
 }
