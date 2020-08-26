@@ -67,6 +67,8 @@ export const fetchGallery = (path: string) =>
 
                                         const galleryImages = _images.map((img, idx) => ({
                                             id: `${directoryId}-${img.img}-${idx}`,
+                                            likes: Math.floor(Math.random()*150),
+                                            liked: Math.random() > 0.5,
                                             src: `${path}${item.path}${img.img}`,
                                             thumbnail: `${path}${item.path}${img.thmb}`,
                                             text: img.img.split("/")[1],
