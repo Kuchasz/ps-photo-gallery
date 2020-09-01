@@ -10,7 +10,8 @@
     "build": "webpack -p --config client/webpack.config.js",
     "dev": "webpack-dev-server --hot --inline --config client/webpack.config.js",
     "postinstall": "node node_modules/webpack/bin/webpack.js -p --config client/webpack.config.js",
-    "start": "ts-node server/index.ts",
+    "start:ts": "ts-node server/index.ts",
+    "start": "node server.js",
     "packages:check": "ncu",
     "packages:bump": "ncu -u"
   },
