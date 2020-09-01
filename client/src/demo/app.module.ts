@@ -71,6 +71,7 @@ import { fetchGallery } from "../utils/jalbum";
                             //     });
 
                             galleries.load(gallery, []);
+                            res();
                         });
                     });
             },

@@ -23,7 +23,7 @@ var miniCssExtractLoader = {
 };
 
 var plugins = [
-    new webpack.ContextReplacementPlugin(/angular(\\|\/)core(\\|\/)/, resolve("./src")),
+    new webpack.ContextReplacementPlugin(/angular(\\|\/)core(\\|\/)/, resolve(__dirname, "./src")),
     new HtmlWebpackPlugin({
         template: resolve(__dirname, "src/demo/index.html"),
         title: "Galeria zdjęć"
