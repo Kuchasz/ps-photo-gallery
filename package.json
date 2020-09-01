@@ -7,10 +7,10 @@
   "main": "./dist",
   "typings": "./dist",
   "scripts": {
-    "build": "webpack -p",
-    "dev": "webpack-dev-server --hot --inline",
+    "build": "webpack -p --config client/webpack.config.js",
+    "dev": "webpack-dev-server --hot --inline --config client/webpack.config.js",
     "postinstall": "node node_modules/webpack/bin/webpack.js -p",
-    "start": "node server.js",
+    "start": "ts-node server/index.ts",
     "packages:check": "ncu",
     "packages:bump": "ncu -u"
   },
@@ -70,6 +70,11 @@
     "to-string-loader": "1.1.6"
   },
   "devDependencies": {
-    "html-loader": "^1.1.0"
+    "apollo-server-express": "^2.17.0",
+    "graphql": "^15.3.0",
+    "html-loader": "^1.1.0",
+    "sqlite3": "^5.0.0",
+    "ts-node": "^9.0.0",
+    "tslib": "^2.0.1"
   }
 }
