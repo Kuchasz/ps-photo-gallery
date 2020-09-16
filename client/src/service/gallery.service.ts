@@ -11,12 +11,27 @@ import { Subject } from "rxjs/Subject";
 import { switchMap, take, takeWhile, map, filter, find, tap, finalize, publishLast } from "rxjs/operators";
 import { from, pipe, interval as fromInterval } from "rxjs";
 import { ParamMap, Route, Router, ActivatedRoute } from "@angular/router";
+import { GraphQLClient } from "graphql-request";
 
 // import * as firebase from "firebase";
 // import "firebase/firestore";
 // import { uuidv4 } from "../utils/uuid";
 
-// const galleryid = "03948572-9968-0648-3059-059683920592";
+const galleryId = "03948572-9968-0648-3059-059683920592";
+
+import { getSdk } from "../../../sdk";
+const sdk = getSdk(new GraphQLClient("http://localhost:4000/graphql"));
+
+let clientId = Number.parseInt(localStorage.getItem("client.id") ?? "0");
+if (!clientId) {
+    sdk.connectClient({ name: "Jacek" }).then((x) => {
+        clientId = x.connect.id;
+        localStorage.setItem("client.id", String(clientId));
+        console.log(`NEWLY_CONNECTED: ${clientId}`);
+    });
+} else {
+    console.log(`ALREADY_CONNECTED: ${clientId}`);
+}
 
 @Injectable()
 export class GalleryService {
@@ -36,6 +51,8 @@ export class GalleryService {
         this.player
             .pipe(switchMap((interval: number) => (interval ? this.playerEngine(interval) : from(null))))
             .subscribe();
+
+        sdk.getLikes({ galleryId: "1" }).then(console.log);
 
         // const app = firebase.initializeApp({
         //     apiKey: config.firebase.apiKey,
@@ -90,18 +107,22 @@ export class GalleryService {
         // });
     }
 
-    load(result: {
-        images: GalleryImage[];
-        directoryImages: { [id: string]: string[] };
-        directories: { [id: string]: GalleryDirectory };
-    }, likes: {id: string, count: number}[]) {
+    load(
+        result: {
+            images: GalleryImage[];
+            directoryImages: { [id: string]: string[] };
+            directories: { [id: string]: GalleryDirectory };
+        },
+        likes: { id: string; count: number }[]
+    ) {
         const state = this.state.getValue();
 
-        const images = result.images.map(i => ({
-            ...i, 
-            likes: likes.filter(l => i.id === l.id).map(l => l.count)[0] ?? 0}))
+        const images = result.images.map((i) => ({
+            ...i,
+            likes: likes.filter((l) => i.id === l.id).map((l) => l.count)[0] ?? 0
+        }));
 
-            console.log(likes);
+        console.log(likes);
 
         this.state.next({
             ...state,
@@ -115,8 +136,8 @@ export class GalleryService {
     }
 
     likeImage(id: string, directoryId: string) {
+        sdk.likeImage({imageId: id, galleryId, clientId});
         // const doc = this.db.doc(`galleries/${galleryid}/likes/${id}`);
-
         // doc.get().then((x) => {
         //     if (x.exists) {
         //         x.ref.update({ count: firebase.firestore.FieldValue.increment(1) });

@@ -1,0 +1,18 @@
+query getLikes($galleryId:String!){
+  likes(galleryId: $galleryId) {
+    imageId,
+    galleryId
+  }
+}
+
+mutation likeImage($imageId: String!, $clientId: Int!, $galleryId: String!){
+  likeImage(imageId: $imageId, clientId: $clientId, galleryId: $galleryId){
+    imageId
+  }
+}
+
+mutation connectClient($name: String!){
+  connect(name: $name){
+    id
+  }
+}

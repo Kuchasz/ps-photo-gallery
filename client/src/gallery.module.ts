@@ -55,7 +55,7 @@ export const CONFIG = new InjectionToken<GalleryConfig>('config');
   ]
 })
 export class GalleryModule {
-  static forRoot(config?: GalleryConfig): ModuleWithProviders {
+  static forRoot(config?: GalleryConfig): ModuleWithProviders<GalleryModule> {
 
     return {
       ngModule: GalleryModule,
