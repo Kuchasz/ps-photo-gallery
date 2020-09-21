@@ -23,15 +23,22 @@ import { getSdk } from "../../../sdk";
 const sdk = getSdk(new GraphQLClient("http://localhost:4000/graphql"));
 
 let clientId = Number.parseInt(localStorage.getItem("client.id") ?? "0");
-if (!clientId) {
-    sdk.connectClient({ name: "Jacek" }).then((x) => {
-        clientId = x.connect.id;
+
+(async () => {
+    if (!clientId) {
+        const result = await sdk.connectClient({ name: "Jacek" });
+        clientId = result.connect.id;
         localStorage.setItem("client.id", String(clientId));
         console.log(`NEWLY_CONNECTED: ${clientId}`);
-    });
-} else {
-    console.log(`ALREADY_CONNECTED: ${clientId}`);
-}
+    } else {
+        console.log(`ALREADY_CONNECTED: ${clientId}`);
+    }
+
+    const likesResult = await sdk.getLikes({ galleryId, clientId });
+    console.log(likesResult.likes);
+
+})();
+
 
 @Injectable()
 export class GalleryService {
@@ -51,8 +58,6 @@ export class GalleryService {
         this.player
             .pipe(switchMap((interval: number) => (interval ? this.playerEngine(interval) : from(null))))
             .subscribe();
-
-        sdk.getLikes({ galleryId: "1" }).then(console.log);
 
         // const app = firebase.initializeApp({
         //     apiKey: config.firebase.apiKey,
@@ -113,16 +118,15 @@ export class GalleryService {
             directoryImages: { [id: string]: string[] };
             directories: { [id: string]: GalleryDirectory };
         },
-        likes: { id: string; count: number }[]
+        likes: { imageId: string; likes: number, liked: boolean }[]
     ) {
         const state = this.state.getValue();
 
         const images = result.images.map((i) => ({
             ...i,
-            likes: likes.filter((l) => i.id === l.id).map((l) => l.count)[0] ?? 0
+            likes: likes.filter((l) => i.id === l.imageId).map((l) => l.likes)[0] ?? 0,
+            liked: likes.filter((l) => i.id === l.imageId).map((l) => l.liked)[0] ?? false
         }));
-
-        console.log(likes);
 
         this.state.next({
             ...state,
@@ -136,7 +140,7 @@ export class GalleryService {
     }
 
     likeImage(id: string, directoryId: string) {
-        sdk.likeImage({imageId: id, galleryId, clientId});
+        sdk.likeImage({ imageId: id, galleryId, clientId });
         // const doc = this.db.doc(`galleries/${galleryid}/likes/${id}`);
         // doc.get().then((x) => {
         //     if (x.exists) {

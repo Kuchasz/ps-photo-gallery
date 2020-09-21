@@ -20,26 +20,27 @@ export type Client = {
 
 export type Like = {
   __typename?: 'Like';
-  galleryId: Scalars['String'];
   imageId: Scalars['String'];
+  liked: Scalars['Boolean'];
+  likes: Scalars['Int'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  connect: Client;
   likeImage: Like;
+  connect: Client;
+};
+
+
+export type MutationLikeImageArgs = {
+  galleryId: Scalars['String'];
+  clientId: Scalars['Int'];
+  imageId: Scalars['String'];
 };
 
 
 export type MutationConnectArgs = {
   name: Scalars['String'];
-};
-
-
-export type MutationLikeImageArgs = {
-  clientId: Scalars['Int'];
-  galleryId: Scalars['String'];
-  imageId: Scalars['String'];
 };
 
 export type Query = {
@@ -49,22 +50,53 @@ export type Query = {
 
 
 export type QueryLikesArgs = {
+  clientId: Scalars['Int'];
   galleryId: Scalars['String'];
 };
 
-export type GetLikesQueryVariables = Exact<{
-  galleryId: Scalars['String'];
-}>;
+
+export const LikeImageDocument = gql`
+    mutation likeImage($imageId: String!, $clientId: Int!, $galleryId: String!) {
+  likeImage(imageId: $imageId, clientId: $clientId, galleryId: $galleryId) {
+    imageId
+  }
+}
+    `;
+export const ConnectClientDocument = gql`
+    mutation connectClient($name: String!) {
+  connect(name: $name) {
+    id
+  }
+}
+    `;
+export const GetLikesDocument = gql`
+    query getLikes($galleryId: String!, $clientId: Int!) {
+  likes(galleryId: $galleryId, clientId: $clientId) {
+    imageId
+    liked
+    likes
+  }
+}
+    `;
+
+export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
 
 
-export type GetLikesQuery = (
-  { __typename?: 'Query' }
-  & { likes: Array<(
-    { __typename?: 'Like' }
-    & Pick<Like, 'imageId' | 'galleryId'>
-  )> }
-);
-
+const defaultWrapper: SdkFunctionWrapper = sdkFunction => sdkFunction();
+export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
+  return {
+    likeImage(variables: LikeImageMutationVariables): Promise<LikeImageMutation> {
+      return withWrapper(() => client.request<LikeImageMutation>(print(LikeImageDocument), variables));
+    },
+    connectClient(variables: ConnectClientMutationVariables): Promise<ConnectClientMutation> {
+      return withWrapper(() => client.request<ConnectClientMutation>(print(ConnectClientDocument), variables));
+    },
+    getLikes(variables: GetLikesQueryVariables): Promise<GetLikesQuery> {
+      return withWrapper(() => client.request<GetLikesQuery>(print(GetLikesDocument), variables));
+    }
+  };
+}
+export type Sdk = ReturnType<typeof getSdk>;
 export type LikeImageMutationVariables = Exact<{
   imageId: Scalars['String'];
   clientId: Scalars['Int'];
@@ -93,45 +125,16 @@ export type ConnectClientMutation = (
   ) }
 );
 
-
-export const GetLikesDocument = gql`
-    query getLikes($galleryId: String!) {
-  likes(galleryId: $galleryId) {
-    imageId
-    galleryId
-  }
-}
-    `;
-export const LikeImageDocument = gql`
-    mutation likeImage($imageId: String!, $clientId: Int!, $galleryId: String!) {
-  likeImage(imageId: $imageId, clientId: $clientId, galleryId: $galleryId) {
-    imageId
-  }
-}
-    `;
-export const ConnectClientDocument = gql`
-    mutation connectClient($name: String!) {
-  connect(name: $name) {
-    id
-  }
-}
-    `;
-
-export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
+export type GetLikesQueryVariables = Exact<{
+  galleryId: Scalars['String'];
+  clientId: Scalars['Int'];
+}>;
 
 
-const defaultWrapper: SdkFunctionWrapper = sdkFunction => sdkFunction();
-export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
-  return {
-    getLikes(variables: GetLikesQueryVariables): Promise<GetLikesQuery> {
-      return withWrapper(() => client.request<GetLikesQuery>(print(GetLikesDocument), variables));
-    },
-    likeImage(variables: LikeImageMutationVariables): Promise<LikeImageMutation> {
-      return withWrapper(() => client.request<LikeImageMutation>(print(LikeImageDocument), variables));
-    },
-    connectClient(variables: ConnectClientMutationVariables): Promise<ConnectClientMutation> {
-      return withWrapper(() => client.request<ConnectClientMutation>(print(ConnectClientDocument), variables));
-    }
-  };
-}
-export type Sdk = ReturnType<typeof getSdk>;
+export type GetLikesQuery = (
+  { __typename?: 'Query' }
+  & { likes: Array<(
+    { __typename?: 'Like' }
+    & Pick<Like, 'imageId' | 'liked' | 'likes'>
+  )> }
+);

@@ -11,6 +11,7 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "rootDir": ".",
+    "outDir": "output",
     "target": "es5",
     "typeRoots": [
       "node_modules/@types"
@@ -22,8 +23,5 @@
       "es5",
       "es2015"
     ]
-  },
-  "include": [
-    "./src"
-  ]
+  }
 }

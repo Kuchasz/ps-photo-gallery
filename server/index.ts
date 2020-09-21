@@ -8,6 +8,8 @@ import { buildSchema } from "type-graphql";
 import { LikeResolver } from "./resolvers/LikeResolver";
 import { ClientResolver } from "./resolvers/ClientResolver";
 
+process.env.PLAYGROUND_URL = "/";
+
 (async () => {
     await createConnection({
         type: "sqlite",
@@ -24,12 +26,15 @@ import { ClientResolver } from "./resolvers/ClientResolver";
         schema: await buildSchema({
             resolvers: [LikeResolver, ClientResolver],
             emitSchemaFile: true
-        })
+        }),
+        playground: true,
+        introspection: true
     });
 
     const app = express();
     server.applyMiddleware({
         app,
+        // path: "/",
         cors: {
             origin: "*",
             methods: "GET,HEAD,PUT,PATCH,POST,DELETE",

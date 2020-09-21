@@ -4,7 +4,7 @@
             <div
                 *ngFor="let image of columnImages"
                 (click)="enableFullscreenMode(image.id, directoryId)"
-                [style.flex]="image.height"
+                [style.flex-basis]="image.height + 'px'"
                 class="image-container"
             >
                 <img [src]="image.src" />

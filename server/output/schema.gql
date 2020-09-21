@@ -9,9 +9,8 @@ type Client {
 }
 
 type Like {
+  galleryId: String!
   imageId: String!
-  liked: Boolean!
-  likes: Int!
 }
 
 type Mutation {
@@ -20,5 +19,5 @@ type Mutation {
 }
 
 type Query {
-  likes(clientId: Int!, galleryId: String!): [Like!]!
+  likes(galleryId: String!): [Like!]!
 }

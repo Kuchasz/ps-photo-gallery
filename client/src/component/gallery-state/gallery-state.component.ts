@@ -23,7 +23,14 @@ export class GalleryStateComponent {
     currentImage$: Observable<GalleryImage>;
     currentDirectory$: Observable<GalleryDirectory>;
 
-    constructor(public gallery: GalleryService, private route: ActivatedRoute, private router: Router, private location: Location) {}
+    currentDirectoryId: string;
+
+    constructor(
+        public gallery: GalleryService,
+        private route: ActivatedRoute,
+        private router: Router,
+        private location: Location
+    ) {}
 
     ngOnInit() {
         this.currentDirectoryId$ = this.route.parent.paramMap.pipe(map((x) => x.get("id")));
@@ -31,9 +38,9 @@ export class GalleryStateComponent {
             switchMap((directoryId) => this.gallery.getDirectory(directoryId))
         );
 
-        this.currentImage$ = this.gallery.state.pipe(
-            map((x) => x.images.find(i => i.id === x.currId))
-        );
+        this.currentImage$ = this.gallery.state.pipe(map((x) => x.images.find((i) => i.id === x.currId)));
+
+        this.currentDirectoryId$.subscribe((currentDirectoryId) => (this.currentDirectoryId = currentDirectoryId));
     }
 
     toggleFullscreen() {
@@ -50,23 +57,34 @@ export class GalleryStateComponent {
     }
 
     get snappedCount() {
-        return this.state.images.filter(x => x.snapped).length;
+        return this.state.images.filter((x) => x.snapped).length;
     }
 
     public displaySnappedImages() {
         this.router.navigate(["/snapped"]);
     }
 
-    goBack(){
+    goBack() {
         // this.onBack.emit();
         this.location.back();
     }
 
-    orderPhotos(){
-    }
+    orderPhotos() {}
 
-    public snapImage() {
-        this.gallery.snapImage(this.currentImageId);
+    // public snapImage() {
+    //     this.gallery.snapImage(this.currentImageId);
+    // }
+
+    public likeImage(imageId: string, directoryId: string, $event: MouseEvent) {
+        const img = this.state.images.find((x) => x.id === imageId);
+
+        if (img.liked === true) return;
+
+        img.likes++;
+        img.liked = true;
+
+        this.gallery.likeImage(imageId, directoryId);
+        $event.stopPropagation();
     }
 
     get currentImageId() {

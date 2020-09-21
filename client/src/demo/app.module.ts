@@ -9,6 +9,8 @@ import { checkIfMobile } from "../utils/browser";
 import { DisplayModes } from "../config/gallery.config";
 import { GalleryService } from "../service/gallery.service";
 import { fetchGallery } from "../utils/jalbum";
+import { getSdk } from "../../../sdk";
+import { GraphQLClient } from "graphql-request";
 
 @NgModule({
     declarations: [AppComponent],
@@ -44,35 +46,53 @@ import { fetchGallery } from "../utils/jalbum";
             provide: APP_INITIALIZER,
             useFactory: (galleries: GalleryService) => {
                 return () =>
-                    new Promise((res, rej) => {
+                    new Promise(async (res, rej) => {
                         const root = "/";
-                        fetchGallery(root).then((gallery) => {
-                            // const app = firebase.initializeApp(
-                            //     {
-                            //         apiKey: firebaseConfig.apiKey,
-                            //         authDomain: firebaseConfig.authDomain,
-                            //         projectId: firebaseConfig.projectId
-                            //     },
-                            //     "wanak"
-                            // );
+                        const gallery = await fetchGallery(root);
 
-                            // const galleryid = "03948572-9968-0648-3059-059683920592";
+                        const galleryId = "03948572-9968-0648-3059-059683920592";
 
-                            // app.firestore()
-                            //     .collection(`galleries/${galleryid}/likes`)
-                            //     .get()
-                            //     .then((data) => {
-                            //         const likes = data.docs.map((doc) => {
-                            //             // const [directoryId, id] = doc.id.split("#");
-                            //             return { id: doc.id, count: doc.data().count };
-                            //         })
+                        const sdk = getSdk(new GraphQLClient("http://localhost:4000/graphql"));
 
-                            //         res();
-                            //     });
+                        let clientId = Number.parseInt(localStorage.getItem("client.id") ?? "0");
 
-                            galleries.load(gallery, []);
-                            res();
-                        });
+                        if (!clientId) {
+                            const result = await sdk.connectClient({ name: "Jacek" });
+                            clientId = result.connect.id;
+                            localStorage.setItem("client.id", String(clientId));
+                            console.log(`NEWLY_CONNECTED: ${clientId}`);
+                        } else {
+                            console.log(`ALREADY_CONNECTED: ${clientId}`);
+                        }
+
+                        const likesResult = await sdk.getLikes({ galleryId, clientId });
+                        console.log(likesResult.likes);
+
+                        // const app = firebase.initializeApp(
+                        //     {
+                        //         apiKey: firebaseConfig.apiKey,
+                        //         authDomain: firebaseConfig.authDomain,
+                        //         projectId: firebaseConfig.projectId
+                        //     },
+                        //     "wanak"
+                        // );
+
+                        // const galleryid = "03948572-9968-0648-3059-059683920592";
+
+                        // app.firestore()
+                        //     .collection(`galleries/${galleryid}/likes`)
+                        //     .get()
+                        //     .then((data) => {
+                        //         const likes = data.docs.map((doc) => {
+                        //             // const [directoryId, id] = doc.id.split("#");
+                        //             return { id: doc.id, count: doc.data().count };
+                        //         })
+
+                        //         res();
+                        //     });
+
+                        galleries.load(gallery, likesResult.likes);
+                        res();
                     });
             },
             deps: [GalleryService],

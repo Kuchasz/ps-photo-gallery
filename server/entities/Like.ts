@@ -1,4 +1,4 @@
-import { Field, ObjectType } from "type-graphql";
+import { Field, Int, ObjectType } from "type-graphql";
 import { Entity, BaseEntity, PrimaryColumn, ManyToOne, Column } from "typeorm";
 import { Client } from "./Client";
 
@@ -9,13 +9,18 @@ export class Like extends BaseEntity {
     @PrimaryColumn()
     imageId: string;
 
-    @Column({nullable: false})
+    @PrimaryColumn()
     clientId: number;
 
     @ManyToOne(type => Client)
     client: Client;
 
-    @Field()
     @PrimaryColumn()
     galleryId: string;
+
+    @Field()
+    liked: boolean;
+
+    @Field(type => Int)
+    likes: number;
 }

@@ -65,8 +65,8 @@ export const fetchGallery = (path: string) =>
                                             }
                                         });
 
-                                        const galleryImages = _images.map((img, _idx) => ({
-                                            id: `${directoryId}#${img.img.replace("/", "_")}`,
+                                        const galleryImages = _images.map((img, idx) => ({
+                                            id: `${directoryId}#${img.img.replace("/", "_")}#${idx}`,
                                             likes: 0,
                                             liked: Math.random() > 0.5,
                                             src: `${path}${item.path}${img.img}`,

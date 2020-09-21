@@ -46,7 +46,7 @@ export class GalleryImagesGridComponent implements OnInit {
         this.images$ = this.currentDirectoryId$.pipe(
             flatMap((directoryId) =>
                 this.gallery.state.pipe(
-                    map(s => ({images: s.images, directoryImages: s.directoryImages})),
+                    map((s) => ({ images: s.images, directoryImages: s.directoryImages })),
                     distinctUntilChanged((prev, curr) => prev.images === curr.images),
                     map((s) => {
                         const ids = s.directoryImages[directoryId];
@@ -111,20 +111,23 @@ export class GalleryImagesGridComponent implements OnInit {
 
         // this.router.onSameUrlNavigation = 'ignore';
 
-        this.router.navigate([`fullscreen`], {relativeTo: this.route});
+        this.router.navigate([`fullscreen`], { relativeTo: this.route });
 
         // this.router.routeReuseStrategy.shouldReuseRoute = () => true;
-        
+
         // this.router.navigate([`fullscreen`], { relativeTo: this.route });
         // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
 
-    likeImage(imageId: string, directoryId: string, $event: MouseEvent){
+    likeImage(imageId: string, directoryId: string, $event: MouseEvent) {
         // console.log('like clicked');
 
-        const img= this.columnsImages.reduce((a,c) => [...a, ...c], []).find(x => x.id === imageId);
+        const img = this.columnsImages.reduce((a, c) => [...a, ...c], []).find((x) => x.id === imageId);
+
+        if (img.liked === true) return;
+
         img.likes++;
-        img.liked = !img.liked;
+        img.liked = true;
 
         this.gallery.likeImage(imageId, directoryId);
         $event.stopPropagation();
