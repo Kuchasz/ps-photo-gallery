@@ -5,7 +5,7 @@ import { getSdk } from "../../sdk";
 
 @Injectable()
 export class ApiService {
-    public sdk = getSdk(new GraphQLClient("http://localhost:4000/graphql"));
+    public sdk = getSdk(new GraphQLClient("http://localhost:8080/api"));
     public clientId: number;
     public galleryId: number;
 

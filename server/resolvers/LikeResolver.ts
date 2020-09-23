@@ -1,5 +1,5 @@
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
-import { Like } from "../entities/like";
+import { Like } from "../entities/Like";
 
 @Resolver()
 export class LikeResolver {
