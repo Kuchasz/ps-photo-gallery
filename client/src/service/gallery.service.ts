@@ -10,35 +10,6 @@ import { Subject } from "rxjs/Subject";
 
 import { switchMap, take, takeWhile, map, filter, find, tap, finalize, publishLast } from "rxjs/operators";
 import { from, pipe, interval as fromInterval } from "rxjs";
-import { ParamMap, Route, Router, ActivatedRoute } from "@angular/router";
-import { GraphQLClient } from "graphql-request";
-
-// import * as firebase from "firebase";
-// import "firebase/firestore";
-// import { uuidv4 } from "../utils/uuid";
-
-const galleryId = "03948572-9968-0648-3059-059683920592";
-
-import { getSdk } from "../../../sdk";
-const sdk = getSdk(new GraphQLClient("http://localhost:4000/graphql"));
-
-let clientId = Number.parseInt(localStorage.getItem("client.id") ?? "0");
-
-(async () => {
-    if (!clientId) {
-        const result = await sdk.connectClient({ name: "Jacek" });
-        clientId = result.connect.id;
-        localStorage.setItem("client.id", String(clientId));
-        console.log(`NEWLY_CONNECTED: ${clientId}`);
-    } else {
-        console.log(`ALREADY_CONNECTED: ${clientId}`);
-    }
-
-    const likesResult = await sdk.getLikes({ galleryId, clientId });
-    console.log(likesResult.likes);
-
-})();
-
 
 @Injectable()
 export class GalleryService {
@@ -47,7 +18,6 @@ export class GalleryService {
     config: GalleryConfig = defaultConfig;
 
     player: Subject<number>;
-    // db: firebase.firestore.Firestore;
 
     constructor(@Optional() config: GalleryConfig) {
         this.state = new BehaviorSubject<GalleryState>(defaultState);
@@ -58,58 +28,6 @@ export class GalleryService {
         this.player
             .pipe(switchMap((interval: number) => (interval ? this.playerEngine(interval) : from(null))))
             .subscribe();
-
-        // const app = firebase.initializeApp({
-        //     apiKey: config.firebase.apiKey,
-        //     authDomain: config.firebase.authDomain,
-        //     projectId: config.firebase.projectId
-        // });
-
-        // this.db = app.firestore(); //.collection(`galleries/${galleryid}/likes`);
-
-        // const weddingId = `wedding-${uuidv4()}`;
-        // const photoIds = [`photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`, `photo-${uuidv4()}`];
-
-        // console.log('SERVICE_RUN!!');
-        // Get a new write batch
-        // var batch = db.batch();
-
-        // Set the value of 'NYC'
-        // var weddingLikes = db.collection("likes").doc(weddingId).collection("photos");
-
-        // photoIds.forEach(id => batch.set(weddingLikes.doc(id), {count: Math.floor(Math.random()*100)}));
-
-        // batch.set(nycRef, {name: "New York City"});
-
-        // Update the population of 'SF'
-        // var sfRef = db.collection("cities").doc("SF");
-        // batch.update(sfRef, {"population": 1000000});
-
-        // Delete the city 'LA'
-        // var laRef = db.collection("cities").doc("LA");
-        // batch.delete(laRef);
-
-        // Commit the batch
-        // batch.commit().then(function (x) {
-        // console.log('saved photos!!');
-        // ...
-        // });
-
-        // db.collection("likes").doc(`wedding-id-${uuidv4()}`).collection("photos")
-
-        // db.runTransaction((transaction) => transaction.)
-
-        // db.collection("likes").add({
-        //     id: `wedding-id-${uuidv4()}`,
-        //     photos: [
-        //         {id: `photo-id-${uuidv4()}`, likes: Math.floor(Math.random()*100)},
-        //         {id: `photo-id-${uuidv4()}`, likes: Math.floor(Math.random()*100)},
-        //         {id: `photo-id-${uuidv4()}`, likes: Math.floor(Math.random()*100)},
-        //         {id: `photo-id-${uuidv4()}`, likes: Math.floor(Math.random()*100)},
-        //         {id: `photo-id-${uuidv4()}`, likes: Math.floor(Math.random()*100)},
-        //         {id: `photo-id-${uuidv4()}`, likes: Math.floor(Math.random()*100)}
-        //     ]
-        // });
     }
 
     load(
@@ -137,18 +55,6 @@ export class GalleryService {
             prevId: undefined,
             nextId: undefined
         });
-    }
-
-    likeImage(id: string, directoryId: string) {
-        sdk.likeImage({ imageId: id, galleryId, clientId });
-        // const doc = this.db.doc(`galleries/${galleryid}/likes/${id}`);
-        // doc.get().then((x) => {
-        //     if (x.exists) {
-        //         x.ref.update({ count: firebase.firestore.FieldValue.increment(1) });
-        //     } else {
-        //         x.ref.set({ count: 1 });
-        //     }
-        // });
     }
 
     setOrientation(orientation: ScreenOrientation) {

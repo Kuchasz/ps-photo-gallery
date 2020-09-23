@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from "type-graphql";
-import { Entity, BaseEntity, PrimaryColumn, ManyToOne, Column } from "typeorm";
+import { Entity, BaseEntity, PrimaryColumn, ManyToOne } from "typeorm";
 import { Client } from "./Client";
 
 @ObjectType()
@@ -9,14 +9,14 @@ export class Like extends BaseEntity {
     @PrimaryColumn()
     imageId: string;
 
-    @PrimaryColumn()
+    @PrimaryColumn({type: "int8"})
     clientId: number;
 
     @ManyToOne(type => Client)
     client: Client;
 
-    @PrimaryColumn()
-    galleryId: string;
+    @PrimaryColumn({type: "int8"})
+    galleryId: number;
 
     @Field()
     liked: boolean;

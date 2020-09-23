@@ -7,6 +7,7 @@ import * as screenfull from "screenfull";
 import { Observable } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 import { map, switchMap, flatMap, find, first } from "rxjs/operators";
+import { ApiService } from '../../service/api.service';
 
 @Component({
     selector: "gallery-state",
@@ -27,6 +28,7 @@ export class GalleryStateComponent {
 
     constructor(
         public gallery: GalleryService,
+        public api: ApiService,
         private route: ActivatedRoute,
         private router: Router,
         private location: Location
@@ -75,7 +77,7 @@ export class GalleryStateComponent {
     //     this.gallery.snapImage(this.currentImageId);
     // }
 
-    public likeImage(imageId: string, directoryId: string, $event: MouseEvent) {
+    public likeImage(imageId: string, $event: MouseEvent) {
         const img = this.state.images.find((x) => x.id === imageId);
 
         if (img.liked === true) return;
@@ -83,7 +85,7 @@ export class GalleryStateComponent {
         img.likes++;
         img.liked = true;
 
-        this.gallery.likeImage(imageId, directoryId);
+        this.api.sdk.likeImage({imageId, galleryId: this.api.galleryId, clientId: this.api.clientId});
         $event.stopPropagation();
     }
 

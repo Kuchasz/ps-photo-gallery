@@ -1,10 +1,10 @@
 <ng-container *ngIf="currentDirectoryId$ | async as currentDirectoryId">
     <ng-container *ngIf="currentDirectory$ | async as currentDirectory"
         ><div class="gallery-state" *ngIf="currentImage$ | async as currentImage">
-            <span *ngIf="!currentImage.liked" (click)="likeImage(currentImage.id, currentDirectory, $event)" class="g-state-button"
+            <span *ngIf="!currentImage.liked" (click)="likeImage(currentImage.id, $event)" class="g-state-button"
                 ><i class="material-icons">favorite_border</i><p>like {{ currentImage.likes }}</p></span
             >
-            <span *ngIf="currentImage.liked" (click)="likeImage(currentImage.id, currentDirectory, $event)" class="g-state-button"
+            <span *ngIf="currentImage.liked" (click)="likeImage(currentImage.id, $event)" class="g-state-button"
                 ><i class="material-icons">favorite</i><p>like {{ currentImage.likes }}</p></span
             >
             <!-- <span class="g-state-text">

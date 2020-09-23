@@ -15,6 +15,7 @@ import { Observable } from "rxjs";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { switchMap, find, flatMap, map, tap, first, filter, pluck, distinctUntilChanged } from "rxjs/operators";
 import { sum, sort } from "../../utils/array";
+import { ApiService } from "../../service/api.service";
 
 @Component({
     selector: "gallery-images-grid",
@@ -32,7 +33,12 @@ export class GalleryImagesGridComponent implements OnInit {
     columnsImages: GalleryImage[][];
     fullscreenModeEnabled$: Observable<boolean>;
 
-    constructor(public gallery: GalleryService, private route: ActivatedRoute, private router: Router) {}
+    constructor(
+        public gallery: GalleryService,
+        public api: ApiService,
+        private route: ActivatedRoute,
+        private router: Router
+    ) {}
 
     ngOnInit() {
         console.log("RENDER: gallery-images-grid");
@@ -119,7 +125,7 @@ export class GalleryImagesGridComponent implements OnInit {
         // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
 
-    likeImage(imageId: string, directoryId: string, $event: MouseEvent) {
+    likeImage(imageId: string, $event: MouseEvent) {
         // console.log('like clicked');
 
         const img = this.columnsImages.reduce((a, c) => [...a, ...c], []).find((x) => x.id === imageId);
@@ -129,7 +135,7 @@ export class GalleryImagesGridComponent implements OnInit {
         img.likes++;
         img.liked = true;
 
-        this.gallery.likeImage(imageId, directoryId);
+        this.api.sdk.likeImage({ imageId, galleryId: this.api.galleryId, clientId: this.api.clientId });
         $event.stopPropagation();
     }
 

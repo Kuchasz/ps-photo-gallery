@@ -6,7 +6,6 @@ export class ClientResolver {
     @Mutation(() => Client)
     connect(@Arg("name") name: string) {
         const client = new Client();
-        // client.id = name;
         client.name = name;
         return client.save();
     }

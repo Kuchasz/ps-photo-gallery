@@ -16,9 +16,9 @@ type Like {
 
 type Mutation {
   connect(name: String!): Client!
-  likeImage(clientId: Int!, galleryId: String!, imageId: String!): Like!
+  likeImage(clientId: Int!, galleryId: Int!, imageId: String!): Like!
 }
 
 type Query {
-  likes(clientId: Int!, galleryId: String!): [Like!]!
+  likes(clientId: Int!, galleryId: Int!): [Like!]!
 }

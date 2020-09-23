@@ -19,9 +19,9 @@
         cursor: pointer;
         display: flex;
         flex-direction: column;
-        flex-basis: 620px;
+        flex-basis: 430px;
         flex-grow: 1;
-        height: 350px;
+        height: 280px;
         position: relative;
         user-select: none;
         overflow: hidden;
@@ -49,17 +49,22 @@
             // }
         }
 
-        &:hover {
-            .g-directory-photo {
-                // transition: transform 4s linear;
-                // transition-delay: 500ms;
-                transform: scale(1.1);
-            }
-            .g-state-text {
-                background-color: rgba(0, 0, 0, 0.5);
-                span {
-                    border-bottom: 2px solid rgba(255, 255, 255, 1);
-                    margin: 20px 20px 100px 60px;
+        @media (min-width: 480px) {
+            &:hover {
+                .g-directory-photo {
+                    transition: transform 4s linear;
+                    // transition-delay: 500ms;
+                    transform: scale(1.1) rotateZ(2.5deg);
+                }
+                .g-state-text {
+                    background-color: rgba(0, 0, 0, 0.5);
+                    span {
+                        // border-bottom: 20px solid rgba(255, 255, 255, 1);
+                        // transition: border-bottom-color, margin 0.4s ease-in-out;
+                        border-bottom-color: #fff;
+                        padding-bottom: 0px;
+                        margin: 20px 20px 80px 60px;
+                    }
                 }
             }
         }
@@ -97,17 +102,19 @@
             box-shadow: inset 0 0 100px black;
 
             span {
-                border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+                border-bottom-width: 1px;
+                border-bottom-color: #333;
+                border-bottom-style: solid;
                 padding-bottom: 10px;
-                margin: 00px 20px 60px 60px;
-                transition: border-bottom, margin 0.4s ease-in-out;
+                margin: 00px 20px 40px 60px;
+                transition: all 0.4s ease-in-out;
                 @media (max-width: 480px) {
                     margin: 0px;
                 }
             }
 
             color: white;
-            font-weight: bolder;
+            font-weight: bold;
             // background: white;
             user-select: none;
             box-sizing: border-box;
@@ -115,10 +122,10 @@
             height: 100%;
             text-transform: uppercase;
             position: absolute;
-            font-size: 22px;
+            font-size: 1.5em;
             padding: 14px;
             @media (max-width: 480px) {
-                // font-size: 0.65em;
+                font-size: 1em;
             }
         }
     }

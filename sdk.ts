@@ -33,7 +33,7 @@ export type Mutation = {
 
 
 export type MutationLikeImageArgs = {
-  galleryId: Scalars['String'];
+  galleryId: Scalars['Int'];
   clientId: Scalars['Int'];
   imageId: Scalars['String'];
 };
@@ -51,12 +51,12 @@ export type Query = {
 
 export type QueryLikesArgs = {
   clientId: Scalars['Int'];
-  galleryId: Scalars['String'];
+  galleryId: Scalars['Int'];
 };
 
 
 export const LikeImageDocument = gql`
-    mutation likeImage($imageId: String!, $clientId: Int!, $galleryId: String!) {
+    mutation likeImage($imageId: String!, $clientId: Int!, $galleryId: Int!) {
   likeImage(imageId: $imageId, clientId: $clientId, galleryId: $galleryId) {
     imageId
   }
@@ -70,7 +70,7 @@ export const ConnectClientDocument = gql`
 }
     `;
 export const GetLikesDocument = gql`
-    query getLikes($galleryId: String!, $clientId: Int!) {
+    query getLikes($galleryId: Int!, $clientId: Int!) {
   likes(galleryId: $galleryId, clientId: $clientId) {
     imageId
     liked
@@ -100,7 +100,7 @@ export type Sdk = ReturnType<typeof getSdk>;
 export type LikeImageMutationVariables = Exact<{
   imageId: Scalars['String'];
   clientId: Scalars['Int'];
-  galleryId: Scalars['String'];
+  galleryId: Scalars['Int'];
 }>;
 
 
@@ -126,7 +126,7 @@ export type ConnectClientMutation = (
 );
 
 export type GetLikesQueryVariables = Exact<{
-  galleryId: Scalars['String'];
+  galleryId: Scalars['Int'];
   clientId: Scalars['Int'];
 }>;
 

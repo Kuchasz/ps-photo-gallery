@@ -7,7 +7,7 @@ export class LikeResolver {
     likeImage(
         @Arg("imageId") imageId: string,
         @Arg("clientId", () => Int) clientId: number,
-        @Arg("galleryId") galleryId: string
+        @Arg("galleryId", () => Int) galleryId: number
     ) {
         const like = new Like();
         like.imageId = imageId;
@@ -17,7 +17,7 @@ export class LikeResolver {
     }
 
     @Query(() => [Like])
-    async likes(@Arg("galleryId") galleryId: string, @Arg("clientId", () => Int) clientId: number) {
+    async likes(@Arg("galleryId", () => Int) galleryId: number, @Arg("clientId", () => Int) clientId: number) {
         const allLikes = await Like.find({ galleryId });
 
         const likes = allLikes.reduce((agg, curr) => {
