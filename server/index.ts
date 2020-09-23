@@ -8,7 +8,7 @@ import { buildSchema } from "type-graphql";
 import { LikeResolver } from "./resolvers/LikeResolver";
 import { ClientResolver } from "./resolvers/ClientResolver";
 
-process.env.PLAYGROUND_URL = "/";
+// process.env.PLAYGROUND_URL = "/";
 
 (async () => {
     await createConnection({

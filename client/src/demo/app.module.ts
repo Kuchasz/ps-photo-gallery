@@ -9,8 +9,9 @@ import { checkIfMobile } from "../utils/browser";
 import { DisplayModes } from "../config/gallery.config";
 import { GalleryService } from "../service/gallery.service";
 import { fetchGallery } from "../utils/jalbum";
-import { ApiService } from '../service/api.service';
+import { ApiService } from "../service/api.service";
 
+document.querySelector("#state-initializer")?.remove();
 @NgModule({
     declarations: [AppComponent],
     imports: [
@@ -46,12 +47,14 @@ import { ApiService } from '../service/api.service';
             useFactory: (galleries: GalleryService, api: ApiService) => {
                 return () =>
                     new Promise(async (res, rej) => {
-                        const root = "/";
+                        const { galleryUrl: root, galleryId }: { galleryUrl: string; galleryId: number } = (window as any)
+                            .___InitialState___ ?? { galleryUrl: "/example-gallery-url/", galleryId: 1 };
+
                         const gallery = await fetchGallery(root);
 
-                        const clientId = await api.connect("John", 1);
+                        const clientId = await api.connect("John", galleryId);
 
-                        const likesResult = await api.sdk.getLikes({ galleryId: 1, clientId });
+                        const likesResult = await api.sdk.getLikes({ galleryId, clientId });
 
                         galleries.load(gallery, likesResult.likes);
                         res();

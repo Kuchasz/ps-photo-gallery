@@ -31,7 +31,7 @@ var plugins = [
     new MiniCssExtractPlugin({
         filename: "[name].css"
     }),
-    new CopyWebpackPlugin({ patterns: [{ from: resolve(__dirname, "src/demo/example-gallery-images") }], options: { concurrency: 20 } }),
+    new CopyWebpackPlugin({ patterns: [{ from: resolve(__dirname, "src/demo/example-gallery-images"), to: "example-gallery-url" }], options: { concurrency: 20 } }),
     new ngtools.AngularCompilerPlugin({
         tsConfigPath: resolve(__dirname, "./tsconfig.json"),
         // entryModule: 'src/demo/app.module#AppModule',

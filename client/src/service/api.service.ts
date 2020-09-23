@@ -1,7 +1,7 @@
 import { Injectable, Optional } from "@angular/core";
 import { GraphQLClient } from "graphql-request";
 
-import { getSdk } from "../../../sdk";
+import { getSdk } from "../../sdk";
 
 @Injectable()
 export class ApiService {
