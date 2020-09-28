@@ -70,6 +70,6 @@
     "graphql-tag": "^2.11.0",
     "html-loader": "^1.1.0",
     "tslib": "^2.0.1",
-    "typescript": "^4.0.2"
+    "typescript": "4.0.2"
   }
 }
