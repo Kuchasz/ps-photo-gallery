@@ -1,11 +1,12 @@
 import { Injectable, Optional } from "@angular/core";
 import { GraphQLClient } from "graphql-request";
+import { app } from "../../../../photographers-panel/server/src/config";
 
 import { getSdk } from "../../sdk";
 
 @Injectable()
 export class ApiService {
-    public sdk = getSdk(new GraphQLClient("http://localhost:8080/api"));
+    public sdk = getSdk(new GraphQLClient(app.appPath + '/api'));
     public clientId: number;
     public galleryId: number;
 
