@@ -9,6 +9,7 @@
   "scripts": {
     "build": "webpack -p",
     "start": "webpack-dev-server --hot --inline",
+    "watch:dev": "rimraf ./dist | webpack --mode development --watch",
     "packages:check": "ncu",
     "packages:bump": "ncu -u"
   },

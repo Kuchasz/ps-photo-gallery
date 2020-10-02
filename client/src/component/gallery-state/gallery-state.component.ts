@@ -32,7 +32,7 @@ export class GalleryStateComponent {
         private route: ActivatedRoute,
         private router: Router,
         private location: Location
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.currentDirectoryId$ = this.route.parent.paramMap.pipe(map((x) => x.get("id")));
@@ -58,6 +58,10 @@ export class GalleryStateComponent {
         }
     }
 
+    get downloadEnabled() {
+        return true;
+    }
+
     get snappedCount() {
         return this.state.images.filter((x) => x.snapped).length;
     }
@@ -71,7 +75,7 @@ export class GalleryStateComponent {
         this.location.back();
     }
 
-    orderPhotos() {}
+    orderPhotos() { }
 
     // public snapImage() {
     //     this.gallery.snapImage(this.currentImageId);
@@ -85,7 +89,7 @@ export class GalleryStateComponent {
         img.likes++;
         img.liked = true;
 
-        this.api.sdk.likeImage({imageId, galleryId: this.api.galleryId, clientId: this.api.clientId});
+        this.api.sdk.likeImage({ imageId, galleryId: this.api.galleryId, clientId: this.api.clientId });
         $event.stopPropagation();
     }
 

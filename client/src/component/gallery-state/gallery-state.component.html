@@ -1,12 +1,14 @@
 <ng-container *ngIf="currentDirectoryId$ | async as currentDirectoryId">
-    <ng-container *ngIf="currentDirectory$ | async as currentDirectory"
-        ><div class="gallery-state" *ngIf="currentImage$ | async as currentImage">
-            <span *ngIf="!currentImage.liked" (click)="likeImage(currentImage.id, $event)" class="g-state-button"
-                ><i class="material-icons">favorite_border</i><p>like {{ currentImage.likes }}</p></span
-            >
-            <span *ngIf="currentImage.liked" (click)="likeImage(currentImage.id, $event)" class="g-state-button"
-                ><i class="material-icons">favorite</i><p>like {{ currentImage.likes }}</p></span
-            >
+    <ng-container *ngIf="currentDirectory$ | async as currentDirectory">
+        <div class="gallery-state" *ngIf="currentImage$ | async as currentImage">
+            <span *ngIf="!currentImage.liked" (click)="likeImage(currentImage.id, $event)" class="g-state-button"><i
+                    class="material-icons">favorite_border</i>
+                <p>like {{ currentImage.likes }}</p>
+            </span>
+            <span *ngIf="currentImage.liked" (click)="likeImage(currentImage.id, $event)" class="g-state-button"><i
+                    class="material-icons">favorite</i>
+                <p>like {{ currentImage.likes }}</p>
+            </span>
             <!-- <span class="g-state-text">
                 <span class="g-snapped-count" *ngIf="snappedCount > 0" (click)="displaySnappedImages()"
                     >{{ snappedCount }} selected</span
@@ -20,10 +22,14 @@
                 ><i class="material-icons">shopping_cart</i></span
             > -->
             <!-- <span class="g-state-button rate" (click)="toggleFullscreen()"><i class="material-icons">message</i></span> -->
-            <span class="g-state-button" *ngIf="fullscreenEnabled" (click)="toggleFullscreen()"
-                ><p>fullscreen</p><i class="material-icons">fullscreen</i></span
-            >
-            <span (click)="goBack()" class="g-state-button"><p>close</p>
+            <a [href]="currentImage.src" download target="_blank" class="g-state-button" *ngIf="downloadEnabled">
+                <p>download</p><i class="material-icons">file_download</i>
+            </a>
+            <span class="g-state-button" *ngIf="fullscreenEnabled" (click)="toggleFullscreen()">
+                <p>fullscreen</p><i class="material-icons">fullscreen</i>
+            </span>
+            <span (click)="goBack()" class="g-state-button">
+                <p>close</p>
                 <i class="material-icons">close</i>
             </span>
         </div>
