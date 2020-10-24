@@ -16,6 +16,21 @@ export class LikeResolver {
         return like.save();
     }
 
+    @Mutation(() => Number)
+    unlikeImage(
+        @Arg("imageId") imageId: string,
+        @Arg("clientId", () => Int) clientId: number,
+        @Arg("galleryId", () => Int) galleryId: number
+    ) {
+        return Like.delete({ galleryId, imageId, clientId });
+        // foo.affected
+        // const like = new Like();
+        // like.imageId = imageId;
+        // like.clientId = clientId;
+        // like.galleryId = galleryId;
+        // return like.save();
+    }
+
     @Query(() => [Like])
     async likes(@Arg("galleryId", () => Int) galleryId: number, @Arg("clientId", () => Int) clientId: number) {
         const allLikes = await Like.find({ galleryId });
