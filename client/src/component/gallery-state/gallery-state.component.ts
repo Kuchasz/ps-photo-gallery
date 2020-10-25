@@ -93,6 +93,18 @@ export class GalleryStateComponent {
         $event.stopPropagation();
     }
 
+    public unlikeImage(imageId: string, $event: MouseEvent) {
+        const img = this.state.images.find((x) => x.id === imageId);
+
+        if (img.liked === false) return;
+
+        img.likes--;
+        img.liked = false;
+
+        this.api.sdk.unlikeImage({ imageId, galleryId: this.api.galleryId, clientId: this.api.clientId });
+        $event.stopPropagation();
+    }
+
     get currentImageId() {
         return this.state.currId;
     }

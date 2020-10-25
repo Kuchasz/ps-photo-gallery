@@ -42,4 +42,4 @@ export const runPhotoGalleryServer = async (app: express.Express) => {
             allowedHeaders: ["Content-Type", "Origin", "Accept"]
         }
     });
-}
+};

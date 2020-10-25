@@ -10,7 +10,7 @@
                 <img [src]="image.src" />
                 <div class="background">
                     <ng-container *ngIf="image.liked">
-                        <i class="material-icons" (click)="likeImage(image.id, $event)">favorite</i>
+                        <i class="material-icons" (click)="unlikeImage(image.id, $event)">favorite</i>
                         <p>{{ image.likes }}</p></ng-container
                     >
                     <ng-container *ngIf="!image.liked"

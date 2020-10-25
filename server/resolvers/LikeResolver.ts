@@ -1,3 +1,4 @@
+import { DeleteResult } from '../entities/DeleteResult';
 import { Arg, Int, Mutation, Query, Resolver } from "type-graphql";
 import { Like } from "../entities/Like";
 
@@ -16,19 +17,19 @@ export class LikeResolver {
         return like.save();
     }
 
-    @Mutation(() => Number)
-    unlikeImage(
+    @Mutation(() => DeleteResult)
+    async unlikeImage(
         @Arg("imageId") imageId: string,
         @Arg("clientId", () => Int) clientId: number,
         @Arg("galleryId", () => Int) galleryId: number
     ) {
-        return Like.delete({ galleryId, imageId, clientId });
-        // foo.affected
-        // const like = new Like();
-        // like.imageId = imageId;
-        // like.clientId = clientId;
-        // like.galleryId = galleryId;
-        // return like.save();
+        const likeToDelete = await Like.findOne({ galleryId, imageId, clientId });
+        
+        if(!likeToDelete)
+            return DeleteResult.None;
+
+        await likeToDelete.remove();
+        return DeleteResult.One;
     }
 
     @Query(() => [Like])

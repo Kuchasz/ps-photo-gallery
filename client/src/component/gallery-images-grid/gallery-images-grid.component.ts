@@ -38,7 +38,7 @@ export class GalleryImagesGridComponent implements OnInit {
         public api: ApiService,
         private route: ActivatedRoute,
         private router: Router
-    ) {}
+    ) { }
 
     ngOnInit() {
         console.log("RENDER: gallery-images-grid");
@@ -92,7 +92,7 @@ export class GalleryImagesGridComponent implements OnInit {
             }));
 
             finalImages = columnsWithAdjustments.map((c) =>
-                c.images.map((img) => ({ ...img, height: img.height * c.adjustment }))
+                c.images.map((img) => Object.assign(img, { height: img.height * c.adjustment }))
             );
 
             // const finalImages = images.reduce(
@@ -126,8 +126,6 @@ export class GalleryImagesGridComponent implements OnInit {
     }
 
     likeImage(imageId: string, $event: MouseEvent) {
-        // console.log('like clicked');
-
         const img = this.columnsImages.reduce((a, c) => [...a, ...c], []).find((x) => x.id === imageId);
 
         if (img.liked === true) return;
@@ -136,6 +134,18 @@ export class GalleryImagesGridComponent implements OnInit {
         img.liked = true;
 
         this.api.sdk.likeImage({ imageId, galleryId: this.api.galleryId, clientId: this.api.clientId });
+        $event.stopPropagation();
+    }
+
+    unlikeImage(imageId: string, $event: MouseEvent) {
+        const img = this.columnsImages.reduce((a, c) => [...a, ...c], []).find((x) => x.id === imageId);
+
+        if (img.liked === false) return;
+
+        img.likes--;
+        img.liked = false;
+
+        this.api.sdk.unlikeImage({ imageId, galleryId: this.api.galleryId, clientId: this.api.clientId });
         $event.stopPropagation();
     }
 

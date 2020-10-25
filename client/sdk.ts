@@ -18,6 +18,11 @@ export type Client = {
   name: Scalars['String'];
 };
 
+export type DeleteResult = {
+  __typename?: 'DeleteResult';
+  affectedRows: Scalars['Int'];
+};
+
 export type Like = {
   __typename?: 'Like';
   imageId: Scalars['String'];
@@ -28,11 +33,19 @@ export type Like = {
 export type Mutation = {
   __typename?: 'Mutation';
   likeImage: Like;
+  unlikeImage: DeleteResult;
   connect: Client;
 };
 
 
 export type MutationLikeImageArgs = {
+  galleryId: Scalars['Int'];
+  clientId: Scalars['Int'];
+  imageId: Scalars['String'];
+};
+
+
+export type MutationUnlikeImageArgs = {
   galleryId: Scalars['Int'];
   clientId: Scalars['Int'];
   imageId: Scalars['String'];
@@ -55,10 +68,26 @@ export type QueryLikesArgs = {
 };
 
 
+export const GetLikesDocument = gql`
+    query getLikes($clientId: Int!, $galleryId: Int!) {
+  likes(clientId: $clientId, galleryId: $galleryId) {
+    imageId
+    liked
+    likes
+  }
+}
+    `;
 export const LikeImageDocument = gql`
     mutation likeImage($imageId: String!, $clientId: Int!, $galleryId: Int!) {
-  likeImage(imageId: $imageId, clientId: $clientId, galleryId: $galleryId) {
+  likeImage(imageId: $imageId, galleryId: $galleryId, clientId: $clientId) {
     imageId
+  }
+}
+    `;
+export const UnlikeImageDocument = gql`
+    mutation unlikeImage($imageId: String!, $clientId: Int!, $galleryId: Int!) {
+  unlikeImage(imageId: $imageId, galleryId: $galleryId, clientId: $clientId) {
+    affectedRows
   }
 }
     `;
@@ -69,15 +98,6 @@ export const ConnectClientDocument = gql`
   }
 }
     `;
-export const GetLikesDocument = gql`
-    query getLikes($galleryId: Int!, $clientId: Int!) {
-  likes(galleryId: $galleryId, clientId: $clientId) {
-    imageId
-    liked
-    likes
-  }
-}
-    `;
 
 export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
 
@@ -85,18 +105,35 @@ export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
 const defaultWrapper: SdkFunctionWrapper = sdkFunction => sdkFunction();
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    getLikes(variables: GetLikesQueryVariables): Promise<GetLikesQuery> {
+      return withWrapper(() => client.request<GetLikesQuery>(print(GetLikesDocument), variables));
+    },
     likeImage(variables: LikeImageMutationVariables): Promise<LikeImageMutation> {
       return withWrapper(() => client.request<LikeImageMutation>(print(LikeImageDocument), variables));
     },
+    unlikeImage(variables: UnlikeImageMutationVariables): Promise<UnlikeImageMutation> {
+      return withWrapper(() => client.request<UnlikeImageMutation>(print(UnlikeImageDocument), variables));
+    },
     connectClient(variables: ConnectClientMutationVariables): Promise<ConnectClientMutation> {
       return withWrapper(() => client.request<ConnectClientMutation>(print(ConnectClientDocument), variables));
-    },
-    getLikes(variables: GetLikesQueryVariables): Promise<GetLikesQuery> {
-      return withWrapper(() => client.request<GetLikesQuery>(print(GetLikesDocument), variables));
     }
   };
 }
 export type Sdk = ReturnType<typeof getSdk>;
+export type GetLikesQueryVariables = Exact<{
+  clientId: Scalars['Int'];
+  galleryId: Scalars['Int'];
+}>;
+
+
+export type GetLikesQuery = (
+  { __typename?: 'Query' }
+  & { likes: Array<(
+    { __typename?: 'Like' }
+    & Pick<Like, 'imageId' | 'liked' | 'likes'>
+  )> }
+);
+
 export type LikeImageMutationVariables = Exact<{
   imageId: Scalars['String'];
   clientId: Scalars['Int'];
@@ -112,6 +149,21 @@ export type LikeImageMutation = (
   ) }
 );
 
+export type UnlikeImageMutationVariables = Exact<{
+  imageId: Scalars['String'];
+  clientId: Scalars['Int'];
+  galleryId: Scalars['Int'];
+}>;
+
+
+export type UnlikeImageMutation = (
+  { __typename?: 'Mutation' }
+  & { unlikeImage: (
+    { __typename?: 'DeleteResult' }
+    & Pick<DeleteResult, 'affectedRows'>
+  ) }
+);
+
 export type ConnectClientMutationVariables = Exact<{
   name: Scalars['String'];
 }>;
@@ -123,18 +175,4 @@ export type ConnectClientMutation = (
     { __typename?: 'Client' }
     & Pick<Client, 'id'>
   ) }
-);
-
-export type GetLikesQueryVariables = Exact<{
-  galleryId: Scalars['Int'];
-  clientId: Scalars['Int'];
-}>;
-
-
-export type GetLikesQuery = (
-  { __typename?: 'Query' }
-  & { likes: Array<(
-    { __typename?: 'Like' }
-    & Pick<Like, 'imageId' | 'liked' | 'likes'>
-  )> }
 );
