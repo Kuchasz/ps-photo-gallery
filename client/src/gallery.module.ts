@@ -16,6 +16,7 @@ import { GalleryImagesFullscreenComponent } from "./component/gallery-images-ful
 import { GallerySnappedImagesComponent } from "./component/gallery-snapped-images/gallery-snapped-images.component";
 import { GallerySnappedStateComponent } from "./component/gallery-snapped-state/gallery-snapped-state.component";
 import { GalleryImagesGridComponent } from "./component/gallery-images-grid/gallery-images-grid.component";
+import { RatingRequestWindowComponent } from "./component/rating-request-window/rating-request-window.component";
 
 import { LazyDirective } from "./directive/lazy.directive";
 import { TapDirective } from "./directive/tap.directive";
@@ -44,6 +45,7 @@ export const CONFIG = new InjectionToken<GalleryConfig>("config");
         GallerySnappedImagesComponent,
         GallerySnappedStateComponent,
         GalleryImagesGridComponent,
+        RatingRequestWindowComponent,
         TapDirective,
         LazyDirective
     ],
