@@ -120,31 +120,18 @@ export class GalleryImagesGridComponent implements OnInit {
         this.router.navigate([`fullscreen`], { relativeTo: this.route });
 
         // this.router.routeReuseStrategy.shouldReuseRoute = () => true;
-
         // this.router.navigate([`fullscreen`], { relativeTo: this.route });
         // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
 
-    likeImage(imageId: string, $event: MouseEvent) {
-        const img = this.columnsImages.reduce((a, c) => [...a, ...c], []).find((x) => x.id === imageId);
-
-        if (img.liked === true) return;
-
-        img.likes++;
-        img.liked = true;
-
+    public likeImage(imageId: string, $event: MouseEvent) {
+        this.gallery.likeImage(imageId);
         this.api.sdk.likeImage({ imageId, galleryId: this.api.galleryId, clientId: this.api.clientId });
         $event.stopPropagation();
     }
 
-    unlikeImage(imageId: string, $event: MouseEvent) {
-        const img = this.columnsImages.reduce((a, c) => [...a, ...c], []).find((x) => x.id === imageId);
-
-        if (img.liked === false) return;
-
-        img.likes--;
-        img.liked = false;
-
+    public unlikeImage(imageId: string, $event: MouseEvent) {
+        this.gallery.unlikeImage(imageId);
         this.api.sdk.unlikeImage({ imageId, galleryId: this.api.galleryId, clientId: this.api.clientId });
         $event.stopPropagation();
     }

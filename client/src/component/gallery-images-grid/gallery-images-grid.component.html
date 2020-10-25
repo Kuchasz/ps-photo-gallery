@@ -10,11 +10,11 @@
                 <img [src]="image.src" />
                 <div class="background">
                     <ng-container *ngIf="image.liked">
-                        <i class="material-icons" (click)="unlikeImage(image.id, $event)">favorite</i>
+                        <span class="mdi mdi-heart" (click)="unlikeImage(image.id, $event)"></span>
                         <p>{{ image.likes }}</p></ng-container
                     >
-                    <ng-container *ngIf="!image.liked"
-                        ><i class="material-icons" (click)="likeImage(image.id, $event)">favorite_border</i>
+                    <ng-container *ngIf="!image.liked">
+                        <span class="mdi mdi-heart-outline" (click)="likeImage(image.id, $event)"></span>
                         <p>{{ image.likes }}</p></ng-container
                     >
                 </div>

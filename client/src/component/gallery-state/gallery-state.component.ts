@@ -66,6 +66,10 @@ export class GalleryStateComponent {
         return this.state.images.filter((x) => x.snapped).length;
     }
 
+    get ratingRequestEnabled() {
+        return this.state.ratingRequestEnabled;
+    }
+
     public displaySnappedImages() {
         this.router.navigate(["/snapped"]);
     }
@@ -100,25 +104,13 @@ export class GalleryStateComponent {
     // }
 
     public likeImage(imageId: string, $event: MouseEvent) {
-        const img = this.state.images.find((x) => x.id === imageId);
-
-        if (img.liked === true) return;
-
-        img.likes++;
-        img.liked = true;
-
+        this.gallery.likeImage(imageId);
         this.api.sdk.likeImage({ imageId, galleryId: this.api.galleryId, clientId: this.api.clientId });
         $event.stopPropagation();
     }
 
     public unlikeImage(imageId: string, $event: MouseEvent) {
-        const img = this.state.images.find((x) => x.id === imageId);
-
-        if (img.liked === false) return;
-
-        img.likes--;
-        img.liked = false;
-
+        this.gallery.unlikeImage(imageId);
         this.api.sdk.unlikeImage({ imageId, galleryId: this.api.galleryId, clientId: this.api.clientId });
         $event.stopPropagation();
     }

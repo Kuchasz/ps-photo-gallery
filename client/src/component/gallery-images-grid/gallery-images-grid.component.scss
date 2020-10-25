@@ -15,7 +15,9 @@ gallery-images-grid {
 
 .column {
     flex-grow: 1;
-    max-width: 800px;
+    flex-shrink: 1;
+    // max-width: 800px;
+    width: 100%;
     padding: 0px 2.5px;
     display: flex;
     flex-direction: column;
@@ -47,7 +49,7 @@ gallery-images-grid {
         p {
             margin: 0px;
         }
-        i {
+        span {
             font-size: 3em;
         }
     }

@@ -1,21 +1,18 @@
 @keyframes wiggle {
     0% {
-        transform: rotateZ(0deg);
-    }
-    1% {
-        transform: translateY(10px) rotateZ(-45deg) scale(1.5);
+        transform: translateY(0px);
     }
     2% {
-        transform: rotateZ(0deg) scale(1);
+        transform: translateY(5px);
     }
-    3% {
-        transform: translateY(10px) rotateZ(45deg) scale(1.5);
+    4% {
+        transform: translateY(0px);
     }
     5% {
-        transform: rotateZ(0deg) scale(1);
+        transform: translateY(5px);
     }
-    100% {
-        transform: rotateZ(0deg);
+    6% {
+        transform: translateY(0px);
     }
 }
 
@@ -88,6 +85,7 @@ span, a {
     // background: black;
     display: flex;
     flex-direction: row;
+    font-weight: bolder;
     align-items: center;
     color: white;
     opacity: 0.25;
@@ -99,18 +97,15 @@ span, a {
     }
     div {
         padding: 0em 0.5em;
-    }
+    } 
     p{
-        margin: 0px 5px;
+        // margin: 0px 5px;
     }
     &.rate {
-        i {
-            font-size: 2em;
-            animation-name: wiggle;
-            animation-duration: 20s;
-            animation-iteration-count: infinite;
-            animation-timing-function: ease-out;
-        }
+        animation-name: wiggle;
+        animation-duration: 10s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
     }
 }
 

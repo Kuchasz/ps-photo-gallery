@@ -66,6 +66,7 @@
     "zone.js": "0.10.3"
   },
   "devDependencies": {
+    "@mdi/font": "^5.8.55",
     "graphql": "^15.3.0",
     "graphql-request": "^3.1.0",
     "graphql-tag": "^2.11.0",

@@ -36,7 +36,6 @@ export class GalleryImageComponent implements OnInit {
         );
 
         this.currentImage$ = this.gallery.state.pipe(
-            tap(console.log),
             map((x) =>({ images: x.images, currId: x.currId, prevId: x.prevId, nextId: x.nextId})),
             map(x => [x.images.find(xx => xx.id === x.prevId), x.images.find(xx => xx.id === x.currId), x.images.find(xx => xx.id === x.nextId)])
         );

@@ -11,6 +11,7 @@ export interface GalleryState {
   fullscreenEnabled: boolean;
   orientation: ScreenOrientation;
   displaySnappedImages: boolean;
+  ratingRequestEnabled: boolean;
 }
 
 export interface GalleryImage {

@@ -14,10 +14,9 @@ import { from, pipe, interval as fromInterval } from "rxjs";
 @Injectable()
 export class GalleryService {
     state: BehaviorSubject<GalleryState>;
-
     config: GalleryConfig = defaultConfig;
-
     player: Subject<number>;
+    likedPhotos: number = 0;
 
     constructor(@Optional() config: GalleryConfig) {
         this.state = new BehaviorSubject<GalleryState>(defaultState);
@@ -57,6 +56,32 @@ export class GalleryService {
         });
     }
 
+    likeImage(imageId: string) {
+        const state = this.state.getValue();
+        const img = state.images.find((x) => x.id === imageId);
+
+        if (img.liked === true)
+            return;
+
+        this.likedPhotos++;
+        img.likes++;
+        img.liked = true;
+
+        if (this.likedPhotos === 10) {
+            this.state.next({ ...state, ratingRequestEnabled: true });
+        }
+    }
+
+    unlikeImage(imageId: string) {
+        const img = this.state.getValue().images.find((x) => x.id === imageId);
+
+        if (img.liked === false)
+            return;
+
+        img.likes--;
+        img.liked = false;
+    }
+
     setOrientation(orientation: ScreenOrientation) {
         const state = this.state.getValue();
         this.state.next({ ...state, orientation });
@@ -71,7 +96,6 @@ export class GalleryService {
     }
 
     selectDirectory(directoryId: string) {
-        console.log("SELECT_DIRECTORY");
         const state = this.state.getValue();
 
         const directories = {
@@ -113,8 +137,6 @@ export class GalleryService {
     }
 
     selectImage(id: string, directoryId: string) {
-        console.log("SELECT_IMAGE");
-
         const state = this.state.getValue();
         const images = state.directoryImages[directoryId];
 
@@ -147,7 +169,7 @@ export class GalleryService {
         this.state.next(newState);
     }
 
-    snapImages(images: GalleryImage[]) {}
+    snapImages(images: GalleryImage[]) { }
 
     displaySnappedImages() {
         const state = this.state.getValue();
