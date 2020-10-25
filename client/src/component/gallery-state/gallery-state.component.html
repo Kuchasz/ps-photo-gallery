@@ -22,9 +22,12 @@
                 ><i class="material-icons">shopping_cart</i></span
             > -->
             <!-- <span class="g-state-button rate" (click)="toggleFullscreen()"><i class="material-icons">message</i></span> -->
-            <a [href]="currentImage.src" download target="_blank" class="g-state-button" *ngIf="downloadEnabled">
+            <!-- <a [href]="currentImage.src" download target="_blank" class="g-state-button" *ngIf="downloadEnabled">
                 <p>download</p><i class="material-icons">file_download</i>
-            </a>
+            </a> -->
+            <span (click)="download(currentImage.src)" class="g-state-button" *ngIf="downloadEnabled">
+                <p>download</p><i class="material-icons">file_download</i>
+            </span>
             <span class="g-state-button" *ngIf="fullscreenEnabled" (click)="toggleFullscreen()">
                 <p>fullscreen</p><i class="material-icons">fullscreen</i>
             </span>

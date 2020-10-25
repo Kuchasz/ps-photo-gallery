@@ -59,7 +59,7 @@ export class GalleryStateComponent {
     }
 
     get downloadEnabled() {
-        return true;
+        return (window.fetch !== undefined && window.URL !== undefined);
     }
 
     get snappedCount() {
@@ -76,6 +76,24 @@ export class GalleryStateComponent {
     }
 
     orderPhotos() { }
+
+    download(imgSrc: string){
+        fetch(imgSrc)
+        .then(resp => resp.blob())
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            // the filename you want
+            a.download = imgSrc.split("/").reverse()[0];
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            // alert('your file has downloaded!'); // or you know, something with better UX...
+        })
+        .catch(() => console.log(`DOWNLOAD OF: ${imgSrc} failed.`));
+    }
 
     // public snapImage() {
     //     this.gallery.snapImage(this.currentImageId);
