@@ -72,6 +72,11 @@ export class GalleryService {
         }
     }
 
+    setRatingRequestEnabled(enabled: boolean){
+        const state = this.state.getValue();
+        this.state.next({...state, ratingRequestEnabled: enabled});
+    }
+
     unlikeImage(imageId: string) {
         const img = this.state.getValue().images.find((x) => x.id === imageId);
 

@@ -9,11 +9,10 @@ rating-request-window {
 }
 
 .popup {
-    margin: 70px auto;
+    margin: 50px auto;
     padding: 20px;
     background: #fff;
-    border-radius: 5px;
-    width: 30%;
+    width: 50%;
     position: relative;
     transition: all 5s ease-in-out;
 
@@ -24,15 +23,15 @@ rating-request-window {
 
     .close {
       position: absolute;
-      top: 20px;
-      right: 30px;
+      top: 5px;
+      right: 15px;
       transition: all 200ms;
       font-size: 30px;
       font-weight: bold;
       text-decoration: none;
       color: #333;
       &:hover {
-        color: #06D85F;
+        color: #d80606;
       }
     }
 

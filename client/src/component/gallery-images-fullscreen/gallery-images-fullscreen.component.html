@@ -1,5 +1,5 @@
-<ng-container>
-  <div *ngIf="gallery.state | async as state" class="g-container" [style.flexDirection]="thumbDirection"
+<ng-container *ngIf="gallery.state | async as state">
+  <div class="g-container" [style.flexDirection]="thumbDirection"
     [ngStyle]="gallery.config.style">
     <gallery-state (onBack)="goBack()" [config]="gallery.config" [state]="state"></gallery-state>
 
@@ -22,5 +22,5 @@
     <gallery-thumb *ngIf="isFullView" [images]="images$ | async" [directoryId]="currentDirectoryId$ | async"
       [state]="state" [directory]="currentDirectory | async" [config]="gallery.config.thumbnails"></gallery-thumb>
   </div>
-  <rating-request-window></rating-request-window>
+  <rating-request-window *ngIf="state.ratingRequestEnabled"></rating-request-window>
 </ng-container>

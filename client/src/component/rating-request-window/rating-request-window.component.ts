@@ -25,4 +25,8 @@ export class RatingRequestWindowComponent implements OnInit {
     ngOnInit() {
     }
 
+    close(){
+        this.gallery.setRatingRequestEnabled(false);
+    }
+
 }
