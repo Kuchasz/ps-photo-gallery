@@ -115,6 +115,10 @@ export class GalleryStateComponent {
         $event.stopPropagation();
     }
 
+    public openDisplayRatingRequestDetails(){
+        this.gallery.setDisplayRatingRequestDetails(true);
+    }
+    
     get currentImageId() {
         return this.state.currId;
     }

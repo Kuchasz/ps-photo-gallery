@@ -1,3 +1,4 @@
+import { Location } from "@angular/common";
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { GalleryService } from "../../service/gallery.service";
 import { GalleryState } from "../../service/gallery.state";
@@ -10,7 +11,21 @@ import { GalleryState } from "../../service/gallery.state";
 })
 export class GalleryNavComponent {
   @Input() state: GalleryState;
-  @Input() currentDirectoryId: number;
+  @Input() currentDirectoryId: string;
 
-  constructor(public gallery: GalleryService) {}
+  constructor(public gallery: GalleryService, private location: Location) { }
+
+  goBack() {
+    this.location.back();
+  }
+
+  prev(e: MouseEvent) {
+    this.gallery.prev(this.currentDirectoryId);
+    e.stopPropagation();
+  }
+
+  next(e: MouseEvent) {
+    this.gallery.next(this.currentDirectoryId);
+    e.stopPropagation();
+  }
 }

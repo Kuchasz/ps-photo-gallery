@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy, ElementRef, OnInit } from "@angular/core";
+import { Component, Input, ChangeDetectionStrategy, ElementRef, OnInit, HostListener } from "@angular/core";
 import { GalleryService } from "../../service/gallery.service";
 import { GalleryState, GalleryDirectory, GalleryImage } from "../../service/gallery.state";
 import { GalleryThumbConfig } from "../../config";
@@ -21,6 +21,7 @@ export class GalleryThumbComponent implements OnInit {
     elContainer: any;
     thumbsDelta: number = 0;
 
+    @HostListener("document:keydown", ["$event"])
     handleKeyStrokes = (e) => {
         if (e.keyCode === 37) this.gallery.prev(this.directoryId);
         if (e.keyCode === 39) this.gallery.next(this.directoryId);
@@ -28,13 +29,7 @@ export class GalleryThumbComponent implements OnInit {
 
     constructor(public gallery: GalleryService, private el: ElementRef) {}
 
-    ngOnDestroy() {
-        window.removeEventListener("keydown", this.handleKeyStrokes);
-    }
-
     ngOnInit() {
-        window.addEventListener("keydown", this.handleKeyStrokes);
-
         // if (this.gallery.config.gestures) {
         this.elContainer = this.el.nativeElement.querySelector(".g-thumbs");
 

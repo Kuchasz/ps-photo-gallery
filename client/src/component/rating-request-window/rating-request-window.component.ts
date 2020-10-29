@@ -26,7 +26,7 @@ export class RatingRequestWindowComponent implements OnInit {
     }
 
     close(){
-        this.gallery.setRatingRequestEnabled(false);
+        this.gallery.setDisplayRatingRequestDetails(false);
     }
 
 }

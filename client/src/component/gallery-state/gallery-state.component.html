@@ -25,7 +25,7 @@
                     class="material-icons">shopping_cart</i></span> -->
                     <!-- Bob lives in a <span class="mdi mdi-home"></span>. -->
 
-            <span *ngIf="ratingRequestEnabled" class="g-state-button rate" (click)="toggleFullscreen()">review us<span class="mdi mdi-message-text-outline"></span></span>
+            <span *ngIf="ratingRequestEnabled" class="g-state-button rate" (click)="openDisplayRatingRequestDetails()">review us<span class="mdi mdi-message-text-outline"></span></span>
             <span (click)="download(currentImage.src)" class="g-state-button" *ngIf="downloadEnabled">
                 <p>download</p><span class="mdi mdi-download"></span>
             </span>

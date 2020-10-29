@@ -12,6 +12,7 @@ export interface GalleryState {
   orientation: ScreenOrientation;
   displaySnappedImages: boolean;
   ratingRequestEnabled: boolean;
+  displayRatingRequestDetails: boolean;
 }
 
 export interface GalleryImage {

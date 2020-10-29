@@ -1,10 +1,10 @@
-<div *ngIf="currentDirectoryId !== undefined" class="g-nav">
+<div *ngIf="currentDirectoryId !== undefined" (click)="goBack()" class="g-nav">
 
-  <div class="g-nav-prev" (mouseup)="gallery.prev(currentDirectoryId)">
+  <div class="g-nav-prev" (click)="prev($event)">
     <span class="mdi mdi-chevron-left"></span>
   </div>
 
-  <div class="g-nav-next" (mouseup)="gallery.next(currentDirectoryId)">
+  <div class="g-nav-next" (click)="next($event)">
     <span class="mdi mdi-chevron-right"></span>
   </div>
 
