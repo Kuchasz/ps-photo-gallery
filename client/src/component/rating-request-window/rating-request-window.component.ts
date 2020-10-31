@@ -11,6 +11,7 @@ import { Location } from "@angular/common";
 import { GalleryState, GalleryDirectory, GalleryImage } from "../../service/gallery.state";
 import { GalleryService } from "../../service/gallery.service";
 import { ActivatedRoute, ParamMap } from "@angular/router";
+import { app } from "../../../../../photographers-panel/server/src/config";
 
 @Component({
     selector: "rating-request-window",
@@ -20,6 +21,9 @@ import { ActivatedRoute, ParamMap } from "@angular/router";
     encapsulation: ViewEncapsulation.None
 })
 export class RatingRequestWindowComponent implements OnInit {
+    
+    reviewUrl: string = app.reviewUrl;
+    
     constructor(public gallery: GalleryService, private route: ActivatedRoute, private location: Location) { }
 
     ngOnInit() {
@@ -28,5 +32,6 @@ export class RatingRequestWindowComponent implements OnInit {
     close(){
         this.gallery.setDisplayRatingRequestDetails(false);
     }
+
 
 }
