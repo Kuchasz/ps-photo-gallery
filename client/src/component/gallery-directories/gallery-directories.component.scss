@@ -95,6 +95,7 @@
             // }
         }
         .g-state-text {
+            user-select: none;
             display: flex;
             justify-content: flex-start;
             transition: background-color 0.5s linear;

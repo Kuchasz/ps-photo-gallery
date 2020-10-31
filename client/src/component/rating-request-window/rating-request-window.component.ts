@@ -23,10 +23,13 @@ import { app } from "../../../../../photographers-panel/server/src/config";
 export class RatingRequestWindowComponent implements OnInit {
     
     reviewUrl: string = app.reviewUrl;
+    likedPhotos: string[] = [];
     
     constructor(public gallery: GalleryService, private route: ActivatedRoute, private location: Location) { }
 
     ngOnInit() {
+        const state = this.gallery.state.getValue(); 
+        this.likedPhotos = this.gallery.likedPhotos.slice(0, 10).map(imageId => state.images.find(x => x.id === imageId).src);
     }
 
     close(){

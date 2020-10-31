@@ -42,6 +42,7 @@ span {
 
 .g-state-text {
     background: black;
+    user-select: none;
     display: flex;
     flex-grow: 1;
     align-self: center;

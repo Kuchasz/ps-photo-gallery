@@ -60,7 +60,7 @@ span, a {
 }
 
 .g-state-text {
-    // background: black;
+    user-select: none;
     display: flex;
     flex-grow: 1;
     align-self: center;
@@ -100,6 +100,7 @@ span, a {
     } 
     p{
         // margin: 0px 5px;
+        user-select: none;
     }
     &.rate {
         animation-name: wiggle;
