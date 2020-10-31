@@ -16,7 +16,7 @@ export class GalleryService {
     state: BehaviorSubject<GalleryState>;
     config: GalleryConfig = defaultConfig;
     player: Subject<number>;
-    likedPhotos: number = 0;
+    likedPhotos: string[] = [];
 
     constructor(@Optional() config: GalleryConfig) {
         this.state = new BehaviorSubject<GalleryState>(defaultState);
@@ -63,18 +63,20 @@ export class GalleryService {
         if (img.liked === true)
             return;
 
-        this.likedPhotos++;
+        if(!this.likedPhotos.includes(imageId))
+            this.likedPhotos.push(imageId);
+
         img.likes++;
         img.liked = true;
 
-        if (this.likedPhotos === 10) {
-            this.state.next({ ...state, ratingRequestEnabled: true });
+        if (this.likedPhotos.length === 10) {
+            this.state.next({ ...state, ratingRequestAvailable: true });
         }
     }
 
-    setRatingRequestEnabled(enabled: boolean){
+    setratingRequestAvailable(enabled: boolean){
         const state = this.state.getValue();
-        this.state.next({...state, ratingRequestEnabled: enabled});
+        this.state.next({...state, ratingRequestAvailable: enabled});
     }
 
     setDisplayRatingRequestDetails(display: boolean){

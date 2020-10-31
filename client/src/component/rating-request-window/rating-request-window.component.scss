@@ -12,9 +12,17 @@ rating-request-window {
     margin: 50px auto;
     padding: 20px;
     background: #fff;
-    width: 50%;
+    width: 500px;
+    height: 500px;
     position: relative;
     transition: all 5s ease-in-out;
+    display: flex;
+    flex-direction: column;
+
+    header{
+      background-color: red;
+      height: 150px;
+    }
 
     h2 {
       margin-top: 0;

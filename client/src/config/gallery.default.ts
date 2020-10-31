@@ -11,7 +11,7 @@ export const defaultState: GalleryState = {
   fullscreenEnabled: true,
   orientation: undefined,
   displaySnappedImages: false,
-  ratingRequestEnabled: false,
+  ratingRequestAvailable: false,
   displayRatingRequestDetails: false
 };
 

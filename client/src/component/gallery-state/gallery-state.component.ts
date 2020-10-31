@@ -66,8 +66,8 @@ export class GalleryStateComponent {
         return this.state.images.filter((x) => x.snapped).length;
     }
 
-    get ratingRequestEnabled() {
-        return this.state.ratingRequestEnabled;
+    get ratingRequestAvailable() {
+        return this.state.ratingRequestAvailable;
     }
 
     public displaySnappedImages() {
