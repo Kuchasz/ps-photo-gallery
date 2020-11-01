@@ -115,6 +115,8 @@ export class GalleryService {
             [directoryId]: { ...state.directories[directoryId], visited: true }
         };
 
+        console.log(directories);
+
         this.state.next({
             ...state,
             directories

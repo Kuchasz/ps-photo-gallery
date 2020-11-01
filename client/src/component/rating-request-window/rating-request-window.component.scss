@@ -18,6 +18,7 @@ rating-request-window {
   transition: all 5s ease-in-out;
   display: flex;
   flex-direction: column;
+  font-weight: inherit;
 
   header {
     display: grid;
@@ -25,11 +26,10 @@ rating-request-window {
     height: 180px;
     grid-gap: 10px;
 
-    div {
-      img {
-        object-fit: cover;
-        object-position: center;
-      }
+    img {
+      object-fit: cover;
+      object-position: center;
+      height: 85px;
     }
   }
 
@@ -37,6 +37,7 @@ rating-request-window {
     color: #333;
     text-align: center;
     margin-top: 20px;
+    font-weight: inherit;
   }
 
   .close {
@@ -68,6 +69,8 @@ rating-request-window {
     justify-content: space-between;
     align-self: center;
     margin-top: 40px;
+    text-transform: uppercase;
+    align-items: center;
   }
 }
 

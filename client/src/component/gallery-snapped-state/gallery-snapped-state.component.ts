@@ -4,6 +4,7 @@ import { GalleryState } from "../../service/gallery.state";
 import { GalleryConfig } from "../../index";
 import * as screenfull from "screenfull";
 import { Router } from "@angular/router";
+import { translations } from '../../i18n';
 
 @Component({
     selector: "gallery-snapped-state",
@@ -15,6 +16,7 @@ export class GallerySnappedStateComponent {
     @Input() config: GalleryConfig;
     @Input() snappedCount: number;    
     @Output() onBack: EventEmitter<void> = new EventEmitter<void>(false);
+    translations = translations;
 
     constructor(public gallery: GalleryService, private router: Router) {}
 

@@ -2,13 +2,10 @@
 	<div class="popup">
 		<p class="close" (click)="close()">&times;</p>
 		<header>
-			<div *ngFor="let url of likedPhotos">
-				<img [src]="url">
-			</div>
+			<img *ngFor="let url of likedPhotos" [src]="url">
 		</header>
-		<h2>Please write an review</h2>
-		<div>We hope you like photos in that gallery. Please write us an review by clicking here or just ignore close
-			that message if you won't like to do that.</div>
-		<a [href]="reviewUrl" target="_blank"><i class="mdi mdi-message-draw"></i>Click here to review</a>
+		<h2>{{ translations.review.header }}</h2>
+		<div>{{ translations.review.text }}</div>
+		<a [href]="reviewUrl" target="_blank"><i class="mdi mdi-message-draw"></i>{{ translations.review.button }}</a>
 	</div>
 </div>

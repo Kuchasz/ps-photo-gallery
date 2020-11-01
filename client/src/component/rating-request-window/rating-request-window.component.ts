@@ -12,6 +12,7 @@ import { GalleryState, GalleryDirectory, GalleryImage } from "../../service/gall
 import { GalleryService } from "../../service/gallery.service";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { app } from "../../../../../photographers-panel/server/src/config";
+import { translations } from '../../i18n';
 
 @Component({
     selector: "rating-request-window",
@@ -24,8 +25,10 @@ export class RatingRequestWindowComponent implements OnInit {
     
     reviewUrl: string = app.reviewUrl;
     likedPhotos: string[] = [];
+    translations = translations; 
     
-    constructor(public gallery: GalleryService, private route: ActivatedRoute, private location: Location) { }
+    constructor(public gallery: GalleryService, private route: ActivatedRoute, private location: Location) {
+    }
 
     ngOnInit() {
         const state = this.gallery.state.getValue(); 

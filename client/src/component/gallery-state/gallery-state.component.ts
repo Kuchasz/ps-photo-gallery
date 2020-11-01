@@ -8,6 +8,7 @@ import { Observable } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 import { map, switchMap, flatMap, find, first } from "rxjs/operators";
 import { ApiService } from '../../service/api.service';
+import { translations } from '../../i18n';
 
 @Component({
     selector: "gallery-state",
@@ -23,6 +24,7 @@ export class GalleryStateComponent {
     currentDirectoryId$: Observable<string>;
     currentImage$: Observable<GalleryImage>;
     currentDirectory$: Observable<GalleryDirectory>;
+    translations = translations; 
 
     currentDirectoryId: string;
 
