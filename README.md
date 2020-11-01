@@ -1,9 +1,7 @@
 # Demo
 
-This application is continuously deployed into azure app service, most recent version can be seen:
+**[DISCONTINUED]** This application is continuously deployed into azure app service, most recent version can be seen:
 
-[HERE!](http://ps-photo-gallery-demo.azurewebsites.net/) 
-  
 
 ## How to run
 
