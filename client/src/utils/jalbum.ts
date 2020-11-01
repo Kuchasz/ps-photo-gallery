@@ -10,7 +10,7 @@ const getId = () => {
             newId =
                 name
                     .normalize("NFD")
-                    .replace(/[\u0300-\u036f]/g, "")
+                    .replaceAll(/[\u0300-\u036f]/g, "")
                     .toLowerCase() +
                 "-" +
                 tries;
@@ -53,20 +53,20 @@ export const fetchGallery = (path: string) =>
                                     if (photos.gallery) {
                                         const _images = photos.gallery.image.map((img) => img.$);
 
-                                        const directoryId = getIdFromName(item.name.replace("_", "-"));
+                                        const directoryId = getIdFromName(item.name.replaceAll("_", "-"));
 
                                         directories.push({
                                             index,
                                             directory: {
                                                 id: directoryId,
                                                 visited: false,
-                                                name: item.name.replace("_", " "),
+                                                name: item.name.replaceAll("_", " "),
                                                 rootDir: item.path
                                             }
                                         });
 
                                         const galleryImages = _images.map((img, idx) => ({
-                                            id: `${directoryId}#${img.img.replace("/", "_")}#${idx}`,
+                                            id: `${directoryId}#${img.img.replaceAll("/", "_")}#${idx}`,
                                             likes: 0,
                                             liked: Math.random() > 0.5,
                                             src: `${path}${item.path}${img.img}`,
