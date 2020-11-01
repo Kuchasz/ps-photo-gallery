@@ -2,10 +2,10 @@
     <ng-container *ngIf="currentDirectory$ | async as currentDirectory">
         <div class="gallery-state" *ngIf="currentImage$ | async as currentImage">
             <span *ngIf="!currentImage.liked" (click)="likeImage(currentImage.id, $event)" class="g-state-button like"><span class="mdi mdi-heart-outline"></span>
-                <p>{{ currentImage.likes || "" }}</p>
+                <p>{{ (currentImage.likes === 1 && currentImage.liked) || currentImage.likes === 0 ? "" : currentImage.likes }}</p>
             </span>
             <span *ngIf="currentImage.liked" (click)="unlikeImage(currentImage.id, $event)" class="g-state-button like"><span class="mdi mdi-heart"></span>
-                <p>{{ currentImage.likes || "" }}</p>
+                <p>{{ (currentImage.likes === 1 && currentImage.liked) || currentImage.likes === 0 ? "" : currentImage.likes }}</p>
             </span>
             <!-- <span class="g-state-text">
                 <span class="g-snapped-count" *ngIf="snappedCount > 0" (click)="displaySnappedImages()"
