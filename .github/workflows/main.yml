@@ -33,10 +33,10 @@ jobs:
           check-latest: true
 
       - name: "INSTALL DEPENDENCIES"
-      - run: npm install
+        run: npm install
 
       - name: "BUILD"
-      - run: npm run build
+        run: npm run build
 
       # Runs a single command using the runners shell
       # - name: Run a one-line script
