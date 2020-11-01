@@ -10,7 +10,7 @@ const getId = () => {
             newId =
                 name
                     .normalize("NFD")
-                    .replaceAll(/[\u0300-\u036f]/g, "")
+                    .replace(/[\u0300-\u036f]/g, "")
                     .toLowerCase() +
                 "-" +
                 tries;
