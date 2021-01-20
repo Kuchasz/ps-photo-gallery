@@ -41,7 +41,7 @@
     "core-js": "3.6.5",
     "css-loader": "3.5.3",
     "file-loader": "6.0.0",
-    "gsap": "3.5.1",
+    "gsap": "3.6.0",
     "hammerjs": "2.0.8",
     "html-webpack-plugin": "4.3.0",
     "material-design-icons": "3.0.1",
